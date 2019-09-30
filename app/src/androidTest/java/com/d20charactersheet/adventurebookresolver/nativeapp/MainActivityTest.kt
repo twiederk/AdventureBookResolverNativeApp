@@ -1,27 +1,41 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import android.support.test.espresso.Espresso.onView
-import android.support.test.espresso.assertion.ViewAssertions.matches
-import android.support.test.espresso.matcher.ViewMatchers.*
-import android.support.test.rule.ActivityTestRule
-import android.support.test.runner.AndroidJUnit4
-import android.widget.TextView
-import org.hamcrest.CoreMatchers.allOf
-import org.hamcrest.CoreMatchers.instanceOf
+import androidx.appcompat.widget.Toolbar
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.BoundedMatcher
+import androidx.test.espresso.matcher.ViewMatchers.isAssignableFrom
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.rule.ActivityTestRule
+import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.core.Is.`is`
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
-
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun displayBookTitle() {
-        // Assert
-        onView(allOf(instanceOf(TextView::class.java), withParent(withId(R.id.toolbar))))
-            .check(matches(withText("new book")))
+    fun toolbarTitle() {
+        onView(isAssignableFrom(Toolbar::class.java))
+            .check(matches(withToolbarTitle(`is`("new book"))))
+    }
+
+
+    private fun withToolbarTitle(textMatcher: Matcher<CharSequence>): Matcher<Any> {
+        return object : BoundedMatcher<Any, Toolbar>(Toolbar::class.java) {
+            public override fun matchesSafely(toolbar: Toolbar): Boolean {
+                return textMatcher.matches(toolbar.title)
+            }
+
+            override fun describeTo(description: Description) {
+                description.appendText("with toolbar title: ")
+                textMatcher.describeTo(description)
+            }
+        }
     }
 }

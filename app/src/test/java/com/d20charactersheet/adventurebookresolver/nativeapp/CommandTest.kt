@@ -113,18 +113,18 @@ internal class CommandTest {
         verify(game).createBook("my new book")
     }
 
-//    @Test
-//    fun load() {
-//        // Arrange
-//        val underTest = Command.Load
-//
-//        // Act
-//        underTest.execute(game, "loadBook")
-//
-//        // Assert
-//        assertThat(underTest.toString()).isEqualTo("Load")
-//        verify(game).loadBook("loadBook")
-//    }
+    @Test
+    fun load() {
+        // Arrange
+        val underTest = Command.Load
+
+        // Act
+        underTest.execute(game, "loadBook")
+
+        // Assert
+        assertThat(underTest.toString()).isEqualTo("Load")
+        verify(game).loadBook("loadBook")
+    }
 
     @Test
     fun rollDie() {
@@ -149,7 +149,7 @@ internal class CommandTest {
             "Add item",
             "Create",
             "Delete",
-//                "Load",
+            "Load",
             "Path",
             "Remove item",
             "Roll die",

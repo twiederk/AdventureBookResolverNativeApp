@@ -1,17 +1,17 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 
 class GenericCommandFragment : Fragment() {
 
-    private lateinit var commandSpinner: Spinner
-    private lateinit var argumentEditText: EditText
-    private lateinit var outputTextView: TextView
+    internal lateinit var commandSpinner: Spinner
+    internal lateinit var argumentEditText: EditText
+    internal lateinit var outputTextView: TextView
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_generic_command, container, false)
@@ -27,7 +27,7 @@ class GenericCommandFragment : Fragment() {
         commandSpinner = rootView.findViewById(R.id.command_spinner)
 
         ArrayAdapter(
-            context!!,
+            context,
             android.R.layout.simple_spinner_item,
             Command.sortedValues().toTypedArray()
         ).also { adapter ->

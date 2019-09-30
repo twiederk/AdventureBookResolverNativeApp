@@ -4,11 +4,13 @@ import com.d20charachtersheet.adventurebookresolver.core.domain.AdventureBook
 import com.d20charachtersheet.adventurebookresolver.core.domain.AttributeName
 import com.d20charachtersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charachtersheet.adventurebookresolver.core.domain.Die
+import java.io.File
 
 class Game(
     var book: AdventureBook = AdventureBook(),
     private val die: Die = Die(),
-    private val bookStore: BookStore = BookStore()
+    private val bookStore: BookStore = BookStore(),
+    private val fileHelper: FileHelper = FileHelper()
 ) {
 
     fun createBook(title: String): String {
@@ -16,17 +18,19 @@ class Game(
         return """Created book "${book.title}""""
     }
 
-//    fun loadBook(filename: String): String {
-//        val fileHandle = Gdx.files.external("download/$filename.abr")
-//        book = bookStore.import(fileHandle.reader().readLines())
-//        return """Loaded book "${book.title}" from ${fileHandle.file().absolutePath}"""
-//    }
-//
-//    fun saveBook(): String {
-//        val fileHandle = Gdx.files.external("download/${book.title}.abr")
-//        fileHandle.writeString(bookStore.export(book), false)
-//        return """Saved book "${book.title}" to ${fileHandle.file().absolutePath}"""
-//    }
+    fun loadBook(filename: String): String {
+        val directory = fileHelper.getDownloadDirectory()
+        val file = "$directory${File.separator}$filename"
+        book = bookStore.load(file)
+        return """Loaded book "${book.title}" from "$file""""
+    }
+
+    fun saveBook(): String {
+        val directory = fileHelper.getDownloadDirectory()
+        val filename = "$directory${File.separator}${book.title}"
+        val destPath = bookStore.save(book, filename)
+        return """Saved book "${book.title}" to "${destPath.toAbsolutePath()}""""
+    }
 
     fun addAction(actionLabel: String, destinationId: Int) {
         book.addAction(actionLabel, destinationId)
