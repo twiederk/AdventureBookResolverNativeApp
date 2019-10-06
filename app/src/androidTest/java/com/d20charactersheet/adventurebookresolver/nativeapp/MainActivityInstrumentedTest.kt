@@ -15,7 +15,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
-class MainActivityTest {
+class MainActivityInstrumentedTest {
     @get:Rule
     val activityRule = ActivityTestRule(MainActivity::class.java)
 

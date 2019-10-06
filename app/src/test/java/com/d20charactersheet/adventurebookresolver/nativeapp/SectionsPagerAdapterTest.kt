@@ -19,12 +19,12 @@ class SectionsPagerAdapterTest {
 
 
     @Test
-    fun getItem_MainFragment_atPosition0() {
+    fun getItem_PlayerBookAndEntryFragment_atPosition0() {
         // Act
         val fragment = underTest.getItem(0)
 
         // Assert
-        assertThat(fragment).isInstanceOf(MainFragment::class.java)
+        assertThat(fragment).isInstanceOf(PlayerBookAndEntryFragment::class.java)
     }
 
 

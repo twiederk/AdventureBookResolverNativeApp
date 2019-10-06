@@ -1,6 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import com.d20charachtersheet.adventurebookresolver.core.domain.*
+import com.d20charactersheet.adventurebookresolver.core.domain.*
 import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before

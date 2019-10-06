@@ -1,9 +1,9 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import com.d20charachtersheet.adventurebookresolver.core.domain.AdventureBook
-import com.d20charachtersheet.adventurebookresolver.core.domain.AttributeName
-import com.d20charachtersheet.adventurebookresolver.core.domain.BookStore
-import com.d20charachtersheet.adventurebookresolver.core.domain.Die
+import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
+import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
+import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
+import com.d20charactersheet.adventurebookresolver.core.domain.Die
 import java.io.File
 
 class Game(

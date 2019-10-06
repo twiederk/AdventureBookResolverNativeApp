@@ -16,7 +16,7 @@ class SectionsPagerAdapter(fragmentManager: FragmentManager) :
         when (position) {
             1 -> InventoryFragment()
             2 -> GenericCommandFragment()
-            else -> MainFragment()
+            else -> PlayerBookAndEntryFragment()
         }
 
     override fun getCount(): Int = 3

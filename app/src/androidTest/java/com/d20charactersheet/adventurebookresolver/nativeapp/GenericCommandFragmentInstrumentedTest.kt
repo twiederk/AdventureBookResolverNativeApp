@@ -14,6 +14,7 @@ class GenericCommandFragmentIntegrationTest {
 
     @Test
     fun check_initial_layout() {
+
         // Act
         launchFragmentInContainer<GenericCommandFragment>()
 
