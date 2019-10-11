@@ -1,0 +1,12 @@
+= Adventure Book Resolver - Native App
+:icons: font
+:toc: left
+
+== Panels
+Panels are parts of Fragments. Panels have their own layout file, which is imported in the fragments layout file.
+Panels implement the Panel interface.
+[source,kotlin]
+----
+include::../../main/java/com/d20charactersheet/adventurebookresolver/nativeapp/Panel.kt[tags=panelInterface]
+----
+

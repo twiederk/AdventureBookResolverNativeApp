@@ -14,9 +14,13 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Attributes
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.koin.test.KoinTest
+import org.koin.test.inject
 
 @RunWith(AndroidJUnit4::class)
-class PlayerBookAndEntryFragmentInstrumentedTest {
+class AttributesPanelInstrumentedTest : KoinTest {
+
+    private val game: Game by inject()
 
     @Before
     fun before() {
@@ -25,7 +29,7 @@ class PlayerBookAndEntryFragmentInstrumentedTest {
             dexterity = Attribute(AttributeName.DEXTERITY, 8, 9),
             luck = Attribute(AttributeName.LUCK, 5, 10)
         )
-        MainActivity.game.book = AdventureBook(attributes = attributes)
+        game.book = AdventureBook(attributes = attributes)
     }
 
     @Test

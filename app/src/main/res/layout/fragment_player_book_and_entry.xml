@@ -8,4 +8,6 @@
 
     <include layout="@layout/panel_attributes" />
 
+    <include layout="@layout/panel_book" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

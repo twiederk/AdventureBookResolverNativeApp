@@ -1,13 +1,23 @@
 <resources>
+
+    <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
     <string name="action_settings">Settings</string>
+
+    <!-- GenericCommandFragment -->
     <string name="execute_button_text">Execute</string>
     <string name="clear_button_text">Clear</string>
     <string name="argument_edit_text">argument</string>
+
+    <!-- AttributesPanel -->
     <string name="strength">Strength:</string>
-    <string name="plus_sign">+</string>
-    <string name="minus_sign">-</string>
     <string name="dexterity">Dexterity:</string>
     <string name="luck">Luck:</string>
+    <string name="plus_sign">+</string>
+    <string name="minus_sign">-</string>
+
+    <!-- BookPanel -->
+    <string name="tries">Tries:</string>
+    <string name="entries">Entries:</string>
 
 </resources>

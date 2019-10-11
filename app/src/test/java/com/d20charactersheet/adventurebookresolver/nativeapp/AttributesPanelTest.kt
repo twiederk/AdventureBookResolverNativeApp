@@ -16,16 +16,14 @@ import org.junit.Test
 
 class AttributesPanelTest {
 
-
     @Test
-    fun onCreateView() {
+    fun `create attributes panel`() {
         // Arrange
         val attributes = Attributes(
             strength = Attribute(AttributeName.STRENGTH, 14, 20),
             dexterity = Attribute(AttributeName.DEXTERITY, 8, 9),
             luck = Attribute(AttributeName.LUCK, 5, 10)
         )
-        MainActivity.game.book = AdventureBook(attributes = attributes)
 
         val strengthValueTextView = mock<TextView>()
         val strengthPlusButton = mock<Button>()
@@ -49,8 +47,10 @@ class AttributesPanelTest {
             on { findViewById<TextView>(R.id.luck_minus_button) } doReturn luckMinusButton
         }
 
+        val game = Game(AdventureBook(attributes = attributes))
+
         // Act
-        AttributesPanel().create(rootView)
+        AttributesPanel(game).create(rootView)
 
         // Assert
         verify(strengthValueTextView).text = "14 / 20"

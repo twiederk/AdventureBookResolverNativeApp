@@ -6,8 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
+import org.koin.android.ext.android.inject
 
 class GenericCommandFragment : Fragment() {
+
+    private val game: Game by inject()
 
     internal lateinit var commandSpinner: Spinner
     internal lateinit var argumentEditText: EditText
@@ -43,7 +46,7 @@ class GenericCommandFragment : Fragment() {
 
     private fun createExecuteButton(rootView: View) {
         val executeButton: Button = rootView.findViewById(R.id.execute_button)
-        executeButton.setOnClickListener(ExecuteOnClickListener(this, MainActivity.game))
+        executeButton.setOnClickListener(ExecuteOnClickListener(this, game))
     }
 
 

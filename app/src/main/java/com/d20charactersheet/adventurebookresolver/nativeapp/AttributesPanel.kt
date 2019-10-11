@@ -6,7 +6,7 @@ import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.core.domain.Attribute
 import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
 
-class AttributesPanel : Panel {
+class AttributesPanel(private val game: Game) : Panel {
 
     private lateinit var strengthValueTextView: TextView
     private lateinit var dexterityValueTextView: TextView
@@ -56,15 +56,15 @@ class AttributesPanel : Panel {
         attributeName: AttributeName
     ) {
         rootView.findViewById<Button>(plusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(this, MainActivity.game, attributeName, 1))
+            .setOnClickListener(AttributeOnClickListener(this, game, attributeName, 1))
         rootView.findViewById<Button>(minusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(this, MainActivity.game, attributeName, -1))
+            .setOnClickListener(AttributeOnClickListener(this, game, attributeName, -1))
     }
 
     override fun update() {
-        updateAttributeValueTextView(strengthValueTextView, MainActivity.game.book.attributes.strength)
-        updateAttributeValueTextView(dexterityValueTextView, MainActivity.game.book.attributes.dexterity)
-        updateAttributeValueTextView(luckValueTextView, MainActivity.game.book.attributes.luck)
+        updateAttributeValueTextView(strengthValueTextView, game.book.attributes.strength)
+        updateAttributeValueTextView(dexterityValueTextView, game.book.attributes.dexterity)
+        updateAttributeValueTextView(luckValueTextView, game.book.attributes.luck)
     }
 
     private fun updateAttributeValueTextView(attributeValueTextView: TextView, attribute: Attribute) {

@@ -1,15 +1,9 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import android.os.Bundle
 import android.text.Editable
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
@@ -107,44 +101,6 @@ class GenericCommandFragmentTest {
 
         // Assert
         verify(underTest.outputTextView).text = ""
-    }
-
-    @Test
-    fun onCreate() {
-        // Arrange
-        val container = mock<ViewGroup>()
-        val commandSpinner = mock<Spinner>()
-        val argumentEditText = mock<EditText>()
-        val executeButton = mock<Button>()
-        val clearButton = mock<Button>()
-        val outputTextView = mock<TextView>()
-        val rootView = mock<View> {
-            on { findViewById<Spinner>(R.id.command_spinner) } doReturn commandSpinner
-            on { findViewById<EditText>(R.id.argument_edit_text) } doReturn argumentEditText
-            on { findViewById<Button>(R.id.execute_button) } doReturn executeButton
-            on { findViewById<Button>(R.id.clear_button) } doReturn clearButton
-            on { findViewById<TextView>(R.id.output_text_view) } doReturn outputTextView
-        }
-        val inflater = mock<LayoutInflater> {
-            on { inflate(R.layout.fragment_generic_command, container, false) } doReturn rootView
-        }
-        val savedInstanceState = mock<Bundle>()
-
-        // Act
-        underTest.onCreateView(inflater, container, savedInstanceState)
-
-        // Assert
-        verify(inflater).inflate(R.layout.fragment_generic_command, container, false)
-        verify(commandSpinner).adapter = any()
-        argumentCaptor<ExecuteOnClickListener> {
-            verify(executeButton).setOnClickListener(capture())
-            assertThat(firstValue).isInstanceOf(ExecuteOnClickListener::class.java)
-        }
-        argumentCaptor<ClearOnClickListener> {
-            verify(clearButton).setOnClickListener(capture())
-            assertThat(firstValue).isInstanceOf(ClearOnClickListener::class.java)
-        }
-
     }
 
 }
