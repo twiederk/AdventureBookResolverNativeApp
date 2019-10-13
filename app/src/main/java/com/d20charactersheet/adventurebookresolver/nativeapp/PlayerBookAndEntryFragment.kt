@@ -11,11 +11,15 @@ open class PlayerBookAndEntryFragment : Fragment() {
 
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
+    private val entryPanel: EntryPanel by inject()
+    private val actionPanel: ActionPanel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_player_book_and_entry, container, false)
         attributesPanel.create(rootView)
         bookPanel.create(rootView)
+        entryPanel.create(rootView)
+        actionPanel.create(rootView)
         return rootView
     }
 

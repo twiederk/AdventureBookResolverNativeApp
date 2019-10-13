@@ -10,4 +10,8 @@
 
     <include layout="@layout/panel_book" />
 
+    <include layout="@layout/panel_entry" />
+
+    <include layout="@layout/panel_action" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

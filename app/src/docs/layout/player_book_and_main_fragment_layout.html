@@ -1,24 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-
     <head>
-
         <title>Player Book And Entry Fragment</title>
-
         <meta
                 name="viewport"
                 content="width=device-width, initial-scale=1">
-
         <link
                 rel="stylesheet"
                 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <style>
             body {
                 font-family: Arial, Helvetica, sans-serif;
             }
-
-
             .mobile-container {
                 max-width: 360px;
                 margin: auto;
@@ -27,17 +20,14 @@
                 color: white;
                 border-radius: 10px;
             }
-
             .topnav {
                 overflow: hidden;
                 background-color: #333;
                 position: relative;
             }
-
             .topnav #myLinks {
                 display: none;
             }
-
             .topnav a {
                 color: white;
                 padding: 14px 16px;
@@ -45,7 +35,6 @@
                 font-size: 17px;
                 display: block;
             }
-
             .topnav a.icon {
                 background: #4CAF50;
                 display: block;
@@ -53,17 +42,14 @@
                 right: 0;
                 top: 0;
             }
-
             .topnav a:hover {
                 background-color: #ddd;
                 color: black;
             }
-
             .active {
                 background-color: #4CAF50;
                 color: white;
             }
-
             .action-button {
                 background-color: #CC0000; /* Green */
                 border: none;
@@ -76,187 +62,127 @@
                 cursor: pointer;
                 border-radius: 50%
             }
-
             .floating-position {
                 position: fixed; /* Fixed Sidebar (stay in place on scroll) */
                 z-index: 1; /* Stay on top */
                 margin-left: 280px;
                 margin-top: 500px;
             }
-
             .actions-list {
                 width: 320px;
                 height: 100px;
                 overflow: auto;
             }
-
             .actions-table {
                 width: 100%;
             }
-
             .action-id {
                 text-align: right;
             }
-
             .player-panel {
                 background-color: cadetblue;
             }
-
             .book-panel {
                 background-color: burlywood;
             }
-
             .entry-panel {
                 background-color: darkgoldenrod;
             }
-
             .add-action-panel {
-                background-color: bisque;
-
+                background-color: teal;
             }
 
         </style>
     </head>
-
     <body>
-
         <!-- Simulate a smartphone / tablet -->
-
         <div class="mobile-container">
-
             <!-- Top Navigation Menu -->
-
             <div class="topnav">
-
                 <a class="active">&lt;book title&gt;</a>
-
                 <div id="myLinks">
-
                     <a>Restart</a>
                 </div>
-
                 <a
                         href="javascript:void(0);"
                         class="icon"
                         onclick="myFunction()">
-
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
             </div>
-
             <div style="padding-left:16px">
-
                 <div class="floating-position">
-
                     <button class="action-button">
-
                         <i class="fa fa-home"></i>
                     </button>
                 </div>
-
                 <table class="player-panel">
-
                     <tr>
-
                         <td>Strength:</td>
-
                         <td>14 / 20</td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="+">
                         </td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="-">
                         </td>
                     </tr>
-
                     <tr>
-
                         <td>Dexterity:</td>
-
                         <td>8 / 9</td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="+">
                         </td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="-">
                         </td>
                     </tr>
-
                     <tr>
-
                         <td>Luck:</td>
-
                         <td>5 / 10</td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="+">
                         </td>
-
                         <td>
-
                             <input
                                     type="button"
                                     value="-">
                         </td>
                     </tr>
                 </table>
-
                 <div class="book-panel">
-
                     <table>
-
                         <tr>
-
                             <td>Tries:</td>
-
                             <td>1</td>
                         </tr>
-
                         <tr>
-
                             <td>Entries:</td>
-
                             <td>120 / 400 (30%)</td>
                         </tr>
                     </table>
                 </div>
-
                 <div class="entry-panel">
-
                     <p>
-
                         <label>
-
                             <input
                                     type="text"
                                     value="&lt;entry title&gt;" />
                             (1)
                         </label>
                     </p>
-
                     <p>
-
                         <label>
-
                             <textarea
                                     rows="4"
                                     cols="38">
@@ -264,95 +190,85 @@
                             </textarea>
                         </label>
                     </p>
-
                     <div class="add-action-panel">
-
                         <p>
-
                             <label>
-
                                 <input
                                         type="text"
                                         value="&lt;action label&gt;" />
                             </label>
-
                             <label>
-
                                 <input
                                         style="width: 50px;"
                                         type="text"
                                         value="&lt;id&gt;" />
                             </label>
-
                             <input
                                     type="button"
                                     value="Add" />
                         </p>
-                    </div>
 
-                    <div class="actions-list">
+                        <div class="actions-list">
 
-                        <table class="actions-table">
+                            <table class="actions-table">
 
-                            <tr>
+                                <tr>
 
-                                <td>&lt;action label&gt;</td>
+                                    <td>&lt;action label&gt;</td>
 
-                                <td class="action-id">
+                                    <td class="action-id">
 
-                                    <button>&lt;id&gt;</button>
-                                </td>
-                            </tr>
+                                        <button>&lt;id&gt;</button>
+                                    </td>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td>&lt;action label&gt;</td>
+                                    <td>&lt;action label&gt;</td>
 
-                                <td class="action-id">
+                                    <td class="action-id">
 
-                                    <button>&lt;id&gt;</button>
-                                </td>
-                            </tr>
+                                        <button>&lt;id&gt;</button>
+                                    </td>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td>&lt;action label&gt;</td>
+                                    <td>&lt;action label&gt;</td>
 
-                                <td class="action-id">
+                                    <td class="action-id">
 
-                                    <button>&lt;id&gt;</button>
-                                </td>
-                            </tr>
+                                        <button>&lt;id&gt;</button>
+                                    </td>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td>&lt;action label&gt;</td>
+                                    <td>&lt;action label&gt;</td>
 
-                                <td class="action-id">
+                                    <td class="action-id">
 
-                                    <button>&lt;id&gt;</button>
-                                </td>
-                            </tr>
+                                        <button>&lt;id&gt;</button>
+                                    </td>
+                                </tr>
 
-                            <tr>
+                                <tr>
 
-                                <td>&lt;action label&gt;</td>
+                                    <td>&lt;action label&gt;</td>
 
-                                <td class="action-id">
+                                    <td class="action-id">
 
-                                    <button>&lt;id&gt;</button>
-                                </td>
-                            </tr>
-                        </table>
+                                        <button>&lt;id&gt;</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
-
             <!-- End smartphone / tablet look -->
         </div>
-
         <script>
-
             function myFunction() {
                 var x = document.getElementById("myLinks");
                 if (x.style.display === "block") {
@@ -361,7 +277,7 @@
                     x.style.display = "block";
                 }
             }
-        </script>
 
+        </script>
     </body>
 </html>

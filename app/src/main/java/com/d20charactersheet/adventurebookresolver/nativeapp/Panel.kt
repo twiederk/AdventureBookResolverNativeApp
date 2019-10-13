@@ -4,7 +4,7 @@ import android.view.View
 
 // tag::panelInterface[]
 interface Panel {
-    fun update()
     fun create(rootView: View)
+    fun update()
 }
 // end::panelInterface[]

@@ -19,5 +19,11 @@
     <!-- BookPanel -->
     <string name="tries">Tries:</string>
     <string name="entries">Entries:</string>
+    <string name="entry_title_hint">enter entry title</string>
+
+    <!-- ActionPanel -->
+    <string name="action_label_hint">enter action label</string>
+    <string name="action_id_hint">id</string>
+    <string name="add_button_text">Add</string>
 
 </resources>

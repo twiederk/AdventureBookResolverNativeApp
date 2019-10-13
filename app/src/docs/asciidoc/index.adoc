@@ -3,8 +3,14 @@
 :toc: left
 
 == Panels
-Panels are parts of Fragments. Panels have their own layout file, which is imported in the fragments layout file.
-Panels implement the Panel interface.
+
+* Panels are parts of fragments.
+* Panels have their own layout file, which is imported in the fragments layout file.
+* Panels are injected by member injection into fragments using Koin.
+* Game is injected by constructor injection into panels using Koin.
+* Listeners of the panel are implemented as classes in same file as the panel.
+* Listeners receive game as constructor parameter, but it is not injected by Koin.
+* Panels implement the Panel interface.
 [source,kotlin]
 ----
 include::../../main/java/com/d20charactersheet/adventurebookresolver/nativeapp/Panel.kt[tags=panelInterface]

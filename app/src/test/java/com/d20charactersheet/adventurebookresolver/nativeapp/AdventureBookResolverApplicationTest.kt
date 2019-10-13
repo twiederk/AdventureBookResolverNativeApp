@@ -12,6 +12,8 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val game: Game by inject()
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
+    private val entryPanel: EntryPanel by inject()
+    private val actionPanel: ActionPanel by inject()
 
     @After
     fun after() {
@@ -28,5 +30,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(game).isNotNull
         assertThat(attributesPanel).isNotNull
         assertThat(bookPanel).isNotNull
+        assertThat(entryPanel).isNotNull
+        assertThat(actionPanel).isNotNull
     }
 }
