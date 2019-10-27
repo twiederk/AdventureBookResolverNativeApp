@@ -12,9 +12,26 @@ import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
 
-class AttributesPanelTest {
+class AttributesPanelKoinTest : KoinTest {
+
+    @Before
+    fun before() {
+        startKoin {
+            modules(appModule)
+        }
+    }
+
+    @After
+    fun after() {
+        stopKoin()
+    }
 
     @Test
     fun `create attributes panel`() {
@@ -82,21 +99,6 @@ class AttributesPanelTest {
             verify(luckMinusButton).setOnClickListener(capture())
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
         }
-    }
-
-    @Test
-    fun `change attribute onClick`() {
-        // Arrange
-        val game = mock<Game>()
-        val attributesPanel = mock<AttributesPanel>()
-        val underTest = AttributeOnClickListener(attributesPanel, game, AttributeName.STRENGTH, 1)
-
-        // Act
-        underTest.onClick(mock())
-
-        // Assert
-        verify(game).changeAttribute(AttributeName.STRENGTH, 1)
-        verify(attributesPanel).update()
     }
 
 }

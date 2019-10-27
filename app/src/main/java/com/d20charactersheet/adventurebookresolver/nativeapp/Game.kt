@@ -1,9 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
-import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
-import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
-import com.d20charactersheet.adventurebookresolver.core.domain.Die
+import com.d20charactersheet.adventurebookresolver.core.domain.*
 import java.io.File
 
 class Game(
@@ -60,8 +57,8 @@ class Game(
         return """Added "$item" to inventory"""
     }
 
-    fun delete(entryId: String): String {
-        book.delete(entryId.toInt())
+    fun delete(entryId: Int): String {
+        book.delete(entryId)
         return "Deleted entry $entryId"
     }
 
@@ -101,6 +98,10 @@ class Game(
 
     fun rollDie(dieRoll: String): String {
         return "You rolled ${die.convert(dieRoll)} and scored: ${die.roll(dieRoll)}"
+    }
+
+    fun getAction(index: Int): Action {
+        return book.getActions().elementAt(index)
     }
 
 }

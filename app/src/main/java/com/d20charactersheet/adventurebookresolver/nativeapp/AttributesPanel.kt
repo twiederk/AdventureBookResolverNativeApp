@@ -5,6 +5,8 @@ import android.widget.Button
 import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.core.domain.Attribute
 import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class AttributesPanel(private val game: Game) : Panel {
 
@@ -56,9 +58,9 @@ class AttributesPanel(private val game: Game) : Panel {
         attributeName: AttributeName
     ) {
         rootView.findViewById<Button>(plusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(this, game, attributeName, 1))
+            .setOnClickListener(AttributeOnClickListener(attributeName, 1))
         rootView.findViewById<Button>(minusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(this, game, attributeName, -1))
+            .setOnClickListener(AttributeOnClickListener(attributeName, -1))
     }
 
     override fun update() {
@@ -76,11 +78,12 @@ class AttributesPanel(private val game: Game) : Panel {
 }
 
 class AttributeOnClickListener(
-    private val attributesPanel: AttributesPanel,
-    private val game: Game,
     private val attributeName: AttributeName,
     private val value: Int
-) : View.OnClickListener {
+) : View.OnClickListener, KoinComponent {
+
+    private val attributesPanel: AttributesPanel by inject()
+    private val game: Game by inject()
 
     override fun onClick(v: View?) {
         game.changeAttribute(attributeName, value)

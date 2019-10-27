@@ -1,23 +1,29 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class ActionPanel(private val game: Game) : Panel {
+
+class ActionPanel : Panel {
 
     internal lateinit var actionLabelEditText: EditText
     internal lateinit var actionIdEditText: EditText
     internal lateinit var actionMoveRecyclerView: RecyclerView
-
+    internal var itemTouchHelper: ItemTouchHelper? = null
 
     override fun create(rootView: View) {
         actionLabelEditText = rootView.findViewById(R.id.action_label_edit_text)
@@ -33,11 +39,16 @@ class ActionPanel(private val game: Game) : Panel {
     }
 
     private fun createActionMoveRecyclerView(rootView: View) {
+        val actionMoveAdapter = ActionMoveAdapter()
         actionMoveRecyclerView = rootView.findViewById<RecyclerView>(R.id.action_move_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(rootView.context)
-            adapter = ActionMoveAdapter(game)
+            adapter = actionMoveAdapter
         }
+        if (itemTouchHelper == null) {
+            itemTouchHelper = ItemTouchHelper(ActionDeleteSimpleCallback(actionMoveAdapter))
+        }
+        itemTouchHelper?.attachToRecyclerView(actionMoveRecyclerView)
     }
 
     override fun update() {
@@ -81,7 +92,10 @@ class ActionAddOnClickListener : View.OnClickListener, KoinComponent {
 
 }
 
-class ActionMoveAdapter(private val game: Game) : RecyclerView.Adapter<ActionMoveViewHolder>() {
+class ActionMoveAdapter : RecyclerView.Adapter<ActionMoveViewHolder>(), KoinComponent {
+
+    private val game: Game by inject()
+    private val bookPanel: BookPanel by inject()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActionMoveViewHolder {
         val rootView = LayoutInflater.from(parent.context).inflate(R.layout.listitem_move_action, parent, false)
@@ -94,6 +108,12 @@ class ActionMoveAdapter(private val game: Game) : RecyclerView.Adapter<ActionMov
     }
 
     override fun getItemCount() = game.book.getActions().size
+
+    fun deleteItem(position: Int) {
+        val action = game.getAction(position)
+        game.delete(action.destination.id)
+        bookPanel.update()
+    }
 }
 
 class ActionMoveViewHolder(val rootView: View) : RecyclerView.ViewHolder(rootView) {
@@ -124,6 +144,59 @@ class ActionMoveOnClickListener : View.OnClickListener, KoinComponent {
         actionPanel.update()
     }
 
+}
+
+class ActionDeleteSimpleCallback(
+    private val actionMoveAdapter: ActionMoveAdapter,
+    internal var background: Drawable = ColorDrawable(Color.RED)
+) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+
+    override fun onMove(
+        recylerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        target: RecyclerView.ViewHolder
+    ) = false
+
+    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+        actionMoveAdapter.deleteItem(viewHolder.adapterPosition)
+        actionMoveAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+    }
+
+    override fun onChildDraw(
+        canvas: Canvas, recyclerView: RecyclerView,
+        viewHolder: RecyclerView.ViewHolder,
+        dX: Float,
+        dY: Float,
+        actionState: Int,
+        isCurrentlyActive: Boolean
+    ) {
+        super.onChildDraw(canvas, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
+        onChildDraw(canvas, viewHolder.itemView, dX.toInt())
+    }
+
+    internal fun onChildDraw(canvas: Canvas, itemView: View, dX: Int) {
+
+        when {
+            dX > 0 -> // Swiping to the right
+                background.setBounds(
+                    itemView.left, itemView.top,
+                    itemView.left + dX + BACKGROUND_CORNER_OFFSET,
+                    itemView.bottom
+                )
+            dX < 0 -> // Swiping to the left
+                background.setBounds(
+                    itemView.right + dX - BACKGROUND_CORNER_OFFSET,
+                    itemView.top, itemView.right, itemView.bottom
+                )
+            else -> // view is unSwiped
+                background.setBounds(0, 0, 0, 0)
+        }
+        background.draw(canvas)
+    }
+
+    companion object {
+        private const val BACKGROUND_CORNER_OFFSET = 20
+    }
 }
 
 

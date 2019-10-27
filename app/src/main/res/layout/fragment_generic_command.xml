@@ -6,45 +6,7 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/command_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin" />
+    <include layout="@layout/panel_generic_command" />
 
-    <EditText
-        android:id="@+id/argument_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:hint="@string/argument_edit_text"
-        android:inputType="text"
-        android:autofillHints="" />
 
-    <Button
-        android:id="@+id/execute_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="@string/execute_button_text" />
-
-    <Button
-        android:id="@+id/clear_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:text="@string/clear_button_text" />
-
-    <ScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="@dimen/activity_horizontal_margin">
-
-        <TextView
-            android:id="@+id/output_text_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </ScrollView>
 </LinearLayout>

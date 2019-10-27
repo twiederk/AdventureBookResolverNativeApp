@@ -66,7 +66,7 @@ internal class GameTest {
     @Test
     fun `delete action`() {
         // Act
-        val result = underTest.delete("2")
+        val result = underTest.delete(2)
 
         // Assert
         assertThat(result).isEqualTo("Deleted entry 2")
@@ -272,4 +272,19 @@ internal class GameTest {
         assertThat(output).isEqualTo("""Saved book "saved book title" to "x:${File.separator}destination path"""")
     }
 
+    @Test
+    fun getAction() {
+        // Arrange
+        val sourceEntry = BookEntry(1)
+        val destinationEntry = BookEntry(2)
+        whenever(book.getActions()).doReturn(setOf(Action("myAction", sourceEntry, destinationEntry)))
+
+        // Act
+        val action = underTest.getAction(0)
+
+        // Assert
+        assertThat(action.label).isEqualTo("myAction")
+        assertThat(action.source).isEqualTo(sourceEntry)
+        assertThat(action.destination).isEqualTo(destinationEntry)
+    }
 }

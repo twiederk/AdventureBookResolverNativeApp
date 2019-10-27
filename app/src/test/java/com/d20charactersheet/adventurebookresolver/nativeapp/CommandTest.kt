@@ -36,19 +36,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun `delete command`() {
-        // Arrange
-        val underTest = Command.Delete
-
-        // Act
-        underTest.execute(game, "2")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Delete")
-        verify(game).delete("2")
-    }
-
-    @Test
     fun `display actions to unvisited entries`() {
         // Arrange
         val underTest = Command.Unvisited
@@ -148,7 +135,6 @@ internal class CommandTest {
         assertThat(items.map { it.toString() }).containsExactly(
             "Add item",
             "Create",
-            "Delete",
             "Load",
             "Path",
             "Remove item",

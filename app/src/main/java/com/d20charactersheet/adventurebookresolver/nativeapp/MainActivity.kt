@@ -12,12 +12,15 @@ import org.koin.android.ext.android.inject
 class MainActivity : AppCompatActivity() {
 
     private val game: Game by inject()
+    private val toolbarPanel: ToolbarPanel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        setSupportActionBar(toolbar)
+        toolbarPanel.create(findViewById(android.R.id.content))
+
+        setSupportActionBar(toolbarPanel.getToolbar())
         container.adapter = SectionsPagerAdapter(supportFragmentManager)
 
         fab.setOnClickListener { game.saveBook() }
@@ -43,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
 
     internal fun update() {
-        toolbar.title = game.book.title
+        toolbarPanel.update()
     }
 
 
