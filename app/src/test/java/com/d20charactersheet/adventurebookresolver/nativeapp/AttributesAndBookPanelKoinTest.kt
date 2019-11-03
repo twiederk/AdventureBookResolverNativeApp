@@ -17,12 +17,10 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
 
-internal class PlayerBookAndEntryFragmentKoinTest : KoinTest {
+internal class AttributesAndBookPanelKoinTest : KoinTest {
 
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
-    private val entryPanel: EntryPanel by inject()
-    private val actionPanel: ActionPanel by inject()
 
     @Before
     fun before() {
@@ -31,8 +29,6 @@ internal class PlayerBookAndEntryFragmentKoinTest : KoinTest {
         }
         declareMock<AttributesPanel>()
         declareMock<BookPanel>()
-        declareMock<EntryPanel>()
-        declareMock<ActionPanel>()
     }
 
 
@@ -48,19 +44,17 @@ internal class PlayerBookAndEntryFragmentKoinTest : KoinTest {
         val rootView: View = mock()
 
         val inflater = mock<LayoutInflater> {
-            on { inflate(R.layout.fragment_player_book_and_entry, container, false) } doReturn rootView
+            on { inflate(R.layout.fragment_attributes_and_book, container, false) } doReturn rootView
         }
         val savedInstanceState = mock<Bundle>()
 
         // Act
-        PlayerBookAndEntryFragment().onCreateView(inflater, container, savedInstanceState)
+        AttributesAndBookPanel().onCreateView(inflater, container, savedInstanceState)
 
         // Assert
-        verify(inflater).inflate(R.layout.fragment_player_book_and_entry, container, false)
+        verify(inflater).inflate(R.layout.fragment_attributes_and_book, container, false)
         verify(attributesPanel).create(any())
         verify(bookPanel).create(any())
-        verify(entryPanel).create(any())
-        verify(actionPanel).create(any())
     }
 
 }

@@ -19,7 +19,10 @@
     <!-- BookPanel -->
     <string name="tries">Tries:</string>
     <string name="entries">Entries:</string>
-    <string name="entry_title_hint">enter entry title</string>
+
+    <!-- EntryPanel -->
+    <string name="entry_title_hint">enter title</string>
+    <string name="entry_note_hint">enter note</string>
 
     <!-- ActionPanel -->
     <string name="action_label_hint">enter action label</string>

@@ -14,10 +14,11 @@ class SectionsPagerAdapter(fragmentManager: FragmentManager) :
 
     override fun getItem(position: Int): Fragment =
         when (position) {
-            1 -> InventoryFragment()
-            2 -> GenericCommandFragment()
-            else -> PlayerBookAndEntryFragment()
+            1 -> AttributesAndBookPanel()
+            2 -> InventoryFragment()
+            3 -> GenericCommandFragment()
+            else -> EntryFragment()
         }
 
-    override fun getCount(): Int = 3
+    override fun getCount(): Int = 4
 }

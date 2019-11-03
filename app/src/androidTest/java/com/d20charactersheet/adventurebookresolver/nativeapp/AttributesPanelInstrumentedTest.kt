@@ -36,7 +36,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     fun check_initial_layout() {
 
         // Act
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Assert
         onView(withId(R.id.strength_text_view)).check(matches(withText(R.string.strength)))
@@ -58,7 +58,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun strength_increase() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.strength_plus_button)).perform(ViewActions.click())
@@ -70,7 +70,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun strength_decrease() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.strength_minus_button)).perform(ViewActions.click())
@@ -82,7 +82,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun dexterity_increase() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.dexterity_plus_button)).perform(ViewActions.click())
@@ -94,7 +94,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun dexterity_decrease() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.dexterity_minus_button)).perform(ViewActions.click())
@@ -106,7 +106,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun luck_increase() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.luck_plus_button)).perform(ViewActions.click())
@@ -118,7 +118,7 @@ class AttributesPanelInstrumentedTest : KoinTest {
     @Test
     fun luck_decrease() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
 
         // Act
         onView(withId(R.id.luck_minus_button)).perform(ViewActions.click())

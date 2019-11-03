@@ -25,7 +25,7 @@ class ActionPanelInstrumentedTest : KoinTest {
     @Test
     fun check_initial_layout() {
         // Act
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Assert
         onView(withId(R.id.action_label_edit_text)).check(matches(isDisplayed()))
@@ -37,7 +37,8 @@ class ActionPanelInstrumentedTest : KoinTest {
     @Test
     fun add_action_to_entry() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<AttributesAndBookPanel>()
+        launchFragmentInContainer<EntryFragment>()
 
         onView(withId(R.id.action_label_edit_text)).perform(ViewActions.typeText("myActionLabel"))
         onView(withId(R.id.action_id_edit_text)).perform(ViewActions.typeText("10"))
@@ -64,7 +65,7 @@ class ActionPanelInstrumentedTest : KoinTest {
     fun move_to_other_entry() {
         // Arrange
         game.book.addAction("to Library", 2)
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Act
         onView(withId(R.id.move_action_entry_id_button)).perform(ViewActions.click())
@@ -78,7 +79,7 @@ class ActionPanelInstrumentedTest : KoinTest {
     fun delete_action_with_swipe() {
         // Arrange
         game.book.addAction("to delete", 2)
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Act
         onView(withId(R.id.move_action_label_text_view)).perform(ViewActions.swipeLeft())

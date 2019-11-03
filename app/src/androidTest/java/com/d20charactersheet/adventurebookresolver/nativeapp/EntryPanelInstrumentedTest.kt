@@ -21,7 +21,7 @@ class EntryPanelInstrumentedTest : KoinTest {
         game.note("myNote")
 
         // Act
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Assert
         onView(withId(R.id.entry_title_edit_text)).check(matches(withText("Untitled")))
@@ -33,7 +33,7 @@ class EntryPanelInstrumentedTest : KoinTest {
     fun type_entry_title() {
 
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Act
         onView(withId(R.id.entry_title_edit_text))
@@ -47,7 +47,7 @@ class EntryPanelInstrumentedTest : KoinTest {
     @Test
     fun type_entry_note() {
         // Arrange
-        launchFragmentInContainer<PlayerBookAndEntryFragment>()
+        launchFragmentInContainer<EntryFragment>()
 
         // Act
         onView(withId(R.id.entry_note_edit_text))

@@ -9,38 +9,45 @@ class SectionsPagerAdapterTest {
     private val underTest = SectionsPagerAdapter(mock())
 
     @Test
-    fun count_maxNumberOfFragments_3() {
+    fun count_maxNumberOfFragments_4() {
         // Act
         val count = underTest.count
 
         // Assert
-        assertThat(count).isEqualTo(3)
+        assertThat(count).isEqualTo(4)
     }
 
-
     @Test
-    fun getItem_PlayerBookAndEntryFragment_atPosition0() {
+    fun getItem_EntryFragment_atPosition0() {
         // Act
         val fragment = underTest.getItem(0)
 
         // Assert
-        assertThat(fragment).isInstanceOf(PlayerBookAndEntryFragment::class.java)
+        assertThat(fragment).isInstanceOf(EntryFragment::class.java)
     }
 
-
     @Test
-    fun getItem_InventoryFragment_atPosition1() {
+    fun getItem_AttributesAndBookFragment_atPosition1() {
         // Act
         val fragment = underTest.getItem(1)
+
+        // Assert
+        assertThat(fragment).isInstanceOf(AttributesAndBookPanel::class.java)
+    }
+
+    @Test
+    fun getItem_InventoryFragment_atPosition2() {
+        // Act
+        val fragment = underTest.getItem(2)
 
         // Assert
         assertThat(fragment).isInstanceOf(InventoryFragment::class.java)
     }
 
     @Test
-    fun getItem_GenericCommandFragment_atPosition2() {
+    fun getItem_GenericCommandFragment_atPosition3() {
         // Act
-        val fragment = underTest.getItem(2)
+        val fragment = underTest.getItem(3)
 
         // Assert
         assertThat(fragment).isInstanceOf(GenericCommandFragment::class.java)
