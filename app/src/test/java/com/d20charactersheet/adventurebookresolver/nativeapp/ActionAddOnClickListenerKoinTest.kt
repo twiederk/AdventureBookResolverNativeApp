@@ -36,8 +36,8 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         // Arrange
         declareMock<BookPanel>()
         declareMock<ActionPanel> {
-            given(this.getActionLabel()).willReturn("")
-            given(this.getActionId()).willReturn("10")
+            given(getActionLabel()).willReturn("")
+            given(getActionId()).willReturn("10")
         }
 
         // Act
@@ -54,8 +54,8 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         // Arrange
         declareMock<BookPanel>()
         declareMock<ActionPanel> {
-            given(this.getActionLabel()).willReturn("myActionLabel")
-            given(this.getActionId()).willReturn("")
+            given(getActionLabel()).willReturn("myActionLabel")
+            given(getActionId()).willReturn("")
         }
 
         // Act
@@ -73,8 +73,8 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         declareMock<Game>()
         declareMock<BookPanel>()
         declareMock<ActionPanel> {
-            given(this.getActionLabel()).willReturn("myActionLabel")
-            given(this.getActionId()).willReturn("10")
+            given(getActionLabel()).willReturn("myActionLabel")
+            given(getActionId()).willReturn("10")
         }
 
         // Act

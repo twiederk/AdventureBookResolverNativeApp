@@ -6,7 +6,7 @@
     <!-- Strength -->
     <TextView
         android:id="@+id/strength_text_view"
-        android:layout_width="60dp"
+        style="@style/AppTheme.AttributeLabelTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:gravity="start"
@@ -18,7 +18,7 @@
 
     <TextView
         android:id="@+id/strength_value_text_view"
-        android:layout_width="50dp"
+        style="@style/AppTheme.AttributeValueTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/strength_plus_button"
@@ -47,7 +47,7 @@
     <!-- Dexterity -->
     <TextView
         android:id="@+id/dexterity_text_view"
-        android:layout_width="60dp"
+        style="@style/AppTheme.AttributeLabelTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:gravity="start"
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/dexterity_value_text_view"
-        android:layout_width="50dp"
+        style="@style/AppTheme.AttributeValueTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/dexterity_plus_button"
@@ -86,7 +86,7 @@
     <!-- Luck -->
     <TextView
         android:id="@+id/luck_text_view"
-        android:layout_width="60dp"
+        style="@style/AppTheme.AttributeLabelTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:gravity="start"
@@ -96,7 +96,7 @@
 
     <TextView
         android:id="@+id/luck_value_text_view"
-        android:layout_width="50dp"
+        style="@style/AppTheme.AttributeValueTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/luck_plus_button"

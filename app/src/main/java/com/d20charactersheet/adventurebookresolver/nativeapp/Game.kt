@@ -74,12 +74,7 @@ class Game(
             transform = { entry -> "(${entry.id}) - ${entry.title}: ${entry.note}" }
         )
 
-    fun removeItemFromInventory(indexArg: String): String {
-        val index = indexArg.toInt() - 1
-        val name = book.inventory.items[index].name
-        book.removeItemFromInventory(index)
-        return """Removed "$name" from inventory"""
-    }
+    fun removeItemFromInventory(index: Int) = book.removeItemFromInventory(index)
 
     fun runTo(entryId: String): String {
         book.run(entryId.toInt())
@@ -92,16 +87,14 @@ class Game(
             transform = { entry -> "(${entry.id}) - ${entry.title}: ${entry.note}" }
         )
 
-    fun changeAttribute(attributeName: AttributeName, value: Int) {
-        book.changeAttribute(attributeName, value)
-    }
+    fun changeAttribute(attributeName: AttributeName, value: Int) = book.changeAttribute(attributeName, value)
 
-    fun rollDie(dieRoll: String): String {
-        return "You rolled ${die.convert(dieRoll)} and scored: ${die.roll(dieRoll)}"
-    }
+    fun rollDie(dieRoll: String): String = "You rolled ${die.convert(dieRoll)} and scored: ${die.roll(dieRoll)}"
 
-    fun getAction(index: Int): Action {
-        return book.getActions().elementAt(index)
-    }
+    fun getAction(index: Int): Action = book.getActions().elementAt(index)
+
+    fun getNumberOfActions(): Int = book.getActions().size
+
+    fun getNumberOfItems(): Int = book.inventory.items.size
 
 }

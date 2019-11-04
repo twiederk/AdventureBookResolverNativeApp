@@ -1,7 +1,5 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import android.graphics.Canvas
-import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.view.View
 import android.widget.Button
@@ -185,7 +183,7 @@ internal class ActionPanelKoinTest : KoinTest {
     fun `ActionMoveAdapter delete item`() {
         // Arrange
         declareMock<Game> {
-            given(this.getAction(0)).willReturn(Action("myActionToDelete", BookEntry(1), BookEntry(10)))
+            given(getAction(0)).willReturn(Action("myActionToDelete", BookEntry(1), BookEntry(10)))
         }
         declareMock<BookPanel>()
 
@@ -206,83 +204,11 @@ internal class ActionPanelKoinTest : KoinTest {
         }
 
         // Act
-        ActionDeleteSimpleCallback(actionMoveAdapter).onSwiped(viewHolder, 0)
+        ActionDeleteOnSwipeListener(actionMoveAdapter).onSwiped(viewHolder, 0)
 
         // Assert
         verify(actionMoveAdapter).deleteItem(10)
         verify(actionMoveAdapter).notifyItemRemoved(10)
     }
 
-    @Test
-    fun `ActionDeleteSimpleCallback move does nothing`() {
-        // Act
-        val result = ActionDeleteSimpleCallback(mock()).onMove(mock(), mock(), mock())
-
-        // Assert
-        assertThat(result).isFalse()
-    }
-
-    @Test
-    fun `ActionDeleteSimpleCallback onChildDraw swipe right`() {
-        // Arrange
-        val canvas: Canvas = mock()
-        val itemView: View = mock {
-            on { left } doReturn 10
-            on { top } doReturn 20
-            on { right } doReturn 30
-            on { bottom } doReturn 40
-        }
-        val underTest = ActionDeleteSimpleCallback(mock())
-        val background: Drawable = mock()
-        underTest.background = background
-
-        // Act
-        underTest.onChildDraw(canvas, itemView, 10)
-
-        // Assert
-        verify(background).setBounds(10, 20, 40, 40)
-        verify(background).draw(canvas)
-        verifyNoMoreInteractions(background)
-    }
-
-    @Test
-    fun `ActionDeleteSimpleCallback onChildDraw swipe left`() {
-        // Arrange
-        val canvas: Canvas = mock()
-        val itemView: View = mock {
-            on { left } doReturn 10
-            on { top } doReturn 20
-            on { right } doReturn 30
-            on { bottom } doReturn 40
-        }
-        val underTest = ActionDeleteSimpleCallback(mock())
-        val background: Drawable = mock()
-        underTest.background = background
-
-        // Act
-        underTest.onChildDraw(canvas, itemView, -10)
-
-        // Assert
-        verify(background).setBounds(0, 20, 30, 40)
-        verify(background).draw(canvas)
-        verifyNoMoreInteractions(background)
-    }
-
-    @Test
-    fun `ActionDeleteSimpleCallback onChildDraw swipe stopped`() {
-        // Arrange
-        val canvas: Canvas = mock()
-        val itemView: View = mock()
-        val underTest = ActionDeleteSimpleCallback(mock())
-        val background: Drawable = mock()
-        underTest.background = background
-
-        // Act
-        underTest.onChildDraw(canvas, itemView, 0)
-
-        // Assert
-        verify(background).setBounds(0, 0, 0, 0)
-        verify(background).draw(canvas)
-        verifyNoMoreInteractions(background)
-    }
 }

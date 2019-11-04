@@ -44,8 +44,7 @@ class ActionPanelInstrumentedTest : KoinTest {
         onView(withId(R.id.action_id_edit_text)).perform(ViewActions.typeText("10"))
 
         // Act
-        onView(withId(R.id.action_add_button))
-            .perform(ViewActions.click())
+        onView(withId(R.id.action_add_button)).perform(ViewActions.click())
 
         // Assert
         assertThat(game.book.getActions()).hasSize(1)

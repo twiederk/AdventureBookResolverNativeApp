@@ -6,7 +6,7 @@
     <!-- Tries -->
     <TextView
         android:id="@+id/tries_text_view"
-        android:layout_width="50dp"
+        style="@style/AppTheme.BookLabelTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
@@ -32,7 +32,7 @@
     <!-- Entries -->
     <TextView
         android:id="@+id/entries_text_view"
-        android:layout_width="50dp"
+        style="@style/AppTheme.BookLabelTextView"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:gravity="start"

@@ -55,10 +55,9 @@ internal class GameTest {
         whenever(book.inventory).thenReturn(inventory)
 
         // Act
-        val result = underTest.removeItemFromInventory("2")
+        underTest.removeItemFromInventory(1)
 
         // Assert
-        assertThat(result).isEqualTo("""Removed "Sword" from inventory""")
         verify(book).removeItemFromInventory(1)
     }
 
@@ -286,5 +285,32 @@ internal class GameTest {
         assertThat(action.label).isEqualTo("myAction")
         assertThat(action.source).isEqualTo(sourceEntry)
         assertThat(action.destination).isEqualTo(destinationEntry)
+    }
+
+    @Test
+    fun getNumberOfActions() {
+        // Arrange
+        whenever(book.getActions()).doReturn(setOf(Action("myAction", BookEntry(1), BookEntry(2))))
+
+        // Act
+        val numberOfActions = underTest.getNumberOfActions()
+
+        // Assert
+        assertThat(numberOfActions).isEqualTo(1)
+    }
+
+    @Test
+    fun getNumberOfItems() {
+        // Arrange
+        val inventory: Inventory = mock {
+            on { items } doReturn mutableListOf(Item("1"), Item("2"), Item("3"), Item("4"), Item("5"))
+        }
+        whenever(book.inventory).doReturn(inventory)
+
+        // Act
+        val numberOfItems: Int = underTest.getNumberOfItems()
+
+        // Assert
+        assertThat(numberOfItems).isEqualTo(5)
     }
 }

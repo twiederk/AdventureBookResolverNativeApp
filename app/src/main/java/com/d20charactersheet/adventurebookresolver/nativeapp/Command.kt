@@ -6,8 +6,6 @@ enum class Command(
 ) {
 
     Create("Create", { game, argument -> game.createBook(argument) }),
-    AddItem("Add item", { game, argument -> game.addItemToInventory(argument) }),
-    RemoveItem("Remove item", { game, argument -> game.removeItemFromInventory(argument) }),
     Unvisited("Unvisited", { game, _ -> game.displayActionsToUnvisitedEntries() }),
     Path("Path", { game, _ -> game.displayPath() }),
     Run("Run", { game, argument -> game.runTo(argument) }),

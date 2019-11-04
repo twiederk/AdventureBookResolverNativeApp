@@ -10,32 +10,6 @@ internal class CommandTest {
     private val game = mock<Game>()
 
     @Test
-    fun `add item to inventory command`() {
-        // Arrange
-        val underTest = Command.AddItem
-
-        // Act
-        underTest.execute(game, "sword")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Add item")
-        verify(game).addItemToInventory("sword")
-    }
-
-    @Test
-    fun `remove item to inventory command`() {
-        // Arrange
-        val underTest = Command.RemoveItem
-
-        // Act
-        underTest.execute(game, "2")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Remove item")
-        verify(game).removeItemFromInventory("2")
-    }
-
-    @Test
     fun `display actions to unvisited entries`() {
         // Arrange
         val underTest = Command.Unvisited
@@ -133,11 +107,9 @@ internal class CommandTest {
 
         // Assert
         assertThat(items.map { it.toString() }).containsExactly(
-            "Add item",
             "Create",
             "Load",
             "Path",
-            "Remove item",
             "Roll die",
             "Run",
             "Search",

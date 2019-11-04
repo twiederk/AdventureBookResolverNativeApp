@@ -10,10 +10,13 @@ import org.koin.test.inject
 class AdventureBookResolverApplicationTest : KoinTest {
 
     private val game: Game by inject()
+    private val toolbarPanel: ToolbarPanel by inject()
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
     private val entryPanel: EntryPanel by inject()
     private val actionPanel: ActionPanel by inject()
+    private val genericCommandPanel: ActionPanel by inject()
+    private val inventoryPanel: InventoryPanel by inject()
 
     @After
     fun after() {
@@ -28,9 +31,12 @@ class AdventureBookResolverApplicationTest : KoinTest {
 
         // Assert
         assertThat(game).isNotNull
+        assertThat(toolbarPanel).isNotNull
         assertThat(attributesPanel).isNotNull
         assertThat(bookPanel).isNotNull
         assertThat(entryPanel).isNotNull
         assertThat(actionPanel).isNotNull
+        assertThat(genericCommandPanel).isNotNull
+        assertThat(inventoryPanel).isNotNull
     }
 }

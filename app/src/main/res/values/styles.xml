@@ -1,20 +1,42 @@
 <resources>
 
-    <!-- Base application theme. -->
+    <!-- base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/Widget.TextView</item>
     </style>
 
+    <!-- text size for all text views -->
+    <style name="Widget.TextView" parent="@android:style/Widget.Material.TextView">
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!-- toolbar title stays on top if soft keyboard is shown -->
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <!-- Attributes Panel -->
+    <style name="AppTheme.AttributeLabelTextView">
+        <item name="android:layout_width">90dp</item>
+    </style>
+
+    <style name="AppTheme.AttributeValueTextView">
+        <item name="android:layout_width">70dp</item>
+    </style>
+
+    <!-- BookPanel -->
+    <style name="AppTheme.BookLabelTextView">
+        <item name="android:layout_width">90dp</item>
+    </style>
+
 </resources>
+
+
+
+

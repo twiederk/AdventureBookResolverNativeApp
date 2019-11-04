@@ -11,5 +11,6 @@ val appModule = module {
     single { EntryPanel(get()) }
     single { ActionPanel() }
     single { GenericCommandPanel() }
+    single { InventoryPanel() }
 }
 // end::koinConfiguration[]
