@@ -5,7 +5,6 @@ import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.anyString
 import java.io.File
 import java.nio.file.Paths
 
@@ -39,10 +38,9 @@ internal class GameTest {
     @Test
     fun `add item to inventory`() {
         // Act
-        val result = underTest.addItemToInventory("sword")
+        underTest.addItemToInventory("sword")
 
         // Assert
-        assertThat(result).isEqualTo("""Added "sword" to inventory""")
         verify(book).addItemToInventory("sword")
     }
 
@@ -65,10 +63,9 @@ internal class GameTest {
     @Test
     fun `delete action`() {
         // Act
-        val result = underTest.delete(2)
+        underTest.delete(2)
 
         // Assert
-        assertThat(result).isEqualTo("Deleted entry 2")
         verify(book).delete(2)
     }
 
@@ -161,8 +158,8 @@ internal class GameTest {
     fun rollDie() {
 
         // Arrange
-        whenever(die.roll(anyString())).thenReturn(10)
-        whenever(die.convert(anyString())).thenReturn(DieRoll(2, 3))
+        whenever(die.roll("2d6+3")).thenReturn(10)
+        whenever(die.convert(any())).thenReturn(DieRoll(2, 3))
 
         // Act
         val result = underTest.rollDie("2d6+3")
@@ -191,8 +188,6 @@ internal class GameTest {
 
     @Test
     fun `add action`() {
-        // Arrange
-
         // Act
         underTest.addAction("myLabel", 1)
 
@@ -202,8 +197,6 @@ internal class GameTest {
 
     @Test
     fun `move to entry`() {
-        // Arrange
-
         // Act
         underTest.move(1)
 
@@ -213,25 +206,19 @@ internal class GameTest {
 
     @Test
     fun `edit entry title`() {
-        // Arrange
-
         // Act
-        val output = underTest.editBookEntry("myEntryTitle")
+        underTest.editBookEntry("myEntryTitle")
 
         // Assert
-        assertThat(output).isEqualTo("""Set entry title to "myEntryTitle"""")
         verify(book).editBookEntry("myEntryTitle")
     }
 
     @Test
     fun note() {
-        // Arrange
-
         // Act
-        val output = underTest.note("myNote")
+        underTest.note("myNote")
 
         // Assert
-        assertThat(output).isEqualTo("""Set note to "myNote"""")
         verify(book).note("myNote")
     }
 
@@ -264,11 +251,10 @@ internal class GameTest {
         whenever(bookStore.save(book, "downloadDirectory${File.separator}saved book title")).thenReturn(destPath)
 
         // Act
-        val output = underTest.saveBook()
+        underTest.saveBook()
 
         // Assert
         verify(bookStore).save(book, "downloadDirectory${File.separator}saved book title")
-        assertThat(output).isEqualTo("""Saved book "saved book title" to "x:${File.separator}destination path"""")
     }
 
     @Test

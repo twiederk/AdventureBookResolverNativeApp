@@ -22,45 +22,28 @@ class Game(
         return """Loaded book "${book.title}" from "$file""""
     }
 
-    fun saveBook(): String {
+    fun saveBook() {
         val directory = fileHelper.getDownloadDirectory()
         val filename = "$directory${File.separator}${book.title}"
-        val destPath = bookStore.save(book, filename)
-        return """Saved book "${book.title}" to "${destPath.toAbsolutePath()}""""
+        bookStore.save(book, filename)
     }
 
-    fun addAction(actionLabel: String, destinationId: Int) {
-        book.addAction(actionLabel, destinationId)
-    }
+    fun addAction(actionLabel: String, destinationId: Int) = book.addAction(actionLabel, destinationId)
 
-    fun move(entryId: Int) {
-        book.moveToBookEntry(entryId)
-    }
+    fun move(entryId: Int) = book.moveToBookEntry(entryId)
 
-    fun editBookEntry(entryTitle: String): String {
-        book.editBookEntry(entryTitle)
-        return """Set entry title to "$entryTitle""""
-    }
+    fun editBookEntry(entryTitle: String) = book.editBookEntry(entryTitle)
 
-    fun note(note: String): String {
-        book.note(note)
-        return """Set note to "$note""""
-    }
+    fun note(note: String) = book.note(note)
 
     fun restart(): String {
         book.restart()
         return "Restarted book"
     }
 
-    fun addItemToInventory(item: String): String {
-        book.addItemToInventory(item)
-        return """Added "$item" to inventory"""
-    }
+    fun addItemToInventory(item: String) = book.addItemToInventory(item)
 
-    fun delete(entryId: Int): String {
-        book.delete(entryId)
-        return "Deleted entry $entryId"
-    }
+    fun delete(entryId: Int) = book.delete(entryId)
 
     fun displayActionsToUnvisitedEntries(): String =
         book.getActionsToUnvisitedEntries().joinToString(

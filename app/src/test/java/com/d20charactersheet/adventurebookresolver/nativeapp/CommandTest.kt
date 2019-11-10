@@ -101,6 +101,19 @@ internal class CommandTest {
     }
 
     @Test
+    fun restart() {
+        // Arrange
+        val underTest = Command.Restart
+
+        // Act
+        underTest.execute(game, "")
+
+        // Assert
+        assertThat(underTest.toString()).isEqualTo("Restart")
+        verify(game).restart()
+    }
+
+    @Test
     fun `list of all commands sorted by name`() {
         // Act
         val items = Command.sortedValues()
@@ -110,6 +123,7 @@ internal class CommandTest {
             "Create",
             "Load",
             "Path",
+            "Restart",
             "Roll die",
             "Run",
             "Search",
