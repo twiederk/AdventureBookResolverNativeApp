@@ -21,11 +21,13 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import org.koin.test.mock.declareMock
 
 class GenericCommandFragmentKoinTest : KoinTest {
 
     private val underTest = GenericCommandFragment()
     private val game: Game by inject()
+    private val genericCommandPanel: GenericCommandPanel by inject()
 
     @Before
     fun before() {
@@ -47,7 +49,7 @@ class GenericCommandFragmentKoinTest : KoinTest {
     }
 
     @Test
-    fun onCreate() {
+    fun onCreateView() {
         // Arrange
         val container = mock<ViewGroup>()
         val commandSpinner = mock<Spinner>()
@@ -82,6 +84,18 @@ class GenericCommandFragmentKoinTest : KoinTest {
             assertThat(firstValue).isInstanceOf(ClearOnClickListener::class.java)
         }
 
+    }
+
+    @Test
+    fun onResume() {
+        // Arrange
+        declareMock<GenericCommandPanel>()
+
+        // Act
+        underTest.onResume()
+
+        // Assert
+        verify(genericCommandPanel).update()
     }
 
 }

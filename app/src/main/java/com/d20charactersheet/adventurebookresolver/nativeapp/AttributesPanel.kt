@@ -10,15 +10,14 @@ import org.koin.core.inject
 
 class AttributesPanel(private val game: Game) : Panel {
 
-    private lateinit var strengthValueTextView: TextView
-    private lateinit var dexterityValueTextView: TextView
-    private lateinit var luckValueTextView: TextView
+    internal lateinit var strengthValueTextView: TextView
+    internal lateinit var dexterityValueTextView: TextView
+    internal lateinit var luckValueTextView: TextView
 
     override fun create(rootView: View) {
         setupStrengthAttribute(rootView)
         setupDexterityAttribute(rootView)
         setupLuckAttribute(rootView)
-        update()
     }
 
     private fun setupStrengthAttribute(rootView: View) {

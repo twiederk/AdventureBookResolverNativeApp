@@ -32,7 +32,7 @@ class SectionsPagerAdapterTest {
         val fragment = underTest.getItem(1)
 
         // Assert
-        assertThat(fragment).isInstanceOf(AttributesAndBookPanel::class.java)
+        assertThat(fragment).isInstanceOf(AttributesAndBookFragment::class.java)
     }
 
     @Test

@@ -37,7 +37,7 @@ class EntryPanelInstrumentedTest : KoinTest {
 
         // Act
         onView(withId(R.id.entry_title_edit_text))
-            .perform(ViewActions.typeText("myTitle"))
+            .perform(ViewActions.typeText("myTitle\t"))
             .check(matches(withText("myTitle")))
 
         // Assert

@@ -16,11 +16,6 @@ class ExecuteOnClickListenerKoinTest : KoinTest {
 
     private val game: Game by inject()
     private val toolbarPanel: ToolbarPanel by inject()
-    private val attributesPanel: AttributesPanel by inject()
-    private val bookPanel: BookPanel by inject()
-    private val entryPanel: EntryPanel by inject()
-    private val actionPanel: ActionPanel by inject()
-    private val inventoryPanel: InventoryPanel by inject()
     private val genericCommandPanel: GenericCommandPanel by inject()
 
     @Before
@@ -60,11 +55,6 @@ class ExecuteOnClickListenerKoinTest : KoinTest {
         verify(game).createBook("myArgs")
         verify(genericCommandPanel).appendOutput("book created")
         verify(toolbarPanel).update()
-        verify(attributesPanel).update()
-        verify(bookPanel).update()
-        verify(entryPanel).update()
-        verify(actionPanel).update()
-        verify(inventoryPanel).update()
     }
 
 

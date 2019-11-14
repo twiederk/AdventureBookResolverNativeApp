@@ -36,12 +36,6 @@ class AttributesPanelKoinTest : KoinTest {
     @Test
     fun `create attributes panel`() {
         // Arrange
-        val attributes = Attributes(
-            strength = Attribute(AttributeName.STRENGTH, 14, 20),
-            dexterity = Attribute(AttributeName.DEXTERITY, 8, 9),
-            luck = Attribute(AttributeName.LUCK, 5, 10)
-        )
-
         val strengthValueTextView = mock<TextView>()
         val strengthPlusButton = mock<Button>()
         val strengthMinusButton = mock<Button>()
@@ -64,13 +58,11 @@ class AttributesPanelKoinTest : KoinTest {
             on { findViewById<TextView>(R.id.luck_minus_button) } doReturn luckMinusButton
         }
 
-        val game = Game(AdventureBook(attributes = attributes))
 
         // Act
-        AttributesPanel(game).create(rootView)
+        AttributesPanel(Game()).create(rootView)
 
         // Assert
-        verify(strengthValueTextView).text = "14 / 20"
         argumentCaptor<AttributeOnClickListener> {
             verify(strengthPlusButton).setOnClickListener(capture())
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
@@ -80,7 +72,6 @@ class AttributesPanelKoinTest : KoinTest {
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
         }
 
-        verify(dexterityValueTextView).text = "8 / 9"
         argumentCaptor<AttributeOnClickListener> {
             verify(dexterityPlusButton).setOnClickListener(capture())
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
@@ -90,7 +81,6 @@ class AttributesPanelKoinTest : KoinTest {
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
         }
 
-        verify(luckValueTextView).text = "5 / 10"
         argumentCaptor<AttributeOnClickListener> {
             verify(luckPlusButton).setOnClickListener(capture())
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
@@ -99,6 +89,29 @@ class AttributesPanelKoinTest : KoinTest {
             verify(luckMinusButton).setOnClickListener(capture())
             Assertions.assertThat(firstValue).isInstanceOf(AttributeOnClickListener::class.java)
         }
+    }
+
+    @Test
+    fun `update attributes panel`() {
+        // Arrange
+        val attributes = Attributes(
+            strength = Attribute(AttributeName.STRENGTH, 14, 20),
+            dexterity = Attribute(AttributeName.DEXTERITY, 8, 9),
+            luck = Attribute(AttributeName.LUCK, 5, 10)
+        )
+        val game = Game(AdventureBook(attributes = attributes))
+        val underTest = AttributesPanel(game)
+        underTest.strengthValueTextView = mock()
+        underTest.dexterityValueTextView = mock()
+        underTest.luckValueTextView = mock()
+
+        // Act
+        underTest.update()
+
+        // Assert
+        verify(underTest.strengthValueTextView).text = "14 / 20"
+        verify(underTest.dexterityValueTextView).text = "8 / 9"
+        verify(underTest.luckValueTextView).text = "5 / 10"
     }
 
 }

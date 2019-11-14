@@ -5,6 +5,7 @@ import android.widget.TextView
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
+import org.assertj.core.api.Assertions
 import org.junit.Test
 
 class BookPanelTest {
@@ -19,12 +20,29 @@ class BookPanelTest {
             on { findViewById<TextView>(R.id.tries_value_text_view) } doReturn triesValueTextView
             on { findViewById<TextView>(R.id.entries_value_text_view) } doReturn entriesValueTextView
         }
+        val underTest = BookPanel(Game())
 
         // Act
-        BookPanel(Game()).create(rootView)
+        underTest.create(rootView)
 
         // Assert
-        verify(triesValueTextView).text = "1"
-        verify(entriesValueTextView).text = "1 / 400 (0%)"
+        Assertions.assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
+        Assertions.assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
     }
+
+    @Test
+    fun `update book Panel`() {
+        // Arrange
+        val underTest = BookPanel(Game())
+        underTest.triesValueTextView = mock()
+        underTest.entriesValueTextView = mock()
+
+        // Act
+        underTest.update()
+
+        // Assert
+        verify(underTest.triesValueTextView).text = "1"
+        verify(underTest.entriesValueTextView).text = "1 / 400 (0%)"
+    }
+
 }

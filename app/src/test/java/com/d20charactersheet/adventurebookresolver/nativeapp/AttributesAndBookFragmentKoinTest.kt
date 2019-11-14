@@ -17,7 +17,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
 
-internal class AttributesAndBookPanelKoinTest : KoinTest {
+internal class AttributesAndBookFragmentKoinTest : KoinTest {
 
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
@@ -38,7 +38,7 @@ internal class AttributesAndBookPanelKoinTest : KoinTest {
     }
 
     @Test
-    fun onCreate() {
+    fun onCreateView() {
         // Arrange
         val container: ViewGroup = mock()
         val rootView: View = mock()
@@ -49,12 +49,24 @@ internal class AttributesAndBookPanelKoinTest : KoinTest {
         val savedInstanceState = mock<Bundle>()
 
         // Act
-        AttributesAndBookPanel().onCreateView(inflater, container, savedInstanceState)
+        AttributesAndBookFragment().onCreateView(inflater, container, savedInstanceState)
 
         // Assert
         verify(inflater).inflate(R.layout.fragment_attributes_and_book, container, false)
         verify(attributesPanel).create(any())
         verify(bookPanel).create(any())
+    }
+
+    @Test
+    fun onResume() {
+        // Arrange
+
+        // Act
+        AttributesAndBookFragment().onResume()
+
+        // Assert
+        verify(attributesPanel).update()
+        verify(bookPanel).update()
     }
 
 }

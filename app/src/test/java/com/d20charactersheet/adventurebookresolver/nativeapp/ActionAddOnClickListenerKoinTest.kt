@@ -83,7 +83,6 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         // Assert
         verify(game).addAction("myActionLabel", 10)
         verify(actionPanel).clear()
-        verify(bookPanel).update()
         verify(actionPanel).update()
     }
 

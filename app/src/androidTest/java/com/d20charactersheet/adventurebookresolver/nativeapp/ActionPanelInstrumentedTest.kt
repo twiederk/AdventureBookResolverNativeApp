@@ -37,7 +37,6 @@ class ActionPanelInstrumentedTest : KoinTest {
     @Test
     fun add_action_to_entry() {
         // Arrange
-        launchFragmentInContainer<AttributesAndBookPanel>()
         launchFragmentInContainer<EntryFragment>()
 
         onView(withId(R.id.action_label_edit_text)).perform(ViewActions.typeText("myActionLabel"))

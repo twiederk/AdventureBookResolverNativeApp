@@ -14,7 +14,7 @@ class BookPanelInstrumentedTest {
     fun check_initial_layout() {
 
         // Act
-        launchFragmentInContainer<AttributesAndBookPanel>()
+        launchFragmentInContainer<AttributesAndBookFragment>()
 
         // Assert
         onView(withId(R.id.tries_text_view)).check(matches(withText("Tries:")))

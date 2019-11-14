@@ -71,21 +71,11 @@ class ExecuteOnClickListener : View.OnClickListener, KoinComponent {
     private val game: Game by inject()
     private val genericCommandPanel: GenericCommandPanel by inject()
     private val toolbarPanel: ToolbarPanel by inject()
-    private val attributesPanel: AttributesPanel by inject()
-    private val bookPanel: BookPanel by inject()
-    private val entryPanel: EntryPanel by inject()
-    private val actionPanel: ActionPanel by inject()
-    private val inventoryPanel: InventoryPanel by inject()
 
     override fun onClick(v: View?) {
         val output = executeCommand()
         genericCommandPanel.appendOutput(output)
         toolbarPanel.update()
-        attributesPanel.update()
-        bookPanel.update()
-        entryPanel.update()
-        actionPanel.update()
-        inventoryPanel.update()
     }
 
     private fun executeCommand(): String {

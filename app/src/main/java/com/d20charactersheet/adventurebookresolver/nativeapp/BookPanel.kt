@@ -5,13 +5,12 @@ import android.widget.TextView
 
 class BookPanel(private val game: Game) : Panel {
 
-    private lateinit var triesValueTextView: TextView
-    private lateinit var entriesValueTextView: TextView
+    internal lateinit var triesValueTextView: TextView
+    internal lateinit var entriesValueTextView: TextView
 
     override fun create(rootView: View) {
         triesValueTextView = rootView.findViewById(R.id.tries_value_text_view)
         entriesValueTextView = rootView.findViewById(R.id.entries_value_text_view)
-        update()
     }
 
     override fun update() {

@@ -35,7 +35,7 @@ class InventoryFragmentKoinTest : KoinTest {
     }
 
     @Test
-    fun onCreate() {
+    fun onCreateView() {
         // Arrange
         val container: ViewGroup = mock()
         val rootView: View = mock()
@@ -53,5 +53,13 @@ class InventoryFragmentKoinTest : KoinTest {
         verify(inventoryPanel).create(any())
     }
 
+    @Test
+    fun onResume() {
+        // Act
+        InventoryFragment().onResume()
+
+        // Assert
+        verify(inventoryPanel).update()
+    }
 
 }

@@ -38,7 +38,7 @@ internal class EntryFragmentKoinTest : KoinTest {
     }
 
     @Test
-    fun onCreate() {
+    fun onCreateView() {
         // Arrange
         val container: ViewGroup = mock()
         val rootView: View = mock()
@@ -55,6 +55,18 @@ internal class EntryFragmentKoinTest : KoinTest {
         verify(inflater).inflate(R.layout.fragment_entry, container, false)
         verify(entryPanel).create(any())
         verify(actionPanel).create(any())
+    }
+
+    @Test
+    fun onResume() {
+        // Arrange
+
+        // Act
+        EntryFragment().onResume()
+
+        // Assert
+        verify(entryPanel).update()
+        verify(actionPanel).update()
     }
 
 }

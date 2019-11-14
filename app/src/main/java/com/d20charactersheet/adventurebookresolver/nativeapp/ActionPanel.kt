@@ -62,7 +62,6 @@ class ActionAddOnClickListener : View.OnClickListener, KoinComponent {
 
     private val game: Game by inject()
     private val actionPanel: ActionPanel by inject()
-    private val bookPanel: BookPanel by inject()
 
     override fun onClick(v: View?) {
         val actionLabel = actionPanel.getActionLabel()
@@ -75,7 +74,6 @@ class ActionAddOnClickListener : View.OnClickListener, KoinComponent {
             game.addAction(actionLabel, actionId.toInt())
             actionPanel.clear()
             actionPanel.update()
-            bookPanel.update()
         }
     }
 

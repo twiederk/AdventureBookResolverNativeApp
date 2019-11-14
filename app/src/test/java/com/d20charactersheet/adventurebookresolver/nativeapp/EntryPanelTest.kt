@@ -4,11 +4,8 @@ import android.text.Editable
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import com.nhaarman.mockitokotlin2.argumentCaptor
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
-import org.assertj.core.api.Assertions
+import com.nhaarman.mockitokotlin2.*
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class EntryPanelTest {
@@ -31,21 +28,41 @@ class EntryPanelTest {
         EntryPanel(game).create(rootView)
 
         // Assert
-        verify(entryTitleEditText).setText("Untitled")
-        argumentCaptor<GameTextWatcher> {
-            verify(entryTitleEditText).addTextChangedListener(capture())
-            Assertions.assertThat(firstValue).isInstanceOf(GameTextWatcher::class.java)
+        argumentCaptor<GameOnFocusChangeListener> {
+            verify(entryTitleEditText).onFocusChangeListener = capture()
+            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
         }
-        verify(entryIdTextView).text = "(1)"
-        verify(entryNoteEditText).setText("myNote")
-        argumentCaptor<GameTextWatcher> {
-            verify(entryNoteEditText).addTextChangedListener(capture())
-            Assertions.assertThat(firstValue).isInstanceOf(GameTextWatcher::class.java)
+        argumentCaptor<GameOnFocusChangeListener> {
+            verify(entryNoteEditText).onFocusChangeListener = capture()
+            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
         }
     }
 
     @Test
-    fun `set entry title`() {
+    fun `update entry panel`() {
+        // Arrange
+        val game = Game()
+        game.book = mock {
+            on { getEntryTitle() } doReturn "myTitle"
+            on { getEntryId() } doReturn 1
+            on { getEntryNote() } doReturn "myNote"
+        }
+        val underTest = EntryPanel(game)
+        underTest.entryTitleEditText = mock()
+        underTest.entryIdTextView = mock()
+        underTest.entryNoteEditText = mock()
+
+        // Act
+        underTest.update()
+
+        // Assert
+        verify(underTest.entryTitleEditText).setText("myTitle")
+        verify(underTest.entryIdTextView).text = "(1)"
+        verify(underTest.entryNoteEditText).setText("myNote")
+    }
+
+    @Test
+    fun `set entry title on focus lost`() {
 
         val game = Game()
         game.book = mock()
@@ -54,16 +71,19 @@ class EntryPanelTest {
         val editable: Editable = mock {
             on { toString() } doReturn "myTitle"
         }
+        val editText: EditText = mock {
+            on { text } doReturn editable
+        }
 
         // Act
-        GameTextWatcher { text -> game.book.editBookEntry(text) }.afterTextChanged(editable)
+        GameOnFocusChangeListener { text -> game.book.editBookEntry(text) }.onFocusChange(editText, false)
 
         // Assert
         verify(game.book).editBookEntry("myTitle")
     }
 
     @Test
-    fun `edit entry note`() {
+    fun `edit entry note on focus lost`() {
 
         val game = Game()
         game.book = mock()
@@ -72,12 +92,27 @@ class EntryPanelTest {
         val editable: Editable = mock {
             on { toString() } doReturn "myNote"
         }
+        val editText: EditText = mock {
+            on { text } doReturn editable
+        }
 
         // Act
-        GameTextWatcher { text -> game.book.note(text) }.afterTextChanged(editable)
+        GameOnFocusChangeListener { text -> game.book.note(text) }.onFocusChange(editText, false)
 
         // Assert
         verify(game.book).note("myNote")
     }
 
+    @Test
+    fun `do nothing on focus gained`() {
+        // Arrange
+        val game = Game()
+        game.book = mock()
+
+        // Act
+        GameOnFocusChangeListener { text -> game.book.note(text) }.onFocusChange(mock(), true)
+
+        // Assert
+        verifyZeroInteractions(game.book)
+    }
 }
