@@ -17,7 +17,7 @@ import org.koin.test.mock.declareMock
 class ItemAddOnClickListenerKoinTest : KoinTest {
 
     private val game: Game by inject()
-    private val inventoryPanel: InventoryPanel by inject()
+    private val itemPanel: ItemPanel by inject()
 
     @Before
     fun before() {
@@ -35,7 +35,7 @@ class ItemAddOnClickListenerKoinTest : KoinTest {
     fun onClick_adds_item() {
         // Arrange
         declareMock<Game>()
-        declareMock<InventoryPanel> {
+        declareMock<ItemPanel> {
             given(getItem()).willReturn("myItem")
         }
 
@@ -44,15 +44,15 @@ class ItemAddOnClickListenerKoinTest : KoinTest {
 
         // Assert
         verify(game).addItemToInventory("myItem")
-        verify(inventoryPanel).clear()
-        verify(inventoryPanel).update()
+        verify(itemPanel).clear()
+        verify(itemPanel).update()
     }
 
     @Test
     fun onClick_noText_noItemAdded() {
         // Arrange
         declareMock<Game>()
-        declareMock<InventoryPanel> {
+        declareMock<ItemPanel> {
             given(getItem()).willReturn("")
         }
 

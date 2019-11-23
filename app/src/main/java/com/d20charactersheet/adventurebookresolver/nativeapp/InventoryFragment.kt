@@ -8,18 +8,21 @@ import org.koin.android.ext.android.inject
 
 class InventoryFragment : LogFragment() {
 
-    private val inventoryPanel: InventoryPanel by inject()
+    private val goldPanel: GoldPanel by inject()
+    private val itemPanel: ItemPanel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.fragment_inventory, container, false)
-        inventoryPanel.create(rootView)
+        itemPanel.create(rootView)
+        goldPanel.create(rootView)
         return rootView
     }
 
     override fun onResume() {
         super.onResume()
-        inventoryPanel.update()
+        goldPanel.update()
+        itemPanel.update()
     }
 
 }

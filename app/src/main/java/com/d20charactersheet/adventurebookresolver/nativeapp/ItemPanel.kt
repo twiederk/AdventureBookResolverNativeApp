@@ -9,11 +9,11 @@ import androidx.recyclerview.widget.RecyclerView
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class InventoryPanel : Panel {
+class ItemPanel : Panel {
 
     internal lateinit var itemLabelEditText: EditText
     private lateinit var itemAddButton: Button
-    internal lateinit var inventoryRecyclerView: RecyclerView
+    internal lateinit var itemRecyclerView: RecyclerView
     internal var itemTouchHelper: ItemTouchHelper? = null
 
     override fun create(rootView: View) {
@@ -28,22 +28,22 @@ class InventoryPanel : Panel {
     }
 
     private fun createActionMoveRecyclerView(rootView: View) {
-        val inventoryAdapter = InventoryAdapter()
-        inventoryRecyclerView = rootView.findViewById<RecyclerView>(R.id.item_recycler_view).apply {
+        val itemAdapter = ItemAdapter()
+        itemRecyclerView = rootView.findViewById<RecyclerView>(R.id.item_recycler_view).apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(rootView.context)
-            adapter = inventoryAdapter
+            adapter = itemAdapter
         }
         if (itemTouchHelper == null) {
-            itemTouchHelper = ItemTouchHelper(InventoryDeleteOnSwipeListener(inventoryAdapter))
+            itemTouchHelper = ItemTouchHelper(ItemDeleteOnSwipeListener(itemAdapter))
         }
-        itemTouchHelper?.attachToRecyclerView(inventoryRecyclerView)
+        itemTouchHelper?.attachToRecyclerView(itemRecyclerView)
 
     }
 
 
     override fun update() {
-        inventoryRecyclerView.adapter?.notifyDataSetChanged()
+        itemRecyclerView.adapter?.notifyDataSetChanged()
     }
 
     fun getItem() = itemLabelEditText.text.toString()
@@ -56,14 +56,14 @@ class InventoryPanel : Panel {
 class ItemAddOnClickListener : View.OnClickListener, KoinComponent {
 
     private val game: Game by inject()
-    private val inventoryPanel: InventoryPanel by inject()
+    private val itemPanel: ItemPanel by inject()
 
     override fun onClick(v: View?) {
-        val item = inventoryPanel.getItem()
+        val item = itemPanel.getItem()
         if (item.isNotEmpty()) {
             game.addItemToInventory(item)
-            inventoryPanel.clear()
-            inventoryPanel.update()
+            itemPanel.clear()
+            itemPanel.update()
         }
     }
 

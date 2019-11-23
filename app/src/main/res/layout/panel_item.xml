@@ -17,7 +17,6 @@
         app:layout_constraintEnd_toStartOf="@+id/item_add_button"
         app:layout_constraintBaseline_toBaselineOf="@+id/item_add_button" />
 
-
     <Button
         android:id="@+id/item_add_button"
         android:layout_width="100dp"
@@ -28,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/item_label_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/gold_plus_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_recycler_view"

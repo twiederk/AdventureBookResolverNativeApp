@@ -57,9 +57,9 @@ class AttributesPanel(private val game: Game) : Panel {
         attributeName: AttributeName
     ) {
         rootView.findViewById<Button>(plusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(attributeName, 1))
+            .setOnClickListener(AttributeIncreaseOnClickListener(attributeName))
         rootView.findViewById<Button>(minusButtonResourceId)
-            .setOnClickListener(AttributeOnClickListener(attributeName, -1))
+            .setOnClickListener(AttributeDecreaseOnClickListener(attributeName))
     }
 
     override fun update() {
@@ -76,16 +76,29 @@ class AttributesPanel(private val game: Game) : Panel {
 
 }
 
-class AttributeOnClickListener(
-    private val attributeName: AttributeName,
-    private val value: Int
+abstract class AttributeOnClickListener(
+    protected val attributeName: AttributeName
 ) : View.OnClickListener, KoinComponent {
 
-    private val attributesPanel: AttributesPanel by inject()
-    private val game: Game by inject()
+    protected val attributesPanel: AttributesPanel by inject()
+    protected val game: Game by inject()
+
+    abstract override fun onClick(v: View?)
+}
+
+class AttributeIncreaseOnClickListener(attributeName: AttributeName) : AttributeOnClickListener(attributeName) {
 
     override fun onClick(v: View?) {
-        game.changeAttribute(attributeName, value)
+        game.increaseAttribute(attributeName, 1)
+        attributesPanel.update()
+    }
+
+}
+
+class AttributeDecreaseOnClickListener(attributeName: AttributeName) : AttributeOnClickListener(attributeName) {
+
+    override fun onClick(v: View?) {
+        game.decreaseAttribute(attributeName, 1)
         attributesPanel.update()
     }
 

@@ -145,14 +145,26 @@ internal class GameTest {
     }
 
     @Test
-    fun changeAttribute() {
+    fun increaseAttribute() {
 
         // Act
-        underTest.changeAttribute(AttributeName.STRENGTH, 1)
+        underTest.increaseAttribute(AttributeName.STRENGTH, 1)
 
         // Assert
-        verify(book).changeAttribute(AttributeName.STRENGTH, 1)
+        verify(book).increaseAttribute(AttributeName.STRENGTH, 1)
     }
+
+    @Test
+    fun decreaseAttribute() {
+
+        // Act
+        underTest.decreaseAttribute(AttributeName.STRENGTH, 1)
+
+        // Assert
+        verify(book).decreaseAttribute(AttributeName.STRENGTH, 1)
+    }
+
+
 
     @Test
     fun rollDie() {
@@ -299,4 +311,36 @@ internal class GameTest {
         // Assert
         assertThat(numberOfItems).isEqualTo(5)
     }
+
+    @Test
+    fun getGold() {
+        // Arrange
+        whenever(book.getGold()).doReturn(5)
+
+        // Act
+        val gold = underTest.getGold()
+
+        // Assert
+        assertThat(gold).isEqualTo("5")
+    }
+
+    @Test
+    fun increaseGold() {
+        // Act
+        underTest.increaseGold()
+
+        // Assert
+        verify(book).editGold(1)
+    }
+
+    @Test
+    fun decreaseGold() {
+        // Act
+        underTest.decreaseGold()
+
+        // Assert
+        verify(book).editGold(-1)
+    }
+
+
 }

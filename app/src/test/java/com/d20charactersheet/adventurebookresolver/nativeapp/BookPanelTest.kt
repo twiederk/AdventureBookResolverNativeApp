@@ -5,7 +5,7 @@ import android.widget.TextView
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class BookPanelTest {
@@ -26,8 +26,8 @@ class BookPanelTest {
         underTest.create(rootView)
 
         // Assert
-        Assertions.assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
-        Assertions.assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
+        assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
+        assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
     }
 
     @Test

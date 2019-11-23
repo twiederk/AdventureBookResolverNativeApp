@@ -11,17 +11,17 @@ class ItemDeleteSimpleCallbackTest {
     @Test
     fun `ItemDeleteSimpleCallback deletes action`() {
         // Arrange
-        val inventoryAdapter: InventoryAdapter = mock()
+        val itemAdapter: ItemAdapter = mock()
         val viewHolder: RecyclerView.ViewHolder = mock {
             on { adapterPosition } doReturn 10
         }
 
         // Act
-        InventoryDeleteOnSwipeListener(inventoryAdapter).onSwiped(viewHolder, 0)
+        ItemDeleteOnSwipeListener(itemAdapter).onSwiped(viewHolder, 0)
 
         // Assert
-        verify(inventoryAdapter).deleteItem(10)
-        verify(inventoryAdapter).notifyItemRemoved(10)
+        verify(itemAdapter).deleteItem(10)
+        verify(itemAdapter).notifyItemRemoved(10)
     }
 
 }

@@ -41,7 +41,7 @@ class ExecuteOnClickListenerKoinTest : KoinTest {
         declareMock<BookPanel>()
         declareMock<EntryPanel>()
         declareMock<ActionPanel>()
-        declareMock<InventoryPanel>()
+        declareMock<ItemPanel>()
 
         declareMock<GenericCommandPanel> {
             given { getSelectedCommand() }.willReturn(Command.Create)

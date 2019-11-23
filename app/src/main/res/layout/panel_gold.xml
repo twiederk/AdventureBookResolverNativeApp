@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Gold -->
+    <TextView
+        android:id="@+id/gold_label_text_view"
+        android:layout_height="wrap_content"
+        android:layout_width="90dp"
+        android:layout_marginStart="16dp"
+        android:gravity="start"
+        android:text="@string/gold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/gold_plus_button"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+    <TextView
+        android:id="@+id/gold_value_text_view"
+        android:layout_height="wrap_content"
+        android:layout_width="70dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/gold_plus_button"
+        app:layout_constraintStart_toEndOf="@+id/gold_label_text_view" />
+
+    <Button
+        android:id="@+id/gold_plus_button"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/plus_sign"
+        app:layout_constraintStart_toEndOf="@+id/gold_value_text_view"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/gold_minus_button"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/minus_sign"
+        app:layout_constraintStart_toEndOf="@+id/gold_plus_button"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</merge>

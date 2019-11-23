@@ -70,7 +70,6 @@ class Game(
             transform = { entry -> "(${entry.id}) - ${entry.title}: ${entry.note}" }
         )
 
-    fun changeAttribute(attributeName: AttributeName, value: Int) = book.changeAttribute(attributeName, value)
 
     fun rollDie(dieRoll: String): String = "You rolled ${die.convert(dieRoll)} and scored: ${die.roll(dieRoll)}"
 
@@ -79,5 +78,23 @@ class Game(
     fun getNumberOfActions(): Int = book.getActions().size
 
     fun getNumberOfItems(): Int = book.inventory.items.size
+
+    fun increaseAttribute(attributeName: AttributeName, value: Int) {
+        book.increaseAttribute(attributeName, value)
+    }
+
+    fun decreaseAttribute(attributeName: AttributeName, value: Int) {
+        book.decreaseAttribute(attributeName, value)
+    }
+
+    fun getGold() = book.getGold().toString()
+
+    fun increaseGold() {
+        book.editGold(1)
+    }
+
+    fun decreaseGold() {
+        book.editGold(-1)
+    }
 
 }

@@ -18,7 +18,7 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 
-class InventoryPanelKoinTest : KoinTest {
+class ItemPanelKoinTest : KoinTest {
 
     @Before
     fun before() {
@@ -33,7 +33,7 @@ class InventoryPanelKoinTest : KoinTest {
     }
 
     @Test
-    fun create_inventory_panel() {
+    fun create_item_panel() {
 
         // Arrange
         val itemAddButton: Button = mock()
@@ -43,7 +43,7 @@ class InventoryPanelKoinTest : KoinTest {
             on { findViewById<Button>(R.id.item_add_button) } doReturn itemAddButton
             on { findViewById<RecyclerView>(R.id.item_recycler_view) } doReturn itemRecyclerView
         }
-        val underTest = InventoryPanel()
+        val underTest = ItemPanel()
         underTest.itemTouchHelper = mock()
 
 
@@ -69,16 +69,16 @@ class InventoryPanelKoinTest : KoinTest {
             verify(itemRecyclerView).layoutManager = capture()
             assertThat(firstValue).isInstanceOf(LinearLayoutManager::class.java)
         }
-        argumentCaptor<InventoryAdapter> {
+        argumentCaptor<ItemAdapter> {
             verify(itemRecyclerView).adapter = capture()
-            assertThat(firstValue).isInstanceOf(InventoryAdapter::class.java)
+            assertThat(firstValue).isInstanceOf(ItemAdapter::class.java)
         }
     }
 
     @Test
     fun getItem() {
         // Arrange
-        val underTest = InventoryPanel()
+        val underTest = ItemPanel()
         val editable = mock<Editable> {
             on { toString() } doReturn "myItem"
         }
@@ -96,7 +96,7 @@ class InventoryPanelKoinTest : KoinTest {
     @Test
     fun clear() {
         // Arrange
-        val underTest = InventoryPanel()
+        val underTest = ItemPanel()
         underTest.itemLabelEditText = mock()
 
         // Act
@@ -109,18 +109,18 @@ class InventoryPanelKoinTest : KoinTest {
     @Test
     fun update() {
         // Arrange
-        val underTest = InventoryPanel()
-        val inventoryAdapter: InventoryAdapter = mock()
+        val underTest = ItemPanel()
+        val itemAdapter: ItemAdapter = mock()
         val itemRecyclerView: RecyclerView = mock {
-            on { adapter } doReturn inventoryAdapter
+            on { adapter } doReturn itemAdapter
         }
-        underTest.inventoryRecyclerView = itemRecyclerView
+        underTest.itemRecyclerView = itemRecyclerView
 
         // Act
         underTest.update()
 
         // Assert
-        verify(inventoryAdapter).notifyDataSetChanged()
+        verify(itemAdapter).notifyDataSetChanged()
     }
 }
 

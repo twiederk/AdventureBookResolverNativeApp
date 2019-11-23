@@ -8,7 +8,7 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
 
-class InventoryViewHolderTest {
+class ItemViewHolderTest {
 
     @Test
     fun setItem() {
@@ -19,7 +19,7 @@ class InventoryViewHolderTest {
         }
 
         // Act
-        InventoryViewHolder(rootView).setItem(Item("myItem"))
+        ItemViewHolder(rootView).setItem(Item("myItem"))
 
         // Assert
         verify(itemTextView).text = "myItem"

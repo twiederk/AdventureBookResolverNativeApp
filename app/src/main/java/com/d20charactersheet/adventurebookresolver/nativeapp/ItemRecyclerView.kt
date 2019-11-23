@@ -9,18 +9,18 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class InventoryAdapter : RecyclerView.Adapter<InventoryViewHolder>(), KoinComponent {
+class ItemAdapter : RecyclerView.Adapter<ItemViewHolder>(), KoinComponent {
 
     private val game: Game by inject()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InventoryViewHolder {
-        val rootView = LayoutInflater.from(parent.context).inflate(R.layout.listitem_inventory, parent, false)
-        return InventoryViewHolder(rootView)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
+        val rootView = LayoutInflater.from(parent.context).inflate(R.layout.listitem_item, parent, false)
+        return ItemViewHolder(rootView)
     }
 
-    override fun onBindViewHolder(inventoryViewHolder: InventoryViewHolder, position: Int) {
+    override fun onBindViewHolder(itemViewHolder: ItemViewHolder, position: Int) {
         val item = game.book.inventory.items[position]
-        inventoryViewHolder.setItem(item)
+        itemViewHolder.setItem(item)
     }
 
     override fun getItemCount() = game.getNumberOfItems()
@@ -29,7 +29,7 @@ class InventoryAdapter : RecyclerView.Adapter<InventoryViewHolder>(), KoinCompon
 
 }
 
-class InventoryViewHolder(val rootView: View) : RecyclerView.ViewHolder(rootView) {
+class ItemViewHolder(val rootView: View) : RecyclerView.ViewHolder(rootView) {
 
     private val itemTextView: TextView = rootView.findViewById(R.id.item_text_view)
 
@@ -38,11 +38,11 @@ class InventoryViewHolder(val rootView: View) : RecyclerView.ViewHolder(rootView
     }
 }
 
-class InventoryDeleteOnSwipeListener(private val inventoryAdapter: InventoryAdapter) : OnSwipeListener() {
+class ItemDeleteOnSwipeListener(private val itemAdapter: ItemAdapter) : OnSwipeListener() {
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        inventoryAdapter.deleteItem(viewHolder.adapterPosition)
-        inventoryAdapter.notifyItemRemoved(viewHolder.adapterPosition)
+        itemAdapter.deleteItem(viewHolder.adapterPosition)
+        itemAdapter.notifyItemRemoved(viewHolder.adapterPosition)
     }
 
 }

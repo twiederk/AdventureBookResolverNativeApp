@@ -30,16 +30,30 @@ class AttributeOnClickListenerKoinTest : KoinTest {
     }
 
     @Test
-    fun `change attribute onClick`() {
+    fun `onClick increase attribute`() {
         // Arrange
         declareMock<Game>()
         declareMock<AttributesPanel>()
 
         // Act
-        AttributeOnClickListener(AttributeName.STRENGTH, 1).onClick(mock())
+        AttributeIncreaseOnClickListener(AttributeName.STRENGTH).onClick(mock())
 
         // Assert
-        verify(game).changeAttribute(AttributeName.STRENGTH, 1)
+        verify(game).increaseAttribute(AttributeName.STRENGTH, 1)
+        verify(attributesPanel).update()
+    }
+
+    @Test
+    fun `onClick decrease attribute`() {
+        // Arrange
+        declareMock<Game>()
+        declareMock<AttributesPanel>()
+
+        // Act
+        AttributeDecreaseOnClickListener(AttributeName.STRENGTH).onClick(mock())
+
+        // Assert
+        verify(game).decreaseAttribute(AttributeName.STRENGTH, 1)
         verify(attributesPanel).update()
     }
 

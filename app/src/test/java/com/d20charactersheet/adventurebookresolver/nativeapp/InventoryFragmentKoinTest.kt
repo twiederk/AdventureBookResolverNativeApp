@@ -19,14 +19,16 @@ import org.koin.test.mock.declareMock
 
 class InventoryFragmentKoinTest : KoinTest {
 
-    private val inventoryPanel: InventoryPanel by inject()
+    private val itemPanel: ItemPanel by inject()
+    private val goldPanel: GoldPanel by inject()
 
     @Before
     fun before() {
         startKoin {
             modules(appModule)
         }
-        declareMock<InventoryPanel>()
+        declareMock<ItemPanel>()
+        declareMock<GoldPanel>()
     }
 
     @After
@@ -50,7 +52,8 @@ class InventoryFragmentKoinTest : KoinTest {
 
         // Assert
         verify(inflater).inflate(R.layout.fragment_inventory, container, false)
-        verify(inventoryPanel).create(any())
+        verify(goldPanel).create(any())
+        verify(itemPanel).create(any())
     }
 
     @Test
@@ -59,7 +62,8 @@ class InventoryFragmentKoinTest : KoinTest {
         InventoryFragment().onResume()
 
         // Assert
-        verify(inventoryPanel).update()
+        verify(goldPanel).update()
+        verify(itemPanel).update()
     }
 
 }

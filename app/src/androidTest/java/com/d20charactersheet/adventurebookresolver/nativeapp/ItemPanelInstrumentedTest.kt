@@ -13,23 +13,13 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class InventoryPanelInstrumentedTest : KoinTest {
+class ItemPanelInstrumentedTest : KoinTest {
 
     private val game: Game by inject()
 
     @Before
     fun before() {
         game.book = AdventureBook()
-    }
-
-    @Test
-    fun check_initial_layout() {
-        // Act
-        launchFragmentInContainer<InventoryFragment>()
-
-        // Assert
-        onView(withId(R.id.item_label_edit_text)).check(matches(isDisplayed()))
-        onView(withId(R.id.item_add_button)).check(matches(withText("Add")))
     }
 
     @Test

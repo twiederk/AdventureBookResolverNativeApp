@@ -4,6 +4,8 @@
     android:layout_height="match_parent"
     tools:context="InventoryFragment">
 
-    <include layout="@layout/panel_inventory" />
+    <include layout="@layout/panel_gold" />
+
+    <include layout="@layout/panel_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

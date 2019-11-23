@@ -13,7 +13,7 @@ import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
 
-class InventoryAdapterKoinTest : KoinTest {
+class ItemAdapterKoinTest : KoinTest {
 
     private val game: Game by inject()
 
@@ -32,14 +32,14 @@ class InventoryAdapterKoinTest : KoinTest {
     @Test
     fun onBindViewHolder() {
         // Arrange
-        val inventoryViewHolder: InventoryViewHolder = mock()
+        val itemViewHolder: ItemViewHolder = mock()
         game.addItemToInventory("myItem")
 
         // Act
-        InventoryAdapter().onBindViewHolder(inventoryViewHolder, 0)
+        ItemAdapter().onBindViewHolder(itemViewHolder, 0)
 
         // Assert
-        verify(inventoryViewHolder).setItem(Item("myItem"))
+        verify(itemViewHolder).setItem(Item("myItem"))
     }
 
     @Test
@@ -49,7 +49,7 @@ class InventoryAdapterKoinTest : KoinTest {
         game.addItemToInventory("item 2")
 
         // Act
-        val itemCount = InventoryAdapter().itemCount
+        val itemCount = ItemAdapter().itemCount
 
         // Assert
         assertThat(itemCount).isEqualTo(2)
@@ -61,7 +61,7 @@ class InventoryAdapterKoinTest : KoinTest {
         declareMock<Game>()
 
         // Act
-        InventoryAdapter().deleteItem(0)
+        ItemAdapter().deleteItem(0)
 
         // Assert
         verify(game).removeItemFromInventory(0)
