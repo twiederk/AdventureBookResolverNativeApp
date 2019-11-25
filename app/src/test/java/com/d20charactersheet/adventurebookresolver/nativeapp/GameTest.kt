@@ -50,7 +50,7 @@ internal class GameTest {
         val inventory = Inventory()
         inventory.addItem("Leather armor")
         inventory.addItem("Sword")
-        whenever(book.inventory).thenReturn(inventory)
+        whenever(book.inventory).doReturn(inventory)
 
         // Act
         underTest.removeItemFromInventory(1)
@@ -72,7 +72,7 @@ internal class GameTest {
     @Test
     fun `display actions to unvisited entries`() {
         // Arrange
-        whenever(book.getActionsToUnvisitedEntries()).thenReturn(
+        whenever(book.getActionsToUnvisitedEntries()).doReturn(
             listOf(
                 Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200)),
                 Action("left", BookEntry(100, "Tower"), BookEntry(300))
@@ -95,7 +95,7 @@ internal class GameTest {
     @Test
     fun `display path`() {
         // Arrange
-        whenever(book.getPath()).thenReturn(
+        whenever(book.getPath()).doReturn(
             listOf(
                 BookEntry(id = 1, title = "Hallway", note = "Start of adventure"),
                 BookEntry(100, "Tower"),
@@ -130,7 +130,7 @@ internal class GameTest {
     @Test
     fun search() {
         // Arrange
-        whenever(book.search("start")).thenReturn(
+        whenever(book.search("start")).doReturn(
             listOf(
                 BookEntry(id = 1, title = "Hallway", note = "Start of adventure")
             )
@@ -170,8 +170,8 @@ internal class GameTest {
     fun rollDie() {
 
         // Arrange
-        whenever(die.roll("2d6+3")).thenReturn(10)
-        whenever(die.convert(any())).thenReturn(DieRoll(2, 3))
+        whenever(die.roll("2d6+3")).doReturn(10)
+        whenever(die.convert(any())).doReturn(DieRoll(2, 3))
 
         // Act
         val result = underTest.rollDie("2d6+3")
@@ -217,21 +217,21 @@ internal class GameTest {
     }
 
     @Test
-    fun `edit entry title`() {
+    fun setEntryTitle() {
         // Act
-        underTest.editBookEntry("myEntryTitle")
+        underTest.setEntryTitle("myEntryTitle")
 
         // Assert
-        verify(book).editBookEntry("myEntryTitle")
+        verify(book).setEntryTitle("myEntryTitle")
     }
 
     @Test
-    fun note() {
+    fun setEntryNote() {
         // Act
-        underTest.note("myNote")
+        underTest.setEntryNote("myEntryNote")
 
         // Assert
-        verify(book).note("myNote")
+        verify(book).setEntryNote("myEntryNote")
     }
 
     @Test
@@ -241,8 +241,8 @@ internal class GameTest {
         val loadedBook = mock<AdventureBook> {
             on { title } doReturn "loaded book title"
         }
-        whenever(fileHelper.getDownloadDirectory()).thenReturn(File("downloadDirectory"))
-        whenever(bookStore.load(any())).thenReturn(loadedBook)
+        whenever(fileHelper.getDownloadDirectory()).doReturn(File("downloadDirectory"))
+        whenever(bookStore.load(any())).doReturn(loadedBook)
 
 
         // Act
@@ -257,10 +257,10 @@ internal class GameTest {
     @Test
     fun saveBook() {
         // Arrange
-        whenever(fileHelper.getDownloadDirectory()).thenReturn(File("downloadDirectory"))
+        whenever(fileHelper.getDownloadDirectory()).doReturn(File("downloadDirectory"))
         whenever(book.title).doReturn("saved book title")
         val destPath = Paths.get("x:${File.separator}destination path")
-        whenever(bookStore.save(book, "downloadDirectory${File.separator}saved book title")).thenReturn(destPath)
+        whenever(bookStore.save(book, "downloadDirectory${File.separator}saved book title")).doReturn(destPath)
 
         // Act
         underTest.saveBook()

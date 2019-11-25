@@ -18,7 +18,7 @@ class EntryPanelInstrumentedTest : KoinTest {
     @Test
     fun check_initial_layout() {
         // Arrange
-        game.note("myNote")
+        game.setEntryNote("myNote")
 
         // Act
         launchFragmentInContainer<EntryFragment>()
@@ -51,8 +51,9 @@ class EntryPanelInstrumentedTest : KoinTest {
 
         // Act
         onView(withId(R.id.entry_note_edit_text))
-            .perform(ViewActions.typeText("myNote"))
-            .check(matches(withText("myNote")))
+            .perform(ViewActions.typeText("myEntryNote"))
+            .check(matches(withText("myEntryNote")))
+
     }
 
 }

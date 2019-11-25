@@ -1,7 +1,9 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
 import android.view.View
+import android.widget.EditText
 import android.widget.TextView
+import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
@@ -16,9 +18,11 @@ class BookPanelTest {
         // Arrange
         val triesValueTextView: TextView = mock()
         val entriesValueTextView: TextView = mock()
+        val bookNoteEditText: EditText = mock()
         val rootView: View = mock {
             on { findViewById<TextView>(R.id.tries_value_text_view) } doReturn triesValueTextView
             on { findViewById<TextView>(R.id.entries_value_text_view) } doReturn entriesValueTextView
+            on { findViewById<EditText>(R.id.book_note_edit_text) } doReturn bookNoteEditText
         }
         val underTest = BookPanel(Game())
 
@@ -28,14 +32,21 @@ class BookPanelTest {
         // Assert
         assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
         assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
+        argumentCaptor<GameOnFocusChangeListener> {
+            verify(bookNoteEditText).onFocusChangeListener = capture()
+            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
+        }
     }
 
     @Test
     fun `update book Panel`() {
         // Arrange
-        val underTest = BookPanel(Game())
+        val game = Game()
+        game.book.note = "myBookNote"
+        val underTest = BookPanel(game)
         underTest.triesValueTextView = mock()
         underTest.entriesValueTextView = mock()
+        underTest.bookNoteEditText = mock()
 
         // Act
         underTest.update()
@@ -43,6 +54,7 @@ class BookPanelTest {
         // Assert
         verify(underTest.triesValueTextView).text = "1"
         verify(underTest.entriesValueTextView).text = "1 / 400 (0%)"
+        verify(underTest.bookNoteEditText).setText("myBookNote")
     }
 
 }

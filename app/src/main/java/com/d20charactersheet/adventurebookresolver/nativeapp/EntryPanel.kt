@@ -13,10 +13,10 @@ class EntryPanel(private val game: Game) : Panel {
 
     override fun create(rootView: View) {
         entryTitleEditText = rootView.findViewById(R.id.entry_title_edit_text)
-        entryTitleEditText.onFocusChangeListener = GameOnFocusChangeListener { text -> game.book.editBookEntry(text) }
+        entryTitleEditText.onFocusChangeListener = GameOnFocusChangeListener { text -> game.book.setEntryTitle(text) }
         entryIdTextView = rootView.findViewById(R.id.entry_id_text_view)
         entryNoteEditText = rootView.findViewById(R.id.entry_note_edit_text)
-        entryNoteEditText.onFocusChangeListener = GameOnFocusChangeListener { text -> game.book.note(text) }
+        entryNoteEditText.onFocusChangeListener = GameOnFocusChangeListener { text -> game.book.setEntryNote(text) }
     }
 
     override fun update() {

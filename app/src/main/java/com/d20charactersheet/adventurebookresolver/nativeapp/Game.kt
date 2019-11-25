@@ -32,9 +32,9 @@ class Game(
 
     fun move(entryId: Int) = book.moveToBookEntry(entryId)
 
-    fun editBookEntry(entryTitle: String) = book.editBookEntry(entryTitle)
+    fun setEntryTitle(entryTitle: String) = book.setEntryTitle(entryTitle)
 
-    fun note(note: String) = book.note(note)
+    fun setEntryNote(entryNote: String) = book.setEntryNote(entryNote)
 
     fun restart(): String {
         book.restart()

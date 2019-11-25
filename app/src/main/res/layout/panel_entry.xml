@@ -34,10 +34,9 @@
 
     <EditText
         android:id="@+id/entry_note_edit_text"
-        android:inputType="textMultiLine"
-        android:lines="3"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
+        android:inputType="textMultiLine"
         android:scrollbars="vertical"
         android:layout_margin="16dp"
         android:hint="@string/entry_note_hint"

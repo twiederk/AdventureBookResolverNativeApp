@@ -22,7 +22,7 @@ class EntryPanelTest {
             on { findViewById<TextView>(R.id.entry_note_edit_text) } doReturn entryNoteEditText
         }
         val game = Game()
-        game.book.note("myNote")
+        game.book.setEntryNote("myEntryNote")
 
         // Act
         EntryPanel(game).create(rootView)
@@ -43,9 +43,9 @@ class EntryPanelTest {
         // Arrange
         val game = Game()
         game.book = mock {
-            on { getEntryTitle() } doReturn "myTitle"
+            on { getEntryTitle() } doReturn "myEntryTitle"
             on { getEntryId() } doReturn 1
-            on { getEntryNote() } doReturn "myNote"
+            on { getEntryNote() } doReturn "myEntryNote"
         }
         val underTest = EntryPanel(game)
         underTest.entryTitleEditText = mock()
@@ -56,9 +56,9 @@ class EntryPanelTest {
         underTest.update()
 
         // Assert
-        verify(underTest.entryTitleEditText).setText("myTitle")
+        verify(underTest.entryTitleEditText).setText("myEntryTitle")
         verify(underTest.entryIdTextView).text = "(1)"
-        verify(underTest.entryNoteEditText).setText("myNote")
+        verify(underTest.entryNoteEditText).setText("myEntryNote")
     }
 
     @Test
@@ -69,17 +69,17 @@ class EntryPanelTest {
 
         // Arrange
         val editable: Editable = mock {
-            on { toString() } doReturn "myTitle"
+            on { toString() } doReturn "myEntryTitle"
         }
         val editText: EditText = mock {
             on { text } doReturn editable
         }
 
         // Act
-        GameOnFocusChangeListener { text -> game.book.editBookEntry(text) }.onFocusChange(editText, false)
+        GameOnFocusChangeListener { text -> game.book.setEntryTitle(text) }.onFocusChange(editText, false)
 
         // Assert
-        verify(game.book).editBookEntry("myTitle")
+        verify(game.book).setEntryTitle("myEntryTitle")
     }
 
     @Test
@@ -90,17 +90,17 @@ class EntryPanelTest {
 
         // Arrange
         val editable: Editable = mock {
-            on { toString() } doReturn "myNote"
+            on { toString() } doReturn "myEntryNote"
         }
         val editText: EditText = mock {
             on { text } doReturn editable
         }
 
         // Act
-        GameOnFocusChangeListener { text -> game.book.note(text) }.onFocusChange(editText, false)
+        GameOnFocusChangeListener { text -> game.book.setEntryNote(text) }.onFocusChange(editText, false)
 
         // Assert
-        verify(game.book).note("myNote")
+        verify(game.book).setEntryNote("myEntryNote")
     }
 
     @Test
@@ -110,7 +110,7 @@ class EntryPanelTest {
         game.book = mock()
 
         // Act
-        GameOnFocusChangeListener { text -> game.book.note(text) }.onFocusChange(mock(), true)
+        GameOnFocusChangeListener { text -> game.book.setEntryNote(text) }.onFocusChange(mock(), true)
 
         // Assert
         verifyZeroInteractions(game.book)
