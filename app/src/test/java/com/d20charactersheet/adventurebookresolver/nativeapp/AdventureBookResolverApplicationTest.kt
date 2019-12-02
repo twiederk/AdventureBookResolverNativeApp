@@ -17,6 +17,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val actionPanel: ActionPanel by inject()
     private val genericCommandPanel: ActionPanel by inject()
     private val goldPanel: GoldPanel by inject()
+    private val provisionsPanel: ProvisionsPanel by inject()
     private val itemPanel: ItemPanel by inject()
 
     @After
@@ -39,6 +40,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(actionPanel).isNotNull
         assertThat(genericCommandPanel).isNotNull
         assertThat(goldPanel).isNotNull
+        assertThat(provisionsPanel).isNotNull
         assertThat(itemPanel).isNotNull
     }
 }

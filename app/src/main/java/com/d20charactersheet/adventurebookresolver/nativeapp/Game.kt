@@ -97,4 +97,18 @@ class Game(
         book.editGold(-1)
     }
 
+    fun getProvisions() = book.getProvisions().toString()
+
+    fun increaseProvisions() {
+        book.editProvisions(1)
+    }
+
+    fun decreaseProvisions() {
+        book.editProvisions(-1)
+    }
+
+    fun eatProvision() {
+        book.eatProvision()
+    }
+
 }

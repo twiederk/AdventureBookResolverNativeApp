@@ -342,5 +342,44 @@ internal class GameTest {
         verify(book).editGold(-1)
     }
 
+    @Test
+    fun getProvisions() {
+        // Arrange
+        whenever(book.getProvisions()).doReturn(5)
 
+        // Act
+        val provisions = underTest.getProvisions()
+
+        // Assert
+        assertThat(provisions).isEqualTo("5")
+    }
+
+    @Test
+    fun increaseProvisions() {
+        // Act
+        underTest.increaseProvisions()
+
+        // Assert
+        verify(book).editProvisions(1)
+    }
+
+    @Test
+    fun decreaseProvisions() {
+        // Act
+        underTest.decreaseProvisions()
+
+        // Assert
+        verify(book).editProvisions(-1)
+    }
+
+    @Test
+    fun eatProvision() {
+        // Arrange
+
+        // Act
+        underTest.eatProvision()
+
+        // Assert
+        verify(book).eatProvision()
+    }
 }

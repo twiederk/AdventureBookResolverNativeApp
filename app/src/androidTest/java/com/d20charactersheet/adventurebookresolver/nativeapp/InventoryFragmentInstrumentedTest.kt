@@ -29,6 +29,11 @@ class InventoryFragmentInstrumentedTest : KoinTest {
         onView(withId(R.id.gold_value_text_view)).check(matches(withText("0")))
         onView(withId(R.id.gold_plus_button)).check(matches(withText("+")))
         onView(withId(R.id.gold_minus_button)).check(matches(withText("-")))
+        onView(withId(R.id.provisions_label_text_view)).check(matches(withText("Provisions")))
+        onView(withId(R.id.provisions_value_text_view)).check(matches(withText("10")))
+        onView(withId(R.id.provisions_plus_button)).check(matches(withText("+")))
+        onView(withId(R.id.provisions_minus_button)).check(matches(withText("-")))
+        onView(withId(R.id.provisions_eat_button)).check(matches(withText("Eat")))
         onView(withId(R.id.item_label_edit_text)).check(matches(isDisplayed()))
         onView(withId(R.id.item_add_button)).check(matches(withText("Add")))
     }

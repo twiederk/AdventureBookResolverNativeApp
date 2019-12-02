@@ -33,7 +33,11 @@
     <!-- GoldPanel -->
     <string name="gold">Gold</string>
 
-    <!-- InventoryPanel -->
+    <!-- ProvisionsPanel -->
+    <string name="provisions">Provisions</string>
+    <string name="eat">Eat</string>
+
+    <!-- ItemPanel -->
     <string name="item_label_hint">enter item</string>
     <string name="item_add_button">Add</string>
 

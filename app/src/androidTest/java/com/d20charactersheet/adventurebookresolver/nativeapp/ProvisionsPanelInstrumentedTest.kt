@@ -13,39 +13,50 @@ import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
 
-class GoldPanelInstrumentedTest : KoinTest {
+class ProvisionsPanelInstrumentedTest : KoinTest {
 
     private val game: Game by inject()
 
     @Before
     fun before() {
-        game.book = AdventureBook(inventory = Inventory(gold = 5))
+        game.book = AdventureBook(inventory = Inventory(provisions = 4))
     }
 
 
     @Test
-    fun gold_increase() {
+    fun provisions_increase() {
         // Arrange
         launchFragmentInContainer<InventoryFragment>()
 
         // Act
-        onView(withId(R.id.gold_plus_button)).perform(ViewActions.click())
+        onView(withId(R.id.provisions_plus_button)).perform(ViewActions.click())
 
         // Assert
-        onView(withId(R.id.gold_value_text_view)).check(matches(withText("6")))
+        onView(withId(R.id.provisions_value_text_view)).check(matches(withText("5")))
     }
 
     @Test
-    fun gold_decrease() {
+    fun provisions_decrease() {
         // Arrange
         launchFragmentInContainer<InventoryFragment>()
 
         // Act
-        onView(withId(R.id.gold_minus_button)).perform(ViewActions.click())
+        onView(withId(R.id.provisions_minus_button)).perform(ViewActions.click())
 
         // Assert
-        onView(withId(R.id.gold_value_text_view)).check(matches(withText("4")))
+        onView(withId(R.id.provisions_value_text_view)).check(matches(withText("3")))
     }
 
+    @Test
+    fun provisions_eat() {
+        // Arrange
+        launchFragmentInContainer<InventoryFragment>()
+
+        // Act
+        onView(withId(R.id.provisions_eat_button)).perform(ViewActions.click())
+
+        // Assert
+        onView(withId(R.id.provisions_value_text_view)).check(matches(withText("3")))
+    }
 
 }

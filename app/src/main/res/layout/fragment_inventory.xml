@@ -6,6 +6,8 @@
 
     <include layout="@layout/panel_gold" />
 
+    <include layout="@layout/panel_provisions" />
+
     <include layout="@layout/panel_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

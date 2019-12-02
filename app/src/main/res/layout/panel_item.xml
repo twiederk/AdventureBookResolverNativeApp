@@ -27,7 +27,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/item_label_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gold_plus_button" />
+        app:layout_constraintTop_toBottomOf="@+id/provisions_plus_button" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/item_recycler_view"
