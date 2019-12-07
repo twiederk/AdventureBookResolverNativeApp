@@ -3,4 +3,9 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <!-- Action Panel -->
+    <color name="entryVisited">#71abdd</color>
+    <color name="entryUnvisited">#ffff88</color>
+
 </resources>

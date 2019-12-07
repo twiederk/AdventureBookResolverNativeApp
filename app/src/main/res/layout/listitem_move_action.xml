@@ -8,7 +8,8 @@
         android:id="@+id/move_action_label_text_view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:layout_marginStart="8dp" />
 
     <Button
         android:id="@+id/move_action_entry_id_button"

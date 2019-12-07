@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="InventoryFragment">
+    tools:context=".gui.inventory.InventoryFragment">
 
     <include layout="@layout/panel_gold" />
 
