@@ -114,6 +114,47 @@ internal class CommandTest {
         verify(game).restart()
     }
 
+
+    @Test
+    fun `mark way point`() {
+        // Arrange
+        val underTest = Command.SetWayMark
+
+        // Act
+        underTest.execute(game, "WAY_POINT")
+
+        // Assert
+        assertThat(underTest.toString()).isEqualTo("Set way mark")
+        verify(game).setWayMark("WAY_POINT")
+
+    }
+
+    @Test
+    fun `display way points`() {
+        // Arrange
+        val underTest = Command.WayPoints
+
+        // Act
+        underTest.execute(game, "")
+
+        // Assert
+        assertThat(underTest.toString()).isEqualTo("Way points")
+        verify(game).displayWayPoints()
+    }
+
+    @Test
+    fun solve() {
+        // Arrange
+        val underTest = Command.Solve
+
+        // Act
+        underTest.execute(game, "")
+
+        // Assert
+        assertThat(underTest.toString()).isEqualTo("Solve")
+        verify(game).solve()
+    }
+
     @Test
     fun `list of all commands sorted by name`() {
         // Act
@@ -128,11 +169,12 @@ internal class CommandTest {
             "Roll die",
             "Run",
             "Search",
-            "Unvisited"
+            "Set way mark",
+            "Solve",
+            "Unvisited",
+            "Way points"
         )
     }
-
-
 }
 
 

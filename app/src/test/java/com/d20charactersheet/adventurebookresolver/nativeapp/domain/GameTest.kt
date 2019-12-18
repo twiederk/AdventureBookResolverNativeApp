@@ -171,7 +171,6 @@ internal class GameTest {
     }
 
 
-
     @Test
     fun rollDie() {
 
@@ -421,5 +420,72 @@ internal class GameTest {
 
         // Assert
         assertThat(hasProvisions).isTrue()
+    }
+
+    @Test
+    fun markWayMark_asWayPoint() {
+        // Arrange
+        whenever(book.getEntryId()).doReturn(1)
+        whenever(book.getEntryTitle()).doReturn("myTitle")
+        whenever(book.getEntryWayMark()).doReturn(WayMark.WAY_POINT)
+
+        // Act
+        val output = underTest.setWayMark("NORMAL")
+
+        // Assert
+        verify(book).setEntryWayMark(WayMark.NORMAL)
+        assertThat(output).isEqualTo("Set (1) - myTitle to WAY_POINT")
+    }
+
+    @Test
+    fun displayWayPoints() {
+        // Arrange
+        whenever(book.getWayPoints()).doReturn(
+            listOf(
+                BookEntry(id = 10, title = "Hallway", note = "my note"), //
+                BookEntry(id = 20, title = "Library") //
+            )
+        )
+
+        // Act
+        val output = underTest.displayWayPoints()
+
+        // Assert
+        assertThat(output).isEqualToIgnoringNewLines(
+            """       
+            (10) Hallway: my note
+            (20) Library: 
+        """.trimIndent()
+        )
+    }
+
+    @Test
+    fun solve() {
+        // Arrange
+        whenever(book.solve()).doReturn(
+            listOf(
+                listOf(
+                    BookEntry(11, wayMark = WayMark.WAY_POINT),
+                    BookEntry(22),
+                    BookEntry(33, wayMark = WayMark.WAY_POINT)
+                ),
+                listOf(BookEntry(88, wayMark = WayMark.WAY_POINT), BookEntry(99, wayMark = WayMark.WAY_POINT))
+            )
+        )
+
+        // Act
+        val output = underTest.solve()
+
+        // Assert
+//        - display way points and number of entries:
+//        - Order of way points: 1, 3, 5
+//        - Total of entries: 15
+
+        assertThat(output).isEqualToIgnoringNewLines(
+            """
+            11, 33 (entries: 3)
+            88, 99 (entries: 2)
+            """.trimIndent()
+        )
     }
 }

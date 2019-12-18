@@ -85,7 +85,11 @@ class ExecuteOnClickListener : View.OnClickListener, KoinComponent {
     private fun executeCommand(): String {
         val command = genericCommandPanel.getSelectedCommand()
         val argument = genericCommandPanel.getArgument()
-        return command.execute(game, argument)
+        return try {
+            command.execute(game, argument)
+        } catch (exception: Exception) {
+            exception.message ?: "Exception throw with no message"
+        }
     }
 }
 

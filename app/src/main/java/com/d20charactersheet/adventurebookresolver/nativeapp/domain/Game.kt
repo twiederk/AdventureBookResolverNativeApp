@@ -116,4 +116,27 @@ class Game(
 
     fun hasProvisions() = book.getProvisions() > 0
 
+    fun setWayMark(wayMark: String): String {
+        book.setEntryWayMark(WayMark.valueOf(wayMark))
+        return "Set (${book.getEntryId()}) - ${book.getEntryTitle()} to ${book.getEntryWayMark()}"
+    }
+
+    fun displayWayPoints(): String = book.getWayPoints().joinToString(
+        separator = "\n",
+        transform = { "(${it.id}) ${it.title}: ${it.note}" }
+    )
+
+    fun solve(): String = book.solve()
+        .joinToString(
+            separator = "\n",
+            transform = { solution ->
+                solution
+                    .filter { bookEntry -> bookEntry.wayMark == WayMark.WAY_POINT }
+                    .joinToString(
+                        transform = { bookEntry -> bookEntry.id.toString() },
+                        postfix = " (entries: ${solution.size})"
+                    )
+            }
+        )
+
 }
