@@ -40,7 +40,7 @@ class ActionMoveAdapter : RecyclerView.Adapter<ActionMoveViewHolder>(), KoinComp
     }
 }
 
-class ActionMoveViewHolder(rootView: View, private val colorHelper: ColorHelper = ColorHelper()) :
+class ActionMoveViewHolder(rootView: View, private val actionColor: ActionColor = ActionColor()) :
     RecyclerView.ViewHolder(rootView), KoinComponent {
 
     private val game: Game by inject()
@@ -60,7 +60,7 @@ class ActionMoveViewHolder(rootView: View, private val colorHelper: ColorHelper 
 
     private fun setBackgroundColor(entryId: Int) {
         val entry = game.getEntryFromNextEntries(entryId)
-        background.setBackgroundColor(colorHelper.getColor(background, entry.visit))
+        background.setBackgroundColor(actionColor.getColor(background, entry.wayMark, entry.visit))
     }
 
 }

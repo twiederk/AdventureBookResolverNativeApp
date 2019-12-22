@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
+import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
@@ -64,15 +65,15 @@ class ActionMoveViewHolderKoinTest : KoinTest {
             on { findViewById<TextView>(R.id.move_action_label_text_view) } doReturn actionMoveLabelTextView
             on { findViewById<Button>(R.id.move_action_entry_id_button) } doReturn actionMoveEntryIdButton
         }
-        val colorHelper: ColorHelper = mock {
-            on { getColor(rootView, Visit.VISITED) } doReturn 1000
+        val actionColor: ActionColor = mock {
+            on { getColor(rootView, WayMark.NORMAL, Visit.VISITED) } doReturn 1000
         }
         whenever(game.getEntryFromNextEntries(10)).doReturn(BookEntry(id = 10, visit = Visit.VISITED))
 
         // Act
         ActionMoveViewHolder(
             rootView,
-            colorHelper
+            actionColor
         ).setAction("myActionLabel", 10)
 
         // Assert
