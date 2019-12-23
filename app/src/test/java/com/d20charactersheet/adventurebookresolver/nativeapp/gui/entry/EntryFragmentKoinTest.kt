@@ -23,6 +23,7 @@ internal class EntryFragmentKoinTest : KoinTest {
 
     private val entryPanel: EntryPanel by inject()
     private val actionPanel: ActionPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     @Before
     fun before() {
@@ -31,6 +32,7 @@ internal class EntryFragmentKoinTest : KoinTest {
         }
         declareMock<EntryPanel>()
         declareMock<ActionPanel>()
+        declareMock<GraphPanel>()
     }
 
 
@@ -51,13 +53,13 @@ internal class EntryFragmentKoinTest : KoinTest {
         val savedInstanceState = mock<Bundle>()
 
         // Act
-        EntryFragment()
-            .onCreateView(inflater, container, savedInstanceState)
+        EntryFragment().onCreateView(inflater, container, savedInstanceState)
 
         // Assert
         verify(inflater).inflate(R.layout.fragment_entry, container, false)
         verify(entryPanel).create(any())
         verify(actionPanel).create(any())
+        verify(graphPanel).create(any())
     }
 
     @Test
@@ -70,6 +72,7 @@ internal class EntryFragmentKoinTest : KoinTest {
         // Assert
         verify(entryPanel).update()
         verify(actionPanel).update()
+        verify(graphPanel).update()
     }
 
 }

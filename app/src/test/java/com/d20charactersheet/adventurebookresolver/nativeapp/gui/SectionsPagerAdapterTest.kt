@@ -10,11 +10,10 @@ import org.junit.Test
 
 class SectionsPagerAdapterTest {
 
-    private val underTest =
-        SectionsPagerAdapter(mock())
+    private val underTest = SectionsPagerAdapter(mock())
 
     @Test
-    fun count_maxNumberOfFragments_4() {
+    fun count_maxNumberOfFragments_5() {
         // Act
         val count = underTest.count
 

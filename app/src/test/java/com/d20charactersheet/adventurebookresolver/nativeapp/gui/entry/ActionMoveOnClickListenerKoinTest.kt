@@ -20,6 +20,7 @@ class ActionMoveOnClickListenerKoinTest : KoinTest {
     private val game: Game by inject()
     private val entryPanel: EntryPanel by inject()
     private val actionPanel: ActionPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     @Before
     fun before() {
@@ -42,6 +43,7 @@ class ActionMoveOnClickListenerKoinTest : KoinTest {
         val actionMoveEntryIdButton: Button = mock {
             on { text } doReturn "100"
         }
+        declareMock<GraphPanel>()
 
         // Act
         ActionMoveOnClickListener().onClick(actionMoveEntryIdButton)
@@ -50,6 +52,7 @@ class ActionMoveOnClickListenerKoinTest : KoinTest {
         verify(game).move(100)
         verify(entryPanel).update()
         verify(actionPanel).update()
+        verify(graphPanel).update()
     }
 
 }

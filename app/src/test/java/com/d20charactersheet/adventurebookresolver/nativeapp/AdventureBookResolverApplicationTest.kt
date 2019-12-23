@@ -5,7 +5,9 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.ActionPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.BookRenderer
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.EntryPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.GoldPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ItemPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ProvisionsPanel
@@ -28,6 +30,8 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val goldPanel: GoldPanel by inject()
     private val provisionsPanel: ProvisionsPanel by inject()
     private val itemPanel: ItemPanel by inject()
+    private val graphPanel: GraphPanel by inject()
+    private val bookRenderer: BookRenderer by inject()
 
     @After
     fun after() {
@@ -51,5 +55,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(goldPanel).isNotNull
         assertThat(provisionsPanel).isNotNull
         assertThat(itemPanel).isNotNull
+        assertThat(graphPanel).isNotNull
+        assertThat(bookRenderer).isNotNull
     }
 }

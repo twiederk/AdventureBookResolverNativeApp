@@ -70,6 +70,7 @@ class ActionAddOnClickListener : View.OnClickListener, KoinComponent {
 
     private val game: Game by inject()
     private val actionPanel: ActionPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     override fun onClick(v: View?) {
         val actionLabel = actionPanel.getActionLabel()
@@ -82,6 +83,7 @@ class ActionAddOnClickListener : View.OnClickListener, KoinComponent {
             game.addAction(actionLabel, actionId.toInt())
             actionPanel.clear()
             actionPanel.update()
+            graphPanel.update()
         }
     }
 

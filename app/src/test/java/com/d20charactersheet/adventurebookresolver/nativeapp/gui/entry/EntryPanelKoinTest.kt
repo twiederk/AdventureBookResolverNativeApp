@@ -5,12 +5,31 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
+import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.mock.declareMock
 
-class EntryPanelTest {
+class EntryPanelKoinTest : KoinTest {
+
+    @Before
+    fun before() {
+        startKoin {
+            modules(appModule)
+        }
+    }
+
+    @After
+    fun after() {
+        stopKoin()
+    }
 
     @Test
     fun `create entry panel`() {
@@ -30,13 +49,13 @@ class EntryPanelTest {
         EntryPanel(game).create(rootView)
 
         // Assert
-        argumentCaptor<GameOnFocusChangeListener> {
+        argumentCaptor<EntryOnFocusChangeListener> {
             verify(entryTitleEditText).onFocusChangeListener = capture()
-            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
+            assertThat(firstValue).isInstanceOf(EntryOnFocusChangeListener::class.java)
         }
-        argumentCaptor<GameOnFocusChangeListener> {
+        argumentCaptor<EntryOnFocusChangeListener> {
             verify(entryNoteEditText).onFocusChangeListener = capture()
-            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
+            assertThat(firstValue).isInstanceOf(EntryOnFocusChangeListener::class.java)
         }
     }
 
@@ -49,8 +68,7 @@ class EntryPanelTest {
             on { getEntryId() } doReturn 1
             on { getEntryNote() } doReturn "myEntryNote"
         }
-        val underTest =
-            EntryPanel(game)
+        val underTest = EntryPanel(game)
         underTest.entryTitleEditText = mock()
         underTest.entryIdTextView = mock()
         underTest.entryNoteEditText = mock()
@@ -67,10 +85,11 @@ class EntryPanelTest {
     @Test
     fun `set entry title on focus lost`() {
 
+        // Arrange
+        declareMock<GraphPanel>()
         val game = Game()
         game.book = mock()
 
-        // Arrange
         val editable: Editable = mock {
             on { toString() } doReturn "myEntryTitle"
         }
@@ -79,11 +98,8 @@ class EntryPanelTest {
         }
 
         // Act
-        GameOnFocusChangeListener { text ->
-            game.book.setEntryTitle(
-                text
-            )
-        }.onFocusChange(editText, false)
+        EntryOnFocusChangeListener { text -> game.book.setEntryTitle(text) }
+            .onFocusChange(editText, false)
 
         // Assert
         verify(game.book).setEntryTitle("myEntryTitle")
@@ -92,10 +108,11 @@ class EntryPanelTest {
     @Test
     fun `edit entry note on focus lost`() {
 
+        // Arrange
+        declareMock<GraphPanel>()
         val game = Game()
         game.book = mock()
 
-        // Arrange
         val editable: Editable = mock {
             on { toString() } doReturn "myEntryNote"
         }
@@ -104,11 +121,8 @@ class EntryPanelTest {
         }
 
         // Act
-        GameOnFocusChangeListener { text ->
-            game.book.setEntryNote(
-                text
-            )
-        }.onFocusChange(editText, false)
+        EntryOnFocusChangeListener { text -> game.book.setEntryNote(text) }
+            .onFocusChange(editText, false)
 
         // Assert
         verify(game.book).setEntryNote("myEntryNote")
@@ -121,11 +135,8 @@ class EntryPanelTest {
         game.book = mock()
 
         // Act
-        GameOnFocusChangeListener { text ->
-            game.book.setEntryNote(
-                text
-            )
-        }.onFocusChange(mock(), true)
+        EntryOnFocusChangeListener { text -> game.book.setEntryNote(text) }
+            .onFocusChange(mock(), true)
 
         // Assert
         verifyZeroInteractions(game.book)

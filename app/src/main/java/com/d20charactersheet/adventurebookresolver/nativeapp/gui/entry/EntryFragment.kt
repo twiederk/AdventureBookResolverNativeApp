@@ -12,12 +12,14 @@ open class EntryFragment : LogFragment() {
 
     private val entryPanel: EntryPanel by inject()
     private val actionPanel: ActionPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
         val rootView = inflater.inflate(R.layout.fragment_entry, container, false)
         entryPanel.create(rootView)
         actionPanel.create(rootView)
+        graphPanel.create(rootView)
         return rootView
     }
 
@@ -25,6 +27,7 @@ open class EntryFragment : LogFragment() {
         super.onResume()
         entryPanel.update()
         actionPanel.update()
+        graphPanel.update()
     }
 
 }

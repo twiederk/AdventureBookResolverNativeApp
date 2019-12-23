@@ -5,7 +5,6 @@ import android.widget.EditText
 import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.GameOnFocusChangeListener
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.doReturn
 import com.nhaarman.mockitokotlin2.mock
@@ -38,9 +37,9 @@ class BookPanelTest {
         // Assert
         assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
         assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
-        argumentCaptor<GameOnFocusChangeListener> {
+        argumentCaptor<BookOnFocusChangeListener> {
             verify(bookNoteEditText).onFocusChangeListener = capture()
-            assertThat(firstValue).isInstanceOf(GameOnFocusChangeListener::class.java)
+            assertThat(firstValue).isInstanceOf(BookOnFocusChangeListener::class.java)
         }
     }
 

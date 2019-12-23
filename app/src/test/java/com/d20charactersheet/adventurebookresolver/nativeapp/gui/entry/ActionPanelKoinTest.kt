@@ -11,7 +11,6 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
@@ -26,7 +25,7 @@ import org.koin.test.mock.declareMock
 internal class ActionPanelKoinTest : KoinTest {
 
     private val game: Game by inject()
-    private val bookPanel: BookPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     @Before
     fun before() {
@@ -191,14 +190,14 @@ internal class ActionPanelKoinTest : KoinTest {
         declareMock<Game> {
             whenever(getAction(0)).doReturn(Action("myActionToDelete", BookEntry(1), BookEntry(10)))
         }
-        declareMock<BookPanel>()
+        declareMock<GraphPanel>()
 
         // Act
         ActionMoveAdapter().deleteItem(0)
 
         // Assert
         verify(game).delete(10)
-        verify(bookPanel).update()
+        verify(graphPanel).update()
     }
 
     @Test

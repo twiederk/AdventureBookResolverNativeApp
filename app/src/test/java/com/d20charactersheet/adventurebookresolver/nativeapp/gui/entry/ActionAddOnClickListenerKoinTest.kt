@@ -2,7 +2,6 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry
 
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.nhaarman.mockitokotlin2.*
 import org.junit.After
 import org.junit.Before
@@ -17,7 +16,7 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
 
     private val game: Game by inject()
     private val actionPanel: ActionPanel by inject()
-    private val bookPanel: BookPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     @Before
     fun before() {
@@ -34,7 +33,7 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
     @Test
     fun `if label is empty do not add an action`() {
         // Arrange
-        declareMock<BookPanel>()
+        declareMock<GraphPanel> { }
         declareMock<ActionPanel> {
             whenever(getActionLabel()).doReturn("")
             whenever(getActionId()).doReturn("10")
@@ -46,13 +45,13 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         // Assert
         verify(actionPanel).getActionLabel()
         verify(actionPanel).getActionId()
-        verifyNoMoreInteractions(actionPanel, bookPanel)
+        verifyNoMoreInteractions(actionPanel, graphPanel)
     }
 
     @Test
     fun `if id is empty do not add an action`() {
         // Arrange
-        declareMock<BookPanel>()
+        declareMock<GraphPanel>()
         declareMock<ActionPanel> {
             whenever(getActionLabel()).doReturn("myActionLabel")
             whenever(getActionId()).doReturn("")
@@ -64,18 +63,19 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         // Assert
         verify(actionPanel).getActionLabel()
         verify(actionPanel).getActionId()
-        verifyNoMoreInteractions(actionPanel, bookPanel)
+        verifyNoMoreInteractions(actionPanel, graphPanel)
     }
 
     @Test
     fun `add action`() {
         // Arrange
         declareMock<Game>()
-        declareMock<BookPanel>()
+        declareMock<EntryPanel>()
         declareMock<ActionPanel> {
             whenever(getActionLabel()).doReturn("myActionLabel")
             whenever(getActionId()).doReturn("10")
         }
+        declareMock<GraphPanel>()
 
         // Act
         ActionAddOnClickListener().onClick(mock())
@@ -84,6 +84,7 @@ class ActionAddOnClickListenerKoinTest : KoinTest {
         verify(game).addAction("myActionLabel", 10)
         verify(actionPanel).clear()
         verify(actionPanel).update()
+        verify(graphPanel).update()
     }
 
 

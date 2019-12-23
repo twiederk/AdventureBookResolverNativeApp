@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.OnSwipeListener
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -17,7 +16,7 @@ import org.koin.core.inject
 class ActionMoveAdapter : RecyclerView.Adapter<ActionMoveViewHolder>(), KoinComponent {
 
     private val game: Game by inject()
-    private val bookPanel: BookPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActionMoveViewHolder {
         val rootView = LayoutInflater.from(parent.context).inflate(R.layout.listitem_move_action, parent, false)
@@ -36,7 +35,7 @@ class ActionMoveAdapter : RecyclerView.Adapter<ActionMoveViewHolder>(), KoinComp
     fun deleteItem(position: Int) {
         val action = game.getAction(position)
         game.delete(action.destination.id)
-        bookPanel.update()
+        graphPanel.update()
     }
 }
 
@@ -72,6 +71,7 @@ class ActionMoveOnClickListener : View.OnClickListener, KoinComponent {
     private val game: Game by inject()
     private val entryPanel: EntryPanel by inject()
     private val actionPanel: ActionPanel by inject()
+    private val graphPanel: GraphPanel by inject()
 
     override fun onClick(view: View?) {
         val button: Button? = view as? Button
@@ -79,6 +79,7 @@ class ActionMoveOnClickListener : View.OnClickListener, KoinComponent {
         game.move(entryId)
         entryPanel.update()
         actionPanel.update()
+        graphPanel.update()
     }
 
 }

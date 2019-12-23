@@ -6,7 +6,6 @@ import android.widget.TextView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.Panel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.GameOnFocusChangeListener
 
 class BookPanel(private val game: Game) :
     Panel {
@@ -20,7 +19,7 @@ class BookPanel(private val game: Game) :
         entriesValueTextView = rootView.findViewById(R.id.entries_value_text_view)
         bookNoteEditText = rootView.findViewById(R.id.book_note_edit_text)
         bookNoteEditText.onFocusChangeListener =
-            GameOnFocusChangeListener { text ->
+            BookOnFocusChangeListener { text ->
                 game.book.note = text
             }
     }
@@ -35,6 +34,18 @@ class BookPanel(private val game: Game) :
     private fun displayBookEntries(numberOfBookEntries: Int, totalNumberOfBookEntries: Int): String {
         val percentage = "%.0f".format(numberOfBookEntries / totalNumberOfBookEntries.toFloat() * 100)
         return "$numberOfBookEntries / $totalNumberOfBookEntries ($percentage%)"
+    }
+
+}
+
+class BookOnFocusChangeListener(private val gameFunction: (text: String) -> Unit) :
+    View.OnFocusChangeListener {
+
+    override fun onFocusChange(view: View, hasFocus: Boolean) {
+        if (!hasFocus) {
+            val editText = view as EditText
+            gameFunction(editText.text.toString())
+        }
     }
 
 }
