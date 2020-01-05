@@ -18,7 +18,7 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
 
     private fun drawGraphEntry(graphEntry: GraphEntry, canvas: Canvas) {
         drawCurrentEntryRect(graphEntry, canvas)
-        drawEntryRect(graphEntry, canvas)
+        drawEntry(graphEntry, canvas)
     }
 
     private fun drawCurrentEntryRect(graphEntry: GraphEntry, canvas: Canvas) {
@@ -33,7 +33,7 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
         }
     }
 
-    private fun drawEntryRect(graphEntry: GraphEntry, canvas: Canvas) {
+    private fun drawEntry(graphEntry: GraphEntry, canvas: Canvas) {
         setPaintColor(GraphPaint.entryPaint, graphEntry.entry)
         canvas.drawRect(
             graphEntry.left,
@@ -41,6 +41,12 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             graphEntry.right,
             graphEntry.bottom,
             GraphPaint.entryPaint
+        )
+        canvas.drawText(
+            "(${graphEntry.entry.id})",
+            graphEntry.left,
+            graphEntry.top + (100),
+            GraphPaint.textPaint
         )
         canvas.drawText(
             graphEntry.entry.title,

@@ -37,9 +37,8 @@ class Game(
 
     fun setEntryNote(entryNote: String) = book.setEntryNote(entryNote)
 
-    fun restart(): String {
+    fun restart() {
         book.restart()
-        return "Restarted book"
     }
 
     fun addItemToInventory(item: String) = book.addItemToInventory(item)

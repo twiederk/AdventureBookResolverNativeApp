@@ -60,6 +60,7 @@ class GraphCanvasTest {
         // Assert
         verify(actionColor).getColor(view, WayMark.NORMAL, Visit.UNVISITED)
         verify(canvas).drawRect(100f, 200f, 300f, 400f, GraphPaint.entryPaint)
+        verify(canvas).drawText("(1)", 100f, 300f, GraphPaint.textPaint)
         verify(canvas).drawText("myTitle", 100f, 400f, GraphPaint.textPaint)
         verifyNoMoreInteractions(actionColor, canvas)
     }
@@ -81,6 +82,7 @@ class GraphCanvasTest {
         verify(actionColor).getColor(view, WayMark.NORMAL, Visit.UNVISITED)
         verify(canvas).drawRect(50f, 150f, 350f, 450f, GraphPaint.currentEntryPaint)
         verify(canvas).drawRect(100f, 200f, 300f, 400f, GraphPaint.entryPaint)
+        verify(canvas).drawText("(1)", 100f, 300f, GraphPaint.textPaint)
         verify(canvas).drawText("myTitle", 100f, 400f, GraphPaint.textPaint)
         verifyNoMoreInteractions(actionColor, canvas)
     }

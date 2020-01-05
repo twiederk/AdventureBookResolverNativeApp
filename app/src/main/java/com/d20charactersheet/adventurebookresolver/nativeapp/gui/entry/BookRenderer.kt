@@ -97,15 +97,11 @@ class BookRenderer(private val game: Game) {
 
     fun center(): Pair<Float, Float> {
         val graphEntry = graphEntries.find { it.entry.id == game.book.getEntryId() }
-        var center = Pair(WIDTH / 2, HEIGHT / 2)
-        if (graphEntry != null) {
+        return graphEntry?.let {
             val centerX = graphEntry.left + (WIDTH / 2)
             val centerY = graphEntry.top + (HEIGHT / 2)
-            center = Pair(centerX, centerY)
-        }
-        return center
-
+            Pair(centerX, centerY)
+        } ?: Pair(WIDTH / 2, HEIGHT / 2)
     }
-
 
 }

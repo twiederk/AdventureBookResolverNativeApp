@@ -1,6 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
@@ -15,17 +16,20 @@ class MainActivity : LogActivity() {
     private val game: Game by inject()
     private val toolbarPanel: ToolbarPanel by inject()
 
+    internal var dialogBuilder: DialogBuilder = DialogBuilder()
+    private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
+
         toolbarPanel.create(findViewById(android.R.id.content))
 
         setSupportActionBar(toolbarPanel.getToolbar())
-        container.adapter =
-            SectionsPagerAdapter(
-                supportFragmentManager
-            )
+        sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
+        container.adapter = sectionsPagerAdapter
 
         fab.setOnClickListener { game.saveBook() }
 
@@ -53,24 +57,29 @@ class MainActivity : LogActivity() {
         toolbarPanel.update()
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        val id = item.itemId
-
-        if (id == R.id.action_settings) {
-            return true
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.option_restart -> restart()
+            else -> super.onOptionsItemSelected(item)
         }
 
-        return super.onOptionsItemSelected(item)
+    private fun restart(): Boolean {
+        val restartDialog = dialogBuilder.create(this, RestartOnClickListener())
+        restartDialog.show()
+        return true
     }
 
+    inner class RestartOnClickListener : DialogInterface.OnClickListener {
+
+        override fun onClick(dialog: DialogInterface?, which: Int) {
+            game.restart()
+            sectionsPagerAdapter.getItem(container.currentItem).onResume()
+        }
+
+    }
 }

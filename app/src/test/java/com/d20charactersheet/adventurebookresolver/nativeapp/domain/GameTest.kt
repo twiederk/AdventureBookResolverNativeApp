@@ -34,10 +34,9 @@ internal class GameTest {
     @Test
     fun `restart game`() {
         // Act
-        val result = underTest.restart()
+        underTest.restart()
 
         // Assert
-        assertThat(result).isEqualTo("Restarted book")
         verify(book).restart()
     }
 

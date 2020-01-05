@@ -2,7 +2,7 @@
 
     <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="option_restart">Restart</string>
 
     <!-- GenericCommandFragment -->
     <string name="execute_button_text">Execute</string>
@@ -40,5 +40,10 @@
     <!-- ItemPanel -->
     <string name="item_label_hint">enter item</string>
     <string name="item_add_button">Add</string>
+
+    <!-- RestartDialog -->
+    <string name="restart_message">Restart adventure at book entry 1?</string>
+    <string name="restart">Restart</string>
+    <string name="cancel">Cancel</string>
 
 </resources>
