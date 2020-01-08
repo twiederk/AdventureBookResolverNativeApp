@@ -100,6 +100,64 @@
             		background-color: #dd71ab;
             }
 
+             /* The Modal (background) */
+            .modal {
+              display: none; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              left: 0;
+              top: 0;
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+              background-color: #fefefe;
+              margin: 15% auto; /* 15% from the top and centered */
+              padding: 20px;
+              border: 1px solid #888;
+              width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+              color: #aaa;
+              float: right;
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+              color: black;
+              text-decoration: none;
+              cursor: pointer;
+            }
+
+
+             /* The Modal (background) */
+            .action-add-modal {
+              display: none; /* Hidden by default */
+              position: fixed; /* Stay in place */
+              z-index: 1; /* Sit on top */
+              left: 0;
+              top: 0;
+              width: 350px;
+              overflow: auto; /* Enable scroll if needed */
+              background-color: rgb(0,0,0); /* Fallback color */
+              background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .action-add-modal-content {
+              background-color: #fefefe;
+              margin: 15% auto; /* 15% from the top and centered */
+              padding: 20px;
+              border: 1px solid #888;
+              width: 80%; /* Could be more or less, depending on screen size */
+            }
 
         </style>
     </head>
@@ -116,7 +174,7 @@
 
                 <div id="myLinks">
 
-                    <a>Restart</a>
+                    <a id="restart">Restart</a>
                 </div>
 
                 <a
@@ -134,7 +192,10 @@
 
                     <button class="action-button">
 
-                        <i class="fa fa-home"></i>
+                        <span id="actionAdd">
+
+                            <i class="fa fa-plus"></i>
+                        </span>
                     </button>
                 </div>
 
@@ -163,28 +224,6 @@
                     </p>
 
                     <div class="add-action-panel">
-
-                        <p>
-
-                            <label>
-
-                                <input
-                                        type="text"
-                                        value="&lt;action label&gt;" />
-                            </label>
-
-                            <label>
-
-                                <input
-                                        style="width: 50px;"
-                                        type="text"
-                                        value="&lt;id&gt;" />
-                            </label>
-
-                            <input
-                                    type="button"
-                                    value="Add" />
-                        </p>
 
                         <div class="actions-list">
 
@@ -260,7 +299,140 @@
                 }
             }
 
+        </script>
+
+        <!-- Restart Dialog -->
+
+        <div
+                class="modal"
+                id="restartDialog">
+
+            <div class="modal-content">
+
+                <span
+                        id="restartClose"
+                        class="close">&times;</span>
+
+                <p>Restart adventure at book entry 1?
+
+                    <br />
+
+                    <button>CANCEL</button>
+
+                    <button>RESTART</button>
+                </p>
+            </div>
+
+        </div>
+
+        <script>
+            // Get the modal
+            var restartDialog = document.getElementById("restartDialog");
+
+            // Get the button that opens the modal
+            var restartLink = document.getElementById("restart");
+
+            // Get the <span> element that closes the modal
+            var restartClose = document.getElementById("restartClose");
+
+            // When the user clicks on the button, open the modal
+            restartLink.onclick = function() {
+              restartDialog.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            restartClose.onclick = function() {
+              restartDialog.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+              if (event.target == restartDialog) {
+                restartDialog.style.display = "none";
+              }
+            }
+
 
         </script>
+
+
+        <!-- Action Add Dialog -->
+
+        <div
+                class="action-add-modal"
+                id="actionAddDialog">
+
+            <div class="action-add-modal-content">
+
+                <span
+                        id="actionAddClose"
+                        class="close">&times;</span>
+
+                <p>
+
+                    <label>
+
+                        Action:
+
+                        <input
+                                type="text"
+                                value="&lt;action label&gt;" />
+                    </label>
+
+                    <br />
+
+                    <label>
+
+                        Id:
+
+                        <input
+                                style="width: 50px;"
+                                type="text"
+                                value="&lt;id&gt;" />
+                    </label>
+
+                    <br />
+
+                    <button>CANCEL</button>
+
+                    <button>ADD</button>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <script>
+            // Get the modal
+            var actionAddDialog = document.getElementById("actionAddDialog");
+
+            // Get the button that opens the modal
+            var actionAddLink = document.getElementById("actionAdd");
+
+            // Get the <span> element that closes the modal
+            var actionAddClose = document.getElementById("actionAddClose");
+
+            // When the user clicks on the button, open the modal
+            actionAddLink.onclick = function() {
+              actionAddDialog.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            actionAddClose.onclick = function() {
+              actionAddDialog.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+              if (event.target == actionAddDialog) {
+                actionAddDialog.style.display = "none";
+              }
+            }
+
+
+
+        </script>
+
     </body>
 </html>

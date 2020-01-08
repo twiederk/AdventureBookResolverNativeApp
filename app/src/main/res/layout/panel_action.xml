@@ -2,58 +2,25 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/action_label_edit_text"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/action_label_hint"
-        android:inputType="text"
-        android:gravity="start"
-        android:autofillHints=""
-        app:layout_constraintEnd_toStartOf="@+id/action_id_edit_text"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@+id/action_add_button" />
-
-    <EditText
-        android:id="@+id/action_id_edit_text"
-        android:layout_width="40dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        android:hint="@string/action_id_hint"
-        android:inputType="number"
-        android:gravity="center_horizontal"
-        android:autofillHints=""
-        app:layout_constraintEnd_toStartOf="@+id/action_add_button"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/action_label_edit_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/action_add_button" />
-
-    <Button
-        android:id="@+id/action_add_button"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="@string/action_add_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/action_id_edit_text"
-        app:layout_constraintTop_toBottomOf="@+id/entry_note_edit_text" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/action_move_recycler_view"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/action_add_button"
+        app:layout_constraintTop_toBottomOf="@+id/entry_note_edit_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/action_add_floating_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </merge>

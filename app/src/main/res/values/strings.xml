@@ -2,6 +2,7 @@
 
     <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
+    <string name="option_save">Save</string>
     <string name="option_restart">Restart</string>
 
     <!-- GenericCommandFragment -->
@@ -28,7 +29,6 @@
     <!-- ActionPanel -->
     <string name="action_label_hint">enter action label</string>
     <string name="action_id_hint">id</string>
-    <string name="action_add_button">Add</string>
 
     <!-- GoldPanel -->
     <string name="gold">Gold</string>

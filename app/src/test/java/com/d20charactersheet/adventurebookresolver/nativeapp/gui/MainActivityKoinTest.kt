@@ -5,7 +5,10 @@ import androidx.appcompat.app.AlertDialog
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.nhaarman.mockitokotlin2.*
+import com.nhaarman.mockitokotlin2.doReturn
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.verifyZeroInteractions
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
@@ -34,7 +37,6 @@ class MainActivityKoinTest : KoinTest {
         stopKoin()
     }
 
-
     @Test
     fun onOptionsItemSelected_restart() {
         // Arrange
@@ -43,8 +45,8 @@ class MainActivityKoinTest : KoinTest {
         }
         val restartDialog: AlertDialog = mock()
         val underTest = MainActivity()
-        underTest.dialogBuilder = mock {
-            on { create(any(), any()) } doReturn restartDialog
+        underTest.restartDialog = mock {
+            on { create(underTest) } doReturn restartDialog
         }
 
         // Act
@@ -52,11 +54,22 @@ class MainActivityKoinTest : KoinTest {
 
         // Assert
         assertThat(result).isTrue()
-        argumentCaptor<MainActivity.RestartOnClickListener> {
-            verify(underTest.dialogBuilder).create(any(), capture())
-            assertThat(firstValue).isInstanceOf(MainActivity.RestartOnClickListener::class.java)
-        }
         verify(restartDialog).show()
+    }
+
+    @Test
+    fun onOptionsItemSelected_save() {
+        // Arrange
+        val menuItem: MenuItem = mock {
+            on { itemId } doReturn (R.id.option_save)
+        }
+
+        // Act
+        val result = MainActivity().onOptionsItemSelected(menuItem)
+
+        // Assert
+        assertThat(result).isTrue()
+        verify(game).saveBook()
     }
 
     @Test

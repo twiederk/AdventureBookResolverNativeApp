@@ -1,9 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry
 
-import android.text.Editable
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
@@ -11,6 +8,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
@@ -42,14 +40,10 @@ internal class ActionPanelKoinTest : KoinTest {
     @Test
     fun `create action panel`() {
         // Arrange
-        val actionLabelEditText: EditText = mock()
-        val actionIdEditText: EditText = mock()
-        val actionAddButton: Button = mock()
+        val actionAddFloatingActionButton: FloatingActionButton = mock()
         val actionMoveRecyclerView: RecyclerView = mock()
         val rootView: View = mock {
-            on { findViewById<EditText>(R.id.action_label_edit_text) } doReturn actionLabelEditText
-            on { findViewById<EditText>(R.id.action_id_edit_text) } doReturn actionIdEditText
-            on { findViewById<Button>(R.id.action_add_button) } doReturn actionAddButton
+            on { findViewById<FloatingActionButton>(R.id.action_add_floating_action_button) } doReturn actionAddFloatingActionButton
             on { findViewById<RecyclerView>(R.id.action_move_recycler_view) } doReturn actionMoveRecyclerView
         }
         val underTest = ActionPanel()
@@ -59,15 +53,15 @@ internal class ActionPanelKoinTest : KoinTest {
         underTest.create(rootView)
 
         // Assert
-        assertActionAddButton(actionAddButton)
+        assertActionAddFloatingActionButton(actionAddFloatingActionButton)
         assertActionMoveRecyclerView(actionMoveRecyclerView)
         verify(underTest.itemTouchHelper)?.attachToRecyclerView(actionMoveRecyclerView)
     }
 
-    private fun assertActionAddButton(actionAddButton: Button) {
-        argumentCaptor<ActionAddOnClickListener> {
-            verify(actionAddButton).setOnClickListener(capture())
-            assertThat(firstValue).isInstanceOf(ActionAddOnClickListener::class.java)
+    private fun assertActionAddFloatingActionButton(actionAddFloatingActionButton: FloatingActionButton) {
+        argumentCaptor<FloatingActionButtonOnClickListener> {
+            verify(actionAddFloatingActionButton).setOnClickListener(capture())
+            assertThat(firstValue).isInstanceOf(FloatingActionButtonOnClickListener::class.java)
         }
     }
 
@@ -82,59 +76,6 @@ internal class ActionPanelKoinTest : KoinTest {
             assertThat(firstValue).isInstanceOf(ActionMoveAdapter::class.java)
         }
 
-    }
-
-    @Test
-    fun `get action label`() {
-        // Arrange
-        val underTest = ActionPanel()
-        val editable = mock<Editable> {
-            on { toString() } doReturn "myActionLabel"
-        }
-        underTest.actionLabelEditText = mock {
-            on { text } doReturn editable
-        }
-
-        // Act
-        val actionLabel = underTest.getActionLabel()
-
-        // Assert
-        assertThat(actionLabel).isEqualTo("myActionLabel")
-    }
-
-    @Test
-    fun `get action id`() {
-        // Arrange
-        val underTest = ActionPanel()
-        val editable = mock<Editable> {
-            on { toString() } doReturn "10"
-        }
-        underTest.actionIdEditText = mock {
-            on { text } doReturn editable
-        }
-
-        // Act
-        val actionId = underTest.getActionId()
-
-        // Assert
-        assertThat(actionId).isEqualTo("10")
-    }
-
-    @Test
-    fun `clear action panel`() {
-        // Arrange
-        val underTest = ActionPanel()
-        val actionLabelEditText: EditText = mock()
-        val actionIdEditText: EditText = mock()
-        underTest.actionLabelEditText = actionLabelEditText
-        underTest.actionIdEditText = actionIdEditText
-
-        // Act
-        underTest.clear()
-
-        // Assert
-        verify(actionLabelEditText).setText("")
-        verify(actionIdEditText).setText("")
     }
 
     @Test
@@ -161,8 +102,7 @@ internal class ActionPanelKoinTest : KoinTest {
         game.book.addAction("mySecondAction", 20)
 
         // Act
-        val itemCount = ActionMoveAdapter()
-            .itemCount
+        val itemCount = ActionMoveAdapter().itemCount
 
         // Assert
         assertThat(itemCount).isEqualTo(2)
@@ -217,5 +157,4 @@ internal class ActionPanelKoinTest : KoinTest {
         verify(actionMoveAdapter).deleteItem(10)
         verify(actionMoveAdapter).notifyItemRemoved(10)
     }
-
 }

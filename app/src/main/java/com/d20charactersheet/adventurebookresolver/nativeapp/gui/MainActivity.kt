@@ -1,7 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
@@ -13,28 +12,21 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : LogActivity() {
 
-    private val game: Game by inject()
     private val toolbarPanel: ToolbarPanel by inject()
+    private val game: Game by inject()
 
-    internal var dialogBuilder: DialogBuilder = DialogBuilder()
-    private lateinit var sectionsPagerAdapter: SectionsPagerAdapter
+    internal var restartDialog: RestartDialog = RestartDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
-
         toolbarPanel.create(findViewById(android.R.id.content))
-
         setSupportActionBar(toolbarPanel.getToolbar())
-        sectionsPagerAdapter = SectionsPagerAdapter(supportFragmentManager)
-        container.adapter = sectionsPagerAdapter
 
-        fab.setOnClickListener { game.saveBook() }
+        container.adapter = SectionsPagerAdapter(supportFragmentManager)
 
         update()
-
     }
 
     override fun onStart() {
@@ -52,7 +44,6 @@ class MainActivity : LogActivity() {
 
     }
 
-
     internal fun update() {
         toolbarPanel.update()
     }
@@ -65,21 +56,19 @@ class MainActivity : LogActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
             R.id.option_restart -> restart()
+            R.id.option_save -> save()
             else -> super.onOptionsItemSelected(item)
         }
 
     private fun restart(): Boolean {
-        val restartDialog = dialogBuilder.create(this, RestartOnClickListener())
-        restartDialog.show()
+        restartDialog.create(this).show()
         return true
     }
 
-    inner class RestartOnClickListener : DialogInterface.OnClickListener {
-
-        override fun onClick(dialog: DialogInterface?, which: Int) {
-            game.restart()
-            sectionsPagerAdapter.getItem(container.currentItem).onResume()
-        }
-
+    private fun save(): Boolean {
+        game.saveBook()
+        return true
     }
+
+
 }
