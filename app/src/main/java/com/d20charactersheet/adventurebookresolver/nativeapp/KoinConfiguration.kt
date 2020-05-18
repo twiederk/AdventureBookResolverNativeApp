@@ -1,5 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
+import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
@@ -28,5 +29,6 @@ val appModule = module {
     single { ItemPanel() }
     single { GraphPanel(get()) }
     single { BookRenderer(get()) }
+    single { Billing() }
 }
 // end::koinConfiguration[]

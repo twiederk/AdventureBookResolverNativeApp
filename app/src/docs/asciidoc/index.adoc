@@ -23,8 +23,77 @@ Tests using the Koin framework extend the KoinTest class and use the suffix Koin
 * Listeners of the panel are implemented as classes in same file as the panel.
 * Listeners get their dependencies injected by Koin, thus they're KoinComponents.
 * Panels implement the Panel interface.
+
 [source,kotlin]
 ----
-include::../../main/java/com/d20charactersheet/adventurebookresolver/nativeapp/Panel.kt[tag=panelInterface]
+include::../../main/java/com/d20charactersheet/adventurebookresolver/nativeapp/gui/Panel.kt[tag=panelInterface]
 ----
+
+== Billing
+
+The app uses In-App payment to allow users to try it for free using the first book.
+If they want to use additional books they need to buy and empty book.
+With buying the first empty book also the advertisement is removed.
+
+=== Products
+
+|===
+|Product Id |Description                            |Consumable |Price
+|empty_book |Required to create a new adventure book|Yes        |$0.99
+|ad_free    |Removes advertisement                  |No         |-
+|===
+
+:sectnums:
+
+=== Establish Connection to Google Play
+
+By starting the app the MainActivity establishes a connection to Google Play
+
+[plantuml]
+----
+include::diagrams/establishConnection.puml[]
+----
+
+=== Query Products
+
+After establishing a connection successfully the product details are queried.
+They are required by the billing flow
+
+[plantuml]
+----
+include::diagrams/querySkuDetails.puml[]
+----
+
+=== Start Billing Flow
+
+By selecting create from the menu the billing flow starts to buy a new empty book and consume it immediately.
+An activity is required to display the different purchase screens.
+
+[plantuml]
+----
+include::diagrams/startBillingFlow.puml[]
+----
+
+:sectnums!:
+
+=== Tests
+
+Tests on Billing.startBillingFlow()
+
+[plantuml]
+----
+include::diagrams/billingFlow.puml[]
+----
+
+Tests on PurchasesUpdatedListener
+
+[plantuml]
+----
+include::diagrams/purchaseUpdated.puml[]
+----
+
+
+
+
+
 

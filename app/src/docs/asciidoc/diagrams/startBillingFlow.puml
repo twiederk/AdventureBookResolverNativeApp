@@ -1,0 +1,23 @@
+@startuml
+
+actor Actor
+participant MainActivity
+Actor -> MainActivity: create
+
+participant Billing
+MainActivity -> Billing: startBillingFlow(MainActivity)
+
+participant BillingClient
+Billing -> BillingClient: isReady()
+Billing -> BillingClient: launchBillingFlow(activity, flowParams)
+
+participant PurchasesUpdatedListener
+--> PurchasesUpdatedListener: onPurchasesUpdated(billingResult, purchases)
+
+PurchasesUpdatedListener -> PurchasesUpdatedListener: if (BillingResponseCode.OK)
+PurchasesUpdatedListener -> Billing: handlePurchase(purchase)
+Billing -> Billing: if (PurchaseState.PURCHASED)
+Billing -> Billing: grant entitlement
+Billing -> BillingClient: billingClient.consumeAsync
+
+@enduml

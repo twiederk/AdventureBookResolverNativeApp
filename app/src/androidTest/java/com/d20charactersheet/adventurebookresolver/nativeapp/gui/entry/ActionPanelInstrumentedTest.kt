@@ -11,7 +11,6 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.RecyclerViewItemCountAssertion
 import org.hamcrest.Matchers.equalTo
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Test
 import org.koin.test.KoinTest
 import org.koin.test.inject
@@ -26,10 +25,9 @@ class ActionPanelInstrumentedTest : KoinTest {
     }
 
     @Test
-    @Ignore("The style on this component requires your app theme to be Theme.AppCompat (or a descendant)")
     fun check_initial_layout() {
         // Act
-        launchFragmentInContainer<EntryFragment>()
+        launchFragmentInContainer<EntryFragment>(themeResId = R.style.AppTheme)
 
         // Assert
         onView(withId(R.id.action_move_recycler_view)).check(matches(isDisplayed()))
@@ -38,11 +36,10 @@ class ActionPanelInstrumentedTest : KoinTest {
 
 
     @Test
-    @Ignore("The style on this component requires your app theme to be Theme.AppCompat (or a descendant)")
     fun move_to_other_entry() {
         // Arrange
         game.book.addAction("to Library", 2)
-        launchFragmentInContainer<EntryFragment>()
+        launchFragmentInContainer<EntryFragment>(themeResId = R.style.AppTheme)
 
         // Act
         onView(withId(R.id.move_action_entry_id_button)).perform(ViewActions.click())
@@ -53,11 +50,10 @@ class ActionPanelInstrumentedTest : KoinTest {
     }
 
     @Test
-    @Ignore("The style on this component requires your app theme to be Theme.AppCompat (or a descendant)")
     fun delete_action_with_swipe() {
         // Arrange
         game.book.addAction("to delete", 2)
-        launchFragmentInContainer<EntryFragment>()
+        launchFragmentInContainer<EntryFragment>(themeResId = R.style.AppTheme)
 
         // Act
         onView(withId(R.id.move_action_label_text_view)).perform(ViewActions.swipeLeft())

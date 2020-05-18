@@ -2,8 +2,10 @@
 
     <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
+    <string name="option_create">Create</string>
     <string name="option_save">Save</string>
     <string name="option_restart">Restart</string>
+    <string name="option_clear_history">Clear History</string>
 
     <!-- GenericCommandFragment -->
     <string name="execute_button_text">Execute</string>

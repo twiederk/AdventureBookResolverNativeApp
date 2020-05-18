@@ -1,0 +1,14 @@
+@startuml
+
+participant BillingClientStateListener
+--> BillingClientStateListener: onBillingSetupFinished()
+BillingClientStateListener -> Billing : queryProductDetails()
+Billing -> BillingClient: isReady()
+Billing -> BillingClient: querySkuDetailsAsync()
+
+participant SkuDetailsResponseListener
+--> SkuDetailsResponseListener: onSkuDetailsResponse()
+
+SkuDetailsResponseListener -> Billing: set skuDetailsList
+
+@enduml

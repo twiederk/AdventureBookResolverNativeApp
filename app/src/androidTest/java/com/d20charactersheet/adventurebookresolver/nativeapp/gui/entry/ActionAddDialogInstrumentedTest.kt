@@ -26,10 +26,10 @@ class ActionAddDialogInstrumentedTest : KoinTest {
     }
 
     @Test
-    @Ignore("The style on this component requires your app theme to be Theme.AppCompat (or a descendant)")
+    @Ignore("replace by favorite action button")
     fun add_action_to_entry() {
         // Arrange
-        launchFragmentInContainer<EntryFragment>()
+        launchFragmentInContainer<EntryFragment>(themeResId = R.style.AppTheme)
 
         onView(withId(R.id.action_label_edit_text)).perform(ViewActions.typeText("myActionLabel"))
         onView(withId(R.id.action_id_edit_text)).perform(ViewActions.typeText("10"))

@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.d20charactersheet.adventurebookresolver.nativeapp.gui.MainActivity">
+
+
+    <item
+        android:id="@+id/option_create"
+        android:title="@string/option_create"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
     <item
         android:id="@+id/option_save"
         android:title="@string/option_save"
@@ -13,4 +21,11 @@
         android:title="@string/option_restart"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/option_clear_history"
+        android:title="@string/option_clear_history"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
 </menu>

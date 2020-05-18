@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
+import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
@@ -14,6 +15,7 @@ class MainActivity : LogActivity() {
 
     private val toolbarPanel: ToolbarPanel by inject()
     private val game: Game by inject()
+    private val billing: Billing by inject()
 
     internal var restartDialog: RestartDialog = RestartDialog()
 
@@ -26,6 +28,7 @@ class MainActivity : LogActivity() {
 
         container.adapter = SectionsPagerAdapter(supportFragmentManager)
 
+        billing.startConnection(this)
         update()
     }
 
@@ -57,6 +60,8 @@ class MainActivity : LogActivity() {
         when (item.itemId) {
             R.id.option_restart -> restart()
             R.id.option_save -> save()
+            R.id.option_create -> create()
+            R.id.option_clear_history -> clearHistory()
             else -> super.onOptionsItemSelected(item)
         }
 
@@ -70,5 +75,19 @@ class MainActivity : LogActivity() {
         return true
     }
 
+    private fun create(): Boolean {
+        billing.startBillingFlow(this)
+        return true
+    }
+
+    private fun clearHistory(): Boolean {
+        billing.clearHistory()
+        return true
+    }
+
+    fun purchasedBook() {
+        game.createBook("purchased book")
+        update()
+    }
 
 }

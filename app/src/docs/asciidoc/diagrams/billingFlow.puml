@@ -1,0 +1,11 @@
+@startuml
+(*) --> "Billing\n.startBillingFlow()"
+
+if "skuDetails != null" then
+  --> [true] BillingClient\n.launchBillingFlow
+else
+  -> [false] "product info\nis missing"
+  --> [Ending process] (*)
+endif
+
+@enduml

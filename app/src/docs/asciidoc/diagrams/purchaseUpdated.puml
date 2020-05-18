@@ -1,0 +1,15 @@
+@startuml
+(*) --> "PurchasesUpdatedListener\n.onPurchasesUpdated()"
+
+if "billingResponseCode?" then
+--> [OK] handlePurchase
+---> (*)
+else
+--> [USER_CANCELED] cancel message
+---> (*)
+else
+--> [ERROR] error message
+---> (*)
+endif
+
+@enduml
