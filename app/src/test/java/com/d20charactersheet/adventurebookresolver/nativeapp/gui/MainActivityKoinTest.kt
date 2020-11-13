@@ -53,7 +53,7 @@ class MainActivityKoinTest : KoinTest {
         val result = underTest.onOptionsItemSelected(menuItem)
 
         // Assert
-        assertThat(result).isTrue()
+        assertThat(result).isTrue
         verify(restartDialog).show()
     }
 
@@ -68,7 +68,7 @@ class MainActivityKoinTest : KoinTest {
         val result = MainActivity().onOptionsItemSelected(menuItem)
 
         // Assert
-        assertThat(result).isTrue()
+        assertThat(result).isTrue
         verify(game).saveBook()
     }
 
@@ -83,7 +83,7 @@ class MainActivityKoinTest : KoinTest {
         val result = MainActivity().onOptionsItemSelected(menuItem)
 
         // Assert
-        assertThat(result).isFalse()
+        assertThat(result).isFalse
         verifyZeroInteractions(game)
     }
 

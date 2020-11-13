@@ -20,7 +20,7 @@ class OnSwipeListenerTest {
             .onMove(mock(), mock(), mock())
 
         // Assert
-        Assertions.assertThat(result).isFalse()
+        Assertions.assertThat(result).isFalse
     }
 
     @Test

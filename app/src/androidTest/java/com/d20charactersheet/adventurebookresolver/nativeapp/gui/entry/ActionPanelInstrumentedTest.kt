@@ -57,7 +57,6 @@ class ActionPanelInstrumentedTest : KoinTest {
 
         // Act
         onView(withId(R.id.move_action_label_text_view)).perform(ViewActions.swipeLeft())
-        onView(withId(R.id.move_action_label_text_view)).perform(ViewActions.swipeLeft())
 
         // Assert
         onView(withId(R.id.action_move_recycler_view)).check(

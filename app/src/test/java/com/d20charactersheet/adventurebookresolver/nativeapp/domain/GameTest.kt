@@ -406,7 +406,7 @@ internal class GameTest {
         val hasProvisions = underTest.hasProvisions()
 
         // Assert
-        assertThat(hasProvisions).isFalse()
+        assertThat(hasProvisions).isFalse
     }
 
     @Test
@@ -418,7 +418,7 @@ internal class GameTest {
         val hasProvisions = underTest.hasProvisions()
 
         // Assert
-        assertThat(hasProvisions).isTrue()
+        assertThat(hasProvisions).isTrue
     }
 
     @Test

@@ -65,7 +65,7 @@ class GraphViewKoinTest : KoinTest {
         val result = underTest.onTouchEvent(motionEvent)
 
         // Assert
-        assertThat(result).isTrue()
+        assertThat(result).isTrue
         assertThat(underTest.actionStartX).isEqualTo(200f)
         assertThat(underTest.actionStartY).isEqualTo(400f)
     }
@@ -88,7 +88,7 @@ class GraphViewKoinTest : KoinTest {
         val result = underTest.onTouchEvent(motionEvent)
 
         // Assert
-        assertThat(result).isTrue()
+        assertThat(result).isTrue
         assertThat(underTest.viewportX).isEqualTo(200f)
         assertThat(underTest.viewportY).isEqualTo(400f)
 

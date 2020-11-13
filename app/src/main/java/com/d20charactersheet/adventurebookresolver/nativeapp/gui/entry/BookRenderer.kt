@@ -54,7 +54,7 @@ class BookRenderer(private val game: Game) {
 
     private fun sortEntriesByDepth(graph: Graph<BookEntry, LabeledEdge>, bookEntry: BookEntry)
             : MutableMap<Int, MutableList<BookEntry>> {
-        val breadthFirstIterator = BreadthFirstIterator<BookEntry, LabeledEdge>(graph, bookEntry)
+        val breadthFirstIterator = BreadthFirstIterator(graph, bookEntry)
 
         val entriesByDepth = mutableMapOf<Int, MutableList<BookEntry>>()
         for (entry in breadthFirstIterator) {

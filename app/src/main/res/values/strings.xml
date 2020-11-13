@@ -31,6 +31,7 @@
     <!-- ActionPanel -->
     <string name="action_label_hint">enter action label</string>
     <string name="action_id_hint">id</string>
+    <string name="action_fab_hint">add action</string>
 
     <!-- GoldPanel -->
     <string name="gold">Gold</string>

@@ -10,13 +10,12 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.MainActivity
 
 class Billing(private val logger: Logger = Logger) : PurchasesUpdatedListener, SkuDetailsResponseListener {
 
-    private val SKU = "empty_book"
-//    private val SKU = "android.test.purchased"
-//    private val SKU = "android.test.canceled"
-//    private val SKU = "android.test.item_unavailable"
+    companion object {
+        const val SKU = "empty_book"
+    }
 
-    internal lateinit var billingClient: BillingClient
-    internal var skuDetailsList: List<SkuDetails>? = null
+    private lateinit var billingClient: BillingClient
+    private var skuDetailsList: List<SkuDetails>? = null
     private var activity: MainActivity? = null
 
     // --------------------
@@ -56,9 +55,9 @@ class Billing(private val logger: Logger = Logger) : PurchasesUpdatedListener, S
         }
     }
 
-    override fun onSkuDetailsResponse(billingResult: BillingResult?, skuDetailsList: List<SkuDetails>?) {
-        logger.debug("onSkuDetailsResponse(billingResult.responseCode=${billingResult?.responseCode}, skuDetailsList=$skuDetailsList)")
-        if (billingResult!!.responseCode == BillingResponseCode.OK) {
+    override fun onSkuDetailsResponse(billingResult: BillingResult, skuDetailsList: MutableList<SkuDetails>?) {
+        logger.debug("onSkuDetailsResponse(billingResult.responseCode=${billingResult.responseCode}, skuDetailsList=$skuDetailsList)")
+        if (billingResult.responseCode == BillingResponseCode.OK) {
             this.skuDetailsList = skuDetailsList
         }
     }
@@ -117,10 +116,10 @@ class Billing(private val logger: Logger = Logger) : PurchasesUpdatedListener, S
 
     fun clearHistory() {
         if (billingClient.isReady) {
-            billingClient.queryPurchases(SkuType.INAPP).purchasesList.forEach {
+            billingClient.queryPurchases(SkuType.INAPP).purchasesList?.forEach {
                 val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(it.purchaseToken).build()
                 billingClient.consumeAsync(consumeParams) { billingResult, purchaseToken ->
-                    if (billingResult.responseCode == BillingResponseCode.OK && purchaseToken != null) {
+                    if (billingResult.responseCode == BillingResponseCode.OK) {
                         logger.debug("onPurchases Updated consumeAsync, purchases token removed: $purchaseToken")
                     } else {
                         logger.debug("onPurchases some troubles happened: ${billingResult.responseCode}")
