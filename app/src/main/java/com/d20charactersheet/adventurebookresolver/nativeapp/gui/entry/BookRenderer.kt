@@ -14,8 +14,8 @@ class BookRenderer(private val game: Game) {
         private const val HEIGHT = 250f
     }
 
-    private var graphEntries: List<GraphEntry> = mutableListOf()
-    private var graphEdges: List<GraphEdge> = mutableListOf()
+    private var graphEntries: List<GraphEntry> = calculateGraphEntries()
+    private var graphEdges: List<GraphEdge> = calculateGraphEdges(graphEntries)
 
     fun render(): Pair<List<GraphEntry>, List<GraphEdge>> {
         graphEntries = calculateGraphEntries()
@@ -98,10 +98,14 @@ class BookRenderer(private val game: Game) {
     fun center(): Pair<Float, Float> {
         val graphEntry = graphEntries.find { it.entry.id == game.book.getEntryId() }
         return graphEntry?.let {
-            val centerX = graphEntry.left + (WIDTH / 2)
-            val centerY = graphEntry.top + (HEIGHT / 2)
+            val centerX = it.left + (WIDTH / 2)
+            val centerY = it.top + (HEIGHT / 2)
             Pair(centerX, centerY)
         } ?: Pair(WIDTH / 2, HEIGHT / 2)
+    }
+
+    fun touch(x: Float, y: Float): BookEntry? {
+        return graphEntries.find { it.left <= x && it.right >= x && it.top <= y && it.bottom >= y }?.entry
     }
 
 }

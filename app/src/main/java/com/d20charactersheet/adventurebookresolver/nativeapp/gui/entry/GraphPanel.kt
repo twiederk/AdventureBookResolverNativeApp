@@ -14,8 +14,7 @@ class GraphPanel(internal val bookRenderer: BookRenderer) : Panel {
     }
 
     override fun update() {
-        val (centerX, centerY) = bookRenderer.center()
-        graphView.center(centerX, centerY)
+        graphView.center()
         graphView.invalidate()
     }
 

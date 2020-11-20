@@ -1,0 +1,6 @@
+@startuml
+-> GraphView: onDraw()
+GraphView -> GraphCanvas: translate() centers viewport
+GraphView -> BookRenderer: render() calculates data
+GraphView -> GraphCanvas: render() renders data
+@enduml

@@ -13,6 +13,24 @@ class BookRendererTest {
 
     private lateinit var underTest: BookRenderer
 
+    /**
+     *  Set up game with the following book:
+     *
+     *               (One) <--- currentEntry
+     *        to two |   | to three
+     *      ----------   -----------
+     *      |                     |
+     *      |     to three        |
+     *   (Two*) -------------> (Three*)
+     *      |   <------------     |
+     *      |      to two         |
+     *      |                     |
+     *      --------    -----------
+     *      to four|    | to four
+     *            (Four*)
+     *
+     * (*) = wap point
+     */
     @Before
     fun setUp() {
         val game = Game()
@@ -65,9 +83,7 @@ class BookRendererTest {
     }
 
     @Test
-    fun center_onCurrentEntry() {
-        // Arrange
-        underTest.render()
+    fun center_instantiation_centerOnCurrentEntry() {
 
         // Act
         val (viewportX, viewportY) = underTest.center()
@@ -78,13 +94,13 @@ class BookRendererTest {
     }
 
     @Test
-    fun center_currentEntryNotFound() {
-        // Act
-        val (viewportX, viewportY) = underTest.center()
+    fun select_touchEntry2_selectEntry2() {
 
-        // Assert
-        assertThat(viewportX).isEqualTo(125f)
-        assertThat(viewportY).isEqualTo(125f)
+        // act
+        val bookEntry = underTest.touch(150f, 150f)
+
+        // assert
+        assertThat(bookEntry).isEqualTo(BookEntry(1))
     }
 
 }

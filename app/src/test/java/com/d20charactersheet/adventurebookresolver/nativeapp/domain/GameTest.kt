@@ -487,4 +487,17 @@ internal class GameTest {
             """.trimIndent()
         )
     }
+
+    @Test
+    fun touch_destinationEntry_moveToDestinationEntry() {
+        // arrange
+        val destEntry = BookEntry(1)
+
+        // act
+        underTest.touch(destEntry)
+
+        // assert
+        verify(book).moveToBookEntry(destEntry.id)
+    }
+
 }

@@ -138,4 +138,8 @@ class Game(
             }
         )
 
+    fun touch(bookEntry: BookEntry) {
+        book.moveToBookEntry(bookEntry.id)
+    }
+
 }

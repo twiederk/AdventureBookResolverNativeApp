@@ -1,0 +1,38 @@
+@startuml
+GraphView *-- Game
+GraphView *-- BookRenderer
+GraphView *-- GraphCanvas
+GraphCanvas *-- GraphView
+GraphCanvas *-- ActionColor
+
+class GraphView {
+    +onMeasure()
+    +onDraw()
+    +onTouchEvent()
+    +center()
+}
+note top of GraphView : View component visible in app\nand receives all user input
+
+class GraphCanvas {
+    +translate(canvas)
+    +render(canvas, List<GraphEntry>, List<GraphEdge>)
+    -drawGraphEntry()
+    -drawGraphEdge()
+}
+note top of GraphCanvas : renders graph to canvas
+
+class ActionColor {
+    +getColor(GraphView, wayMark, visit)
+}
+
+class BookRenderer {
+    +render()
+    +center()
+    +touch()
+}
+note bottom of BookRenderer : calculates all information necessary for rendering,\nbut is independent of all rendering components
+
+class Game {
+    +touch()
+}
+@enduml

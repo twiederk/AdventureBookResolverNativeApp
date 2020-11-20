@@ -92,6 +92,21 @@ Tests on PurchasesUpdatedListener
 include::diagrams/purchaseUpdated.puml[]
 ----
 
+== Graph Rendering
+
+The GraphView renders the graph of the adventure book and handles interaction from the user with the rendered graph.
+
+[plantuml]
+----
+include::diagrams/graphView.puml[]
+----
+
+The following sequence diagram shows who the graph is rendered.
+
+[plantuml]
+----
+include::diagrams/onDraw.puml[]
+----
 
 
 

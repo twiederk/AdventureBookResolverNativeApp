@@ -6,18 +6,20 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), KoinComponent {
 
+    private val game: Game by inject()
     private val bookRenderer: BookRenderer by inject()
 
     internal var viewportX = 0f
     internal var viewportY = 0f
 
-    internal var actionStartX: Float = 0f
-    internal var actionStartY: Float = 0f
+    internal var touchX: Float = 0f
+    internal var touchY: Float = 0f
 
     internal var graphCanvas = GraphCanvas(this)
 
@@ -30,9 +32,16 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
     }
 
     public override fun onDraw(canvas: Canvas) {
+        initialCentering()
         graphCanvas.translate(canvas, viewportX, viewportY)
         val (entries, edges) = bookRenderer.render()
         graphCanvas.render(canvas, entries, edges)
+    }
+
+    private fun initialCentering() {
+        if (viewportX == 0f && viewportY == 0f) {
+            center()
+        }
     }
 
 
@@ -40,13 +49,18 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                actionStartX = event.x - viewportX
-                actionStartY = event.y - viewportY
+                touchX = event.x - viewportX
+                touchY = event.y - viewportY
+                val bookEntry = bookRenderer.touch(touchX, touchY)
+                bookEntry?.let {
+                    game.touch(bookEntry)
+                    center()
+                }
             }
 
             MotionEvent.ACTION_MOVE -> {
-                viewportX = event.x - actionStartX
-                viewportY = event.y - actionStartY
+                viewportX = event.x - touchX
+                viewportY = event.y - touchY
 
             }
 
@@ -56,7 +70,14 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
         return true
     }
 
-    fun center(centerX: Float, centerY: Float) {
+    fun center() {
+        if (width != 0 || height != 0) {
+            calculateCenter(width.toFloat(), height.toFloat())
+        }
+    }
+
+    internal fun calculateCenter(width: Float, height: Float) {
+        val (centerX, centerY) = bookRenderer.center()
         viewportX = (width / 2) - centerX
         viewportY = (height / 2) - centerY
     }

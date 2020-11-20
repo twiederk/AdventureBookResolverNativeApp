@@ -44,8 +44,7 @@ class GraphPanelTest {
         underTest.update()
 
         // Assert
-        verify(bookRenderer).center()
-        verify(graphView).center(10f, 20f)
+        verify(graphView).center()
         verify(graphView).invalidate()
     }
 
