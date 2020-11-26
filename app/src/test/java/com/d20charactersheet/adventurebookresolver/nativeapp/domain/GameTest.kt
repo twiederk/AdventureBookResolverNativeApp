@@ -489,15 +489,27 @@ internal class GameTest {
     }
 
     @Test
-    fun touch_destinationEntry_moveToDestinationEntry() {
+    fun isCurrentEntry_entryIsCurrentEntry_returnTrue() {
         // arrange
-        val destEntry = BookEntry(1)
+        whenever(book.getEntryId()).doReturn(1)
 
         // act
-        underTest.touch(destEntry)
+        val result = underTest.isCurrentEntry(BookEntry(1))
 
         // assert
-        verify(book).moveToBookEntry(destEntry.id)
+        assertThat(result).isTrue
+    }
+
+    @Test
+    fun isCurrentEntry_entryIsNotCurrentEntry_returnFalse() {
+        // arrange
+        whenever(book.getEntryId()).doReturn(2)
+
+        // act
+        val result = underTest.isCurrentEntry(BookEntry(1))
+
+        // assert
+        assertThat(result).isFalse
     }
 
 }

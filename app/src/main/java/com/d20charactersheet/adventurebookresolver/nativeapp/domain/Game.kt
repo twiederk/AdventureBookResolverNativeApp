@@ -138,8 +138,6 @@ class Game(
             }
         )
 
-    fun touch(bookEntry: BookEntry) {
-        book.moveToBookEntry(bookEntry.id)
-    }
+    fun isCurrentEntry(bookEntry: BookEntry): Boolean = bookEntry.id == book.getEntryId()
 
 }

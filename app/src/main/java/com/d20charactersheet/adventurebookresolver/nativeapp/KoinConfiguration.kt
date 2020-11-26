@@ -5,11 +5,11 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.ActionPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.BookRenderer
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.EntryPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookRenderer
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryDialog
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.GoldPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ItemPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ProvisionsPanel
@@ -21,8 +21,6 @@ val appModule = module {
     single { ToolbarPanel(get()) }
     single { AttributesPanel(get()) }
     single { BookPanel(get()) }
-    single { EntryPanel(get()) }
-    single { ActionPanel() }
     single { GenericCommandPanel() }
     single { GoldPanel(get()) }
     single { ProvisionsPanel(get()) }
@@ -30,5 +28,7 @@ val appModule = module {
     single { GraphPanel(get()) }
     single { BookRenderer(get()) }
     single { Billing() }
+    single { EntryDialog() }
+    single { GraphViewTouchEventHandler() }
 }
 // end::koinConfiguration[]

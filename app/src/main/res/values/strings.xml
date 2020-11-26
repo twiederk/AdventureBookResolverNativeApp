@@ -24,7 +24,7 @@
     <string name="entries">Entries:</string>
     <string name="book_note_hint">enter book note</string>
 
-    <!-- EntryPanel -->
+    <!-- EntryDialog -->
     <string name="entry_title_hint">enter title</string>
     <string name="entry_note_hint">enter entry note</string>
 

@@ -1,9 +1,12 @@
 @startuml
-GraphView *-- Game
+GraphView *-- GraphViewTouchEventHandler
 GraphView *-- BookRenderer
 GraphView *-- GraphCanvas
+GraphViewTouchEventHandler *-- Game
+GraphViewTouchEventHandler *-- BookRenderer
 GraphCanvas *-- GraphView
 GraphCanvas *-- ActionColor
+BookRenderer *-- Game
 
 class GraphView {
     +onMeasure()
@@ -12,6 +15,11 @@ class GraphView {
     +center()
 }
 note top of GraphView : View component visible in app\nand receives all user input
+
+class GraphViewTouchEventHandler {
+    +onTouchEvent()
+}
+note top of GraphViewTouchEventHandler : calls methods on game based on user input
 
 class GraphCanvas {
     +translate(canvas)
@@ -32,7 +40,5 @@ class BookRenderer {
 }
 note bottom of BookRenderer : calculates all information necessary for rendering,\nbut is independent of all rendering components
 
-class Game {
-    +touch()
-}
+class Game
 @enduml

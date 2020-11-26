@@ -1,13 +1,15 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
+import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.ActionPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.BookRenderer
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.EntryPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.GraphPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookRenderer
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryDialog
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.GoldPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ItemPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ProvisionsPanel
@@ -24,14 +26,15 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val toolbarPanel: ToolbarPanel by inject()
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
-    private val entryPanel: EntryPanel by inject()
-    private val actionPanel: ActionPanel by inject()
-    private val genericCommandPanel: ActionPanel by inject()
+    private val genericCommandPanel: GenericCommandPanel by inject()
     private val goldPanel: GoldPanel by inject()
     private val provisionsPanel: ProvisionsPanel by inject()
     private val itemPanel: ItemPanel by inject()
     private val graphPanel: GraphPanel by inject()
     private val bookRenderer: BookRenderer by inject()
+    private val billing: Billing by inject()
+    private val entryDialog: EntryDialog by inject()
+    private val graphViewTouchEventHandler: GraphViewTouchEventHandler by inject()
 
     @After
     fun after() {
@@ -49,13 +52,14 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(toolbarPanel).isNotNull
         assertThat(attributesPanel).isNotNull
         assertThat(bookPanel).isNotNull
-        assertThat(entryPanel).isNotNull
-        assertThat(actionPanel).isNotNull
         assertThat(genericCommandPanel).isNotNull
         assertThat(goldPanel).isNotNull
         assertThat(provisionsPanel).isNotNull
         assertThat(itemPanel).isNotNull
         assertThat(graphPanel).isNotNull
         assertThat(bookRenderer).isNotNull
+        assertThat(billing).isNotNull
+        assertThat(entryDialog).isNotNull
+        assertThat(graphViewTouchEventHandler).isNotNull
     }
 }

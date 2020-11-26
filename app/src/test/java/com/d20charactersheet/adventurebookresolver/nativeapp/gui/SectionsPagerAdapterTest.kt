@@ -1,8 +1,8 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui
 
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesAndBookFragment
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entry.EntryFragment
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandFragment
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphFragment
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.InventoryFragment
 import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
@@ -27,7 +27,7 @@ class SectionsPagerAdapterTest {
         val fragment = underTest.getItem(0)
 
         // Assert
-        assertThat(fragment).isInstanceOf(EntryFragment::class.java)
+        assertThat(fragment).isInstanceOf(GraphFragment::class.java)
     }
 
     @Test
