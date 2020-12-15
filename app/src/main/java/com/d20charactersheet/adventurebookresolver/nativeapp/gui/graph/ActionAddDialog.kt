@@ -7,8 +7,8 @@ import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 
 class ActionAddDialog : KoinComponent {
@@ -45,7 +45,7 @@ class ActionAddDialog : KoinComponent {
         view.findViewById<EditText>(R.id.action_id_edit_text).text.toString()
 
     private fun isDataValidToCreateAction(actionLabel: String, actionId: String) =
-        actionLabel.isNotEmpty() && actionId.isNotEmpty()
+        actionLabel.isNotEmpty() && actionId.isNotEmpty() && actionId.toInt() != game.book.getEntryId()
 
 
 }

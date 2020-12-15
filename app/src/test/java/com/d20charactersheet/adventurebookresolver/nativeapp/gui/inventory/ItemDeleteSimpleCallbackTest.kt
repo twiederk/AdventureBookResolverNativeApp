@@ -1,10 +1,10 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory
 
 import androidx.recyclerview.widget.RecyclerView
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class ItemDeleteSimpleCallbackTest {
 

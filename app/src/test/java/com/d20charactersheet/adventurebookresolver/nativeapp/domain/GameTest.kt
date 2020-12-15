@@ -2,10 +2,10 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.domain
 
 import com.d20charactersheet.adventurebookresolver.core.domain.*
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
-import com.nhaarman.mockitokotlin2.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
+import org.mockito.kotlin.*
 import java.io.File
 import java.nio.file.Paths
 

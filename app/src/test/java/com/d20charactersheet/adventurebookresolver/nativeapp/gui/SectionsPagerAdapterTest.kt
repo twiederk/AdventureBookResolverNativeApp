@@ -4,9 +4,9 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbo
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandFragment
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphFragment
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.InventoryFragment
-import com.nhaarman.mockitokotlin2.mock
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.mockito.kotlin.mock
 
 class SectionsPagerAdapterTest {
 

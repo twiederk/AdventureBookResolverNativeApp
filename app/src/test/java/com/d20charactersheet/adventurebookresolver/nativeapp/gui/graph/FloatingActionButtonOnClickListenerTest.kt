@@ -1,11 +1,11 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import android.view.View
-import com.nhaarman.mockitokotlin2.any
-import com.nhaarman.mockitokotlin2.doReturn
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.junit.Test
+import org.mockito.kotlin.any
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class FloatingActionButtonOnClickListenerTest {
 

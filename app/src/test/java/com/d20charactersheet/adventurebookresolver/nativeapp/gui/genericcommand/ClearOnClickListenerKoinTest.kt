@@ -1,8 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -11,6 +9,8 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class ClearOnClickListenerKoinTest : KoinTest {
 

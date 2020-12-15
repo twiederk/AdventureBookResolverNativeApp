@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.nhaarman.mockitokotlin2.*
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -15,6 +14,7 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
+import org.mockito.kotlin.*
 
 internal class GraphFragmentKoinTest : KoinTest {
 

@@ -11,12 +11,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.koin.core.KoinComponent
-import org.koin.core.inject
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
 class EntryDialog : KoinComponent {
 
     private val game: Game by inject()
+    private val graphPanel: GraphPanel by inject()
 
     internal lateinit var entryTitleEditText: EditText
     internal lateinit var entryNoteEditText: EditText
@@ -60,6 +61,7 @@ class EntryDialog : KoinComponent {
     internal fun updateEntry() {
         game.book.setEntryTitle(entryTitleEditText.text.toString())
         game.book.setEntryNote(entryNoteEditText.text.toString())
+        graphPanel.update()
     }
 
     private fun createActionMoveRecyclerView(rootView: View) {

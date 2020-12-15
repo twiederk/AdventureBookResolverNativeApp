@@ -17,7 +17,7 @@ class MainActivity : LogActivity() {
     private val game: Game by inject()
     private val billing: Billing by inject()
 
-    internal var restartDialog: RestartDialog = RestartDialog()
+    private var restartDialog: RestartDialog = RestartDialog()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

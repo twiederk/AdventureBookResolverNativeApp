@@ -3,8 +3,6 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory
 import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
@@ -14,6 +12,8 @@ import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class ItemAdapterKoinTest : KoinTest {
 

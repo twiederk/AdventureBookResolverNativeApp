@@ -1,10 +1,10 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.verify
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 internal class CommandTest {
 
