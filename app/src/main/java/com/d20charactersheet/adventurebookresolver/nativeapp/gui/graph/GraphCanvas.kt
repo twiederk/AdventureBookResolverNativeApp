@@ -7,11 +7,14 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 
 class GraphCanvas(private val view: View, private val actionColor: ActionColor = ActionColor()) {
 
+    private var scale = 1F
+
     fun translate(canvas: Canvas, viewportX: Float, viewportY: Float) {
         canvas.translate(viewportX, viewportY)
     }
 
-    fun render(canvas: Canvas, entries: List<GraphEntry>, edges: List<GraphEdge>) {
+    fun render(canvas: Canvas, entries: List<GraphEntry>, edges: List<GraphEdge>, scale: Float = 1F) {
+        this.scale = scale
         entries.forEach { drawGraphEntry(it, canvas) }
         edges.forEach { drawGraphEdge(it, canvas) }
     }
@@ -24,10 +27,10 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
     private fun drawCurrentEntryRect(graphEntry: GraphEntry, canvas: Canvas) {
         if (graphEntry.current) {
             canvas.drawRect(
-                graphEntry.left - 50,
-                graphEntry.top - 50,
-                graphEntry.right + 50,
-                graphEntry.bottom + 50,
+                graphEntry.left - (50 * scale),
+                graphEntry.top - (50 * scale),
+                graphEntry.right + (50 * scale),
+                graphEntry.bottom + (50 * scale),
                 GraphPaint.currentEntryPaint
             )
         }
@@ -42,19 +45,33 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             graphEntry.bottom,
             GraphPaint.entryPaint
         )
+        val textPaint = getTextPaint()
         canvas.drawText(
             "(${graphEntry.entry.id})",
             graphEntry.left,
-            graphEntry.top + (100),
-            GraphPaint.textPaint
+            graphEntry.top + (100 * scale),
+            textPaint
         )
         canvas.drawText(
             graphEntry.entry.title,
             graphEntry.left,
             graphEntry.bottom,
-            GraphPaint.textPaint
+            textPaint
         )
     }
+
+    private fun getTextPaint(): Paint {
+        var textPaint = GraphPaint.textPaint
+        if (scale != 1F) {
+            textPaint = scaledTextPaint()
+        }
+        return textPaint
+    }
+
+    private fun scaledTextPaint(): Paint = Paint(GraphPaint.textPaint)
+        .apply {
+            textSize *= scale
+        }
 
 
     private fun drawGraphEdge(graphEdge: GraphEdge, canvas: Canvas) {
@@ -66,7 +83,7 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             graphEdge.endY,
             GraphPaint.edgePaint
         )
-        canvas.drawCircle(graphEdge.endX, graphEdge.endY, 30f, GraphPaint.edgePaint)
+        canvas.drawCircle(graphEdge.endX, graphEdge.endY, 30f * scale, GraphPaint.edgePaint)
     }
 
     private fun setPaintColor(paint: Paint, entry: BookEntry) {

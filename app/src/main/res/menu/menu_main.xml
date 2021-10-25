@@ -13,19 +13,44 @@
     <item
         android:id="@+id/option_save"
         android:title="@string/option_save"
-        android:orderInCategory="100"
+        android:orderInCategory="200"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/option_restart"
         android:title="@string/option_restart"
-        android:orderInCategory="100"
+        android:orderInCategory="300"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/option_zoom"
+        android:title="@string/option_zoom"
+        android:orderInCategory="400"
+        app:showAsAction="never">
+        <menu>
+            <item
+                android:id="@+id/option_zoom_50"
+                android:title="@string/option_zoom_50"
+                android:orderInCategory="410"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/option_zoom_100"
+                android:title="@string/option_zoom_100"
+                android:orderInCategory="420"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/option_zoom_200"
+                android:title="@string/option_zoom_200"
+                android:orderInCategory="430"
+                app:showAsAction="never" />
+        </menu>
+
+    </item>
 
     <item
         android:id="@+id/option_clear_history"
         android:title="@string/option_clear_history"
-        android:orderInCategory="100"
+        android:orderInCategory="500"
         app:showAsAction="never" />
 
 </menu>

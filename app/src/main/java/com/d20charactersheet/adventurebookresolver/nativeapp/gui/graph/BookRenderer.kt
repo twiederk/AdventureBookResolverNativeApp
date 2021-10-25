@@ -17,6 +17,8 @@ class BookRenderer(private val game: Game) {
     private var graphEntries: List<GraphEntry> = calculateGraphEntries()
     private var graphEdges: List<GraphEdge> = calculateGraphEdges(graphEntries)
 
+    var scale: Float = 1f
+
     fun render(): Pair<List<GraphEntry>, List<GraphEdge>> {
         graphEntries = calculateGraphEntries()
         graphEdges = calculateGraphEdges(graphEntries)
@@ -41,11 +43,11 @@ class BookRenderer(private val game: Game) {
     }
 
     private fun createGraphEntry(index: Int, key: Int, currentEntry: BookEntry): GraphEntry {
-        val left = PADDING + (index * (PADDING + WIDTH))
-        val right = left + WIDTH
+        val left = (PADDING + (index * (PADDING + WIDTH))) * scale
+        val right = left + (WIDTH * scale)
 
-        val top = PADDING + (key * (PADDING + HEIGHT))
-        val bottom = top + HEIGHT
+        val top = (PADDING + (key * (PADDING + HEIGHT))) * scale
+        val bottom = top + (HEIGHT * scale)
 
         val selected = currentEntry.id == game.book.getEntryId()
 
@@ -88,9 +90,9 @@ class BookRenderer(private val game: Game) {
     ): GraphEdge {
         val source = entriesMap.getValue(graph.getEdgeSource(edge).id)
         val dest = entriesMap.getValue(graph.getEdgeTarget(edge).id)
-        val startX = source.left + (WIDTH / 2)
+        val startX = source.left + ((WIDTH / 2) * scale)
         val startY = source.bottom
-        val endX = dest.left + (WIDTH / 2)
+        val endX = dest.left + ((WIDTH / 2) * scale)
         val endY = dest.top
         return GraphEdge(startX, startY, endX, endY, edge.label, dest.entry)
     }
@@ -98,10 +100,10 @@ class BookRenderer(private val game: Game) {
     fun center(): Pair<Float, Float> {
         val graphEntry = graphEntries.find { it.entry.id == game.book.getEntryId() }
         return graphEntry?.let {
-            val centerX = it.left + (WIDTH / 2)
-            val centerY = it.top + (HEIGHT / 2)
+            val centerX = it.left + ((WIDTH / 2) * scale)
+            val centerY = it.top + ((HEIGHT / 2) * scale)
             Pair(centerX, centerY)
-        } ?: Pair(WIDTH / 2, HEIGHT / 2)
+        } ?: Pair((WIDTH / 2) * scale, (HEIGHT / 2) * scale)
     }
 
     fun touch(x: Float, y: Float): BookEntry? {

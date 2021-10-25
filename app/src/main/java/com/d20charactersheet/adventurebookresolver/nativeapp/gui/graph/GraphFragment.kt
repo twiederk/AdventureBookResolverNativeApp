@@ -2,6 +2,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
@@ -18,8 +19,34 @@ open class GraphFragment : LogFragment() {
         val rootView = inflater.inflate(R.layout.fragment_graph, container, false)
         createActionAddFloatingActionButton(rootView)
         graphPanel.create(rootView)
+
+        setHasOptionsMenu(true)
+
         return rootView
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when (item.itemId) {
+            R.id.option_zoom_50 -> {
+                scale(0.5f)
+                true
+            }
+            R.id.option_zoom_100 -> {
+                scale(1f)
+                true
+            }
+            R.id.option_zoom_200 -> {
+                scale(2f)
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+
+    private fun scale(scale: Float) {
+        graphPanel.scale(scale)
+    }
+
 
     override fun onResume() {
         super.onResume()

@@ -87,6 +87,7 @@ class GraphViewKoinTest : KoinTest {
             GraphEdge(100f, 200f, 300f, 400f, "myLabel", BookEntry(1))
         )
         whenever(bookRenderer.render()) doReturn Pair(entries, edges)
+        whenever(bookRenderer.scale) doReturn 1F
 
         val canvas: Canvas = mock()
 

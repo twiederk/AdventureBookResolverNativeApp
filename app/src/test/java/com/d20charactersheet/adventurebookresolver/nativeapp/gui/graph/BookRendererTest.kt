@@ -60,10 +60,10 @@ class BookRendererTest {
     @Test
     fun render() {
 
-        // Act
+        // act
         val (entries, edges) = underTest.render()
 
-        // Assert
+        // assert
         assertThat(entries).contains(
             GraphEntry(100f, 100f, 350f, 350f, BookEntry(1), true),
             GraphEntry(100f, 450f, 350f, 700f, BookEntry(2)),
@@ -84,23 +84,81 @@ class BookRendererTest {
 
     @Test
     fun center_instantiation_centerOnCurrentEntry() {
+        // arrange
+        underTest.render()
 
-        // Act
+        // act
         val (viewportX, viewportY) = underTest.center()
 
-        // Assert
+        // assert
         assertThat(viewportX).isEqualTo(225f)
         assertThat(viewportY).isEqualTo(225f)
     }
 
     @Test
+    fun center_withScale2_centerOnCurrentEntry() {
+        // arrange
+        underTest.scale = 2F
+        underTest.render()
+
+        // act
+        val (viewportX, viewportY) = underTest.center()
+
+        // assert
+        assertThat(viewportX).isEqualTo(450f)
+        assertThat(viewportY).isEqualTo(450f)
+    }
+
+    @Test
     fun select_touchEntry2_selectEntry2() {
+        // arrange
+        underTest.render()
 
         // act
         val bookEntry = underTest.touch(150f, 150f)
 
         // assert
         assertThat(bookEntry).isEqualTo(BookEntry(1))
+    }
+
+    @Test
+    fun select_withScale2touchEntry2_selectEntry2() {
+        // arrange
+        underTest.scale = 2F
+        underTest.render()
+
+        // act
+        val bookEntry = underTest.touch(300f, 300f)
+
+        // assert
+        assertThat(bookEntry).isEqualTo(BookEntry(1))
+    }
+
+    @Test
+    fun render_withScale2_everythingIsDoubled() {
+        // arrange
+        underTest.scale = 2F
+
+        // act
+        val (entries, edges) = underTest.render()
+
+        // assert
+        assertThat(entries).contains(
+            GraphEntry(200f, 200f, 700f, 700f, BookEntry(1), true),
+            GraphEntry(200f, 900f, 700f, 1400f, BookEntry(2)),
+            GraphEntry(900f, 900f, 1400f, 1400f, BookEntry(3)),
+            GraphEntry(200f, 1600f, 700f, 2100f, BookEntry(4))
+        )
+
+        assertThat(edges).contains(
+            GraphEdge(450f, 700f, 450f, 900f, "to two", BookEntry(2)),
+            GraphEdge(450f, 700f, 1150f, 900f, "to three", BookEntry(3)),
+            GraphEdge(450f, 1400f, 1150f, 900f, "to three", BookEntry(3)),
+            GraphEdge(1150f, 1400f, 450f, 900f, "to two", BookEntry(2)),
+            GraphEdge(450f, 1400f, 450f, 1600f, "to four", BookEntry(4)),
+            GraphEdge(1150f, 1400f, 450f, 1600f, "to four", BookEntry(4))
+        )
+
     }
 
 }

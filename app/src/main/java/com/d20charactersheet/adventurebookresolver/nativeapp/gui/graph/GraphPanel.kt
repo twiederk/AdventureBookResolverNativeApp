@@ -18,4 +18,8 @@ class GraphPanel(internal val bookRenderer: BookRenderer) : Panel {
         graphView.invalidate()
     }
 
+    fun scale(scale: Float) {
+        graphView.scale(scale)
+    }
+
 }

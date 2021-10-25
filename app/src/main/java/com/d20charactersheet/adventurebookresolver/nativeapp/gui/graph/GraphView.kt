@@ -33,7 +33,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
         initialCentering()
         graphCanvas.translate(canvas, viewportX, viewportY)
         val (entries, edges) = bookRenderer.render()
-        graphCanvas.render(canvas, entries, edges)
+        graphCanvas.render(canvas, entries, edges, bookRenderer.scale)
     }
 
     private fun initialCentering() {
@@ -59,6 +59,11 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
         val (centerX, centerY) = bookRenderer.center()
         viewportX = (width / 2) - centerX
         viewportY = (height / 2) - centerY
+    }
+
+    fun scale(scale: Float) {
+        bookRenderer.scale = scale
+        invalidate()
     }
 
 }
