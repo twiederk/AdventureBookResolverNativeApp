@@ -10,7 +10,6 @@ class BookRenderer(private val game: Game) {
 
     companion object {
         private const val PADDING = 100f
-        private const val WIDTH = 250f
         private const val HEIGHT = 250f
     }
 
@@ -32,26 +31,41 @@ class BookRenderer(private val game: Game) {
 
     private fun calculateGraphEntries(entriesByDepth: MutableMap<Int, MutableList<BookEntry>>): MutableList<GraphEntry> {
         val graphEntries = mutableListOf<GraphEntry>()
-        for (key in entriesByDepth.keys) {
-            val entries = entriesByDepth[key]
+        for (depth in entriesByDepth.keys) {
+            val entries = entriesByDepth[depth]
             entries?.forEachIndexed { index, currentEntry ->
-                val graphEntry = createGraphEntry(index, key, currentEntry)
+                val graphEntry = createGraphEntry(index, depth, currentEntry, entries)
                 graphEntries.add(graphEntry)
             }
         }
         return graphEntries
     }
 
-    private fun createGraphEntry(index: Int, key: Int, currentEntry: BookEntry): GraphEntry {
-        val left = (PADDING + (index * (PADDING + WIDTH))) * scale
-        val right = left + (WIDTH * scale)
+    private fun createGraphEntry(
+        index: Int,
+        depth: Int,
+        currentEntry: BookEntry,
+        entries: MutableList<BookEntry>
+    ): GraphEntry {
+        val withOfEntriesToTheLeft = sumWidthOfEntriesToTheLeft(entries.subList(0, index))
+        val left = (PADDING + (index * PADDING) + withOfEntriesToTheLeft) * scale
+        val ownWidth = GraphPaint.textPaint.measureText(currentEntry.title)
+        val right = left + (ownWidth * scale)
 
-        val top = (PADDING + (key * (PADDING + HEIGHT))) * scale
+        val top = (PADDING + (depth * (PADDING + HEIGHT))) * scale
         val bottom = top + (HEIGHT * scale)
 
         val selected = currentEntry.id == game.book.getEntryId()
 
         return GraphEntry(left, top, right, bottom, currentEntry, selected)
+    }
+
+    private fun sumWidthOfEntriesToTheLeft(entries: MutableList<BookEntry>): Float {
+        var totalWidth = 0F
+        for (entry in entries) {
+           totalWidth += GraphPaint.textPaint.measureText(entry.title)
+        }
+        return totalWidth
     }
 
     private fun sortEntriesByDepth(graph: Graph<BookEntry, LabeledEdge>, bookEntry: BookEntry)
@@ -90,9 +104,9 @@ class BookRenderer(private val game: Game) {
     ): GraphEdge {
         val source = entriesMap.getValue(graph.getEdgeSource(edge).id)
         val dest = entriesMap.getValue(graph.getEdgeTarget(edge).id)
-        val startX = source.left + ((WIDTH / 2) * scale)
+        val startX = source.left + ((source.width / 2) * scale)
         val startY = source.bottom
-        val endX = dest.left + ((WIDTH / 2) * scale)
+        val endX = dest.left + ((source.width / 2) * scale)
         val endY = dest.top
         return GraphEdge(startX, startY, endX, endY, edge.label, dest.entry)
     }
@@ -100,10 +114,10 @@ class BookRenderer(private val game: Game) {
     fun center(): Pair<Float, Float> {
         val graphEntry = graphEntries.find { it.entry.id == game.book.getEntryId() }
         return graphEntry?.let {
-            val centerX = it.left + ((WIDTH / 2) * scale)
+            val centerX = it.left + ((it.width / 2) * scale)
             val centerY = it.top + ((HEIGHT / 2) * scale)
             Pair(centerX, centerY)
-        } ?: Pair((WIDTH / 2) * scale, (HEIGHT / 2) * scale)
+        } ?: Pair((HEIGHT / 2) * scale, (HEIGHT / 2) * scale)
     }
 
     fun touch(x: Float, y: Float): BookEntry? {
@@ -119,7 +133,10 @@ data class GraphEntry(
     val bottom: Float,
     val entry: BookEntry,
     val current: Boolean = false
-)
+) {
+    val width: Float
+        get() = right - left
+}
 
 data class GraphEdge(
     val startX: Float,

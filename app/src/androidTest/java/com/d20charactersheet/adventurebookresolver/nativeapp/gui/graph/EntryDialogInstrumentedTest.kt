@@ -51,10 +51,9 @@ class EntryDialogInstrumentedTest : KoinTest {
     @Test
     fun modify_title_and_note_of_current_entry() {
         // arrange
-        game.book.setEntryTitle("")
         launchFragmentInContainer<GraphFragment>(themeResId = R.style.AppTheme)
         onView(withId(R.id.graph_view)).perform(clickCenter())
-        onView(withId(R.id.entry_title_edit_text)).perform(ViewActions.typeText("myTitle"))
+        onView(withId(R.id.entry_title_edit_text)).perform(ViewActions.replaceText("myTitle"))
         onView(withId(R.id.entry_note_edit_text)).perform(ViewActions.typeText("myNote"))
 
         // act

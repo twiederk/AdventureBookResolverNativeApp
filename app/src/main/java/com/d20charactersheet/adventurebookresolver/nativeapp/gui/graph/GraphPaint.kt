@@ -18,7 +18,7 @@ object GraphPaint {
         strokeWidth = 10f
     }
 
-    val textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+    var textPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         textSize = 72f
         color = Color.RED
     }

@@ -13,7 +13,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
 
-class BookRendererTest {
+class BookRendererScaleTest {
 
     private lateinit var underTest: BookRenderer
 
@@ -65,65 +65,70 @@ class BookRendererTest {
     }
 
     @Test
-    fun render() {
-
-        // act
-        val (entries, edges) = underTest.render()
-
-        // assert
-        assertThat(entries).contains(
-            GraphEntry(100f, 100f, 130f, 350f, BookEntry(1), true),
-            GraphEntry(100f, 450f, 130f, 700f, BookEntry(2)),
-            GraphEntry(230f, 450f, 280f, 700f, BookEntry(3)),
-            GraphEntry(100f, 800f, 140f, 1050f, BookEntry(4))
-        )
-
-        assertThat(edges).contains(
-            GraphEdge(115f, 350f, 115f, 450f, "to two", BookEntry(2)),
-            GraphEdge(115f, 350f, 245f, 450f, "to three", BookEntry(3)),
-            GraphEdge(115f, 700f, 115f, 800f, "to four", BookEntry(4)),
-            GraphEdge(115f, 700f, 245f, 450f, "to three", BookEntry(3)),
-            GraphEdge(255f, 700f, 125f, 450f, "to two", BookEntry(2)),
-            GraphEdge(255f, 700f, 125f, 800f, "to four", BookEntry(4))
-        )
-
-    }
-
-    @Test
-    fun center_instantiation_centerOnCurrentEntry() {
+    fun center_withScale2_centerOnCurrentEntry() {
         // arrange
+        underTest.scale = 2F
         underTest.render()
 
         // act
         val (viewportX, viewportY) = underTest.center()
 
         // assert
-        assertThat(viewportX).isEqualTo(115f)
-        assertThat(viewportY).isEqualTo(225f)
+        assertThat(viewportX).isEqualTo(260f)
+        assertThat(viewportY).isEqualTo(450f)
     }
 
     @Test
-    fun select_touchEntry1_selectEntry1() {
+    fun select_withScale2touchEntry1_selectEntry1() {
         // arrange
+        underTest.scale = 2F
         underTest.render()
 
         // act
-        val bookEntry = underTest.touch(115f, 115f)
+        val bookEntry = underTest.touch(250f, 300f)
 
         // assert
         assertThat(bookEntry).isEqualTo(BookEntry(1))
     }
 
     @Test
-    fun select_touchEntry2_selectEntry2() {
+    fun select_withScale2touchEntry2_selectEntry2() {
         // arrange
+        underTest.scale = 2F
         underTest.render()
 
         // act
-        val bookEntry = underTest.touch(115f, 500f)
+        val bookEntry = underTest.touch(250f, 1000f)
 
         // assert
         assertThat(bookEntry).isEqualTo(BookEntry(2))
+    }
+
+    @Test
+    fun render_withScale2_everythingIsDoubled() {
+        // arrange
+        underTest.scale = 2F
+
+        // act
+        val (entries, edges) = underTest.render()
+
+        // assert
+        assertThat(entries).contains(
+            GraphEntry(200f, 200f, 260f, 700f, BookEntry(1), true),
+            GraphEntry(200f, 900f, 260f, 1400f, BookEntry(2)),
+            GraphEntry(460f, 900f, 560f, 1400f, BookEntry(3)),
+            GraphEntry(200f, 1600f, 280f, 2100f, BookEntry(4))
+        )
+
+        assertThat(edges).contains(
+            GraphEdge(260f, 700f, 260f, 900f, "to two", BookEntry(2)),
+            GraphEdge(260f, 700f, 520f, 900f, "to three", BookEntry(3)),
+            GraphEdge(260f, 1400f, 260f, 1600f, "to four", BookEntry(4)),
+            GraphEdge(260f, 1400f, 520f, 900f, "to three", BookEntry(3)),
+            GraphEdge(560f, 1400f, 300f, 900f, "to two", BookEntry(2)),
+            GraphEdge(560f, 1400f, 300f, 1600f, "to four", BookEntry(4))
+        )
+
     }
 
 }
