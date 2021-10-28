@@ -58,10 +58,13 @@ class ActionAddDialogKoinTest : KoinTest {
             on { findViewById<EditText>(R.id.action_id_edit_text) } doReturn actionIdEditText
         }
 
+        val messageDisplay: MessageDisplay = mock()
+
         // Act
-        ActionAddDialog().addAction(view)
+        ActionAddDialog(messageDisplay).addAction(view)
 
         // Assert
+        verify(messageDisplay).display(view, "Can't create action: Label is missing")
         verifyNoMoreInteractions(game, graphPanel)
     }
 
@@ -79,10 +82,13 @@ class ActionAddDialogKoinTest : KoinTest {
             on { findViewById<EditText>(R.id.action_id_edit_text) } doReturn actionIdEditText
         }
 
+        val messageDisplay: MessageDisplay = mock()
+
         // Act
-        ActionAddDialog().addAction(view)
+        ActionAddDialog(messageDisplay).addAction(view)
 
         // Assert
+        verify(messageDisplay).display(view, "Can't create action: Id is missing")
         verifyNoMoreInteractions(game, graphPanel)
     }
 
@@ -101,11 +107,14 @@ class ActionAddDialogKoinTest : KoinTest {
         }
         whenever(game.book).doReturn(AdventureBook())
 
+        val messageDisplay: MessageDisplay = mock()
+
         // Act
-        ActionAddDialog().addAction(view)
+        ActionAddDialog(messageDisplay).addAction(view)
 
         // Assert
-        verify(game).book
+        verify(game, times(2)).book
+        verify(messageDisplay).display(view, "Can't create action: Id is same as current node")
         verifyNoMoreInteractions(game, graphPanel)
     }
 

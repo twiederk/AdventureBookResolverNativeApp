@@ -11,7 +11,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 
-class ActionAddDialog : KoinComponent {
+class ActionAddDialog(private val messageDisplay: MessageDisplay = MessageDisplay()) : KoinComponent {
 
     private val game: Game by inject()
     private val graphPanel: GraphPanel by inject()
@@ -35,6 +35,9 @@ class ActionAddDialog : KoinComponent {
         if (isDataValidToCreateAction(actionLabel, actionId)) {
             game.addAction(actionLabel, actionId.toInt())
             graphPanel.update()
+        } else {
+            val message = getErrorMessage(actionLabel, actionId)
+            messageDisplay.display(view, message)
         }
     }
 
@@ -46,6 +49,13 @@ class ActionAddDialog : KoinComponent {
 
     private fun isDataValidToCreateAction(actionLabel: String, actionId: String) =
         actionLabel.isNotEmpty() && actionId.isNotEmpty() && actionId.toInt() != game.book.getEntryId()
+
+    private fun getErrorMessage(actionLabel: String, actionId: String): String {
+        if (actionLabel.isEmpty()) return "Can't create action: Label is missing"
+        if (actionId.isEmpty()) return "Can't create action: Id is missing"
+        if (actionId.toInt() == game.book.getEntryId()) return "Can't create action: Id is same as current node"
+        return ""
+    }
 
 
 }

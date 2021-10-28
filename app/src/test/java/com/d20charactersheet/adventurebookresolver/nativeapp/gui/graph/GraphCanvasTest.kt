@@ -28,7 +28,7 @@ class GraphCanvasTest {
     fun render_drawGraphEdge() {
         // Arrange
         val edges = listOf(
-            GraphEdge(100f, 200f, 300f, 400f, "myLabel", BookEntry(1))
+            GraphEdge(100f, 200f, 300f, 400f, "myLabel", 500f, 600f, BookEntry(1))
         )
         val actionColor: ActionColor = mock()
         val view: View = mock()
@@ -41,6 +41,7 @@ class GraphCanvasTest {
         verify(actionColor).getColor(view, WayMark.NORMAL, Visit.UNVISITED)
         verify(canvas).drawLine(100f, 200f, 300f, 400f, GraphPaint.edgePaint)
         verify(canvas).drawCircle(300f, 400f, 30f, GraphPaint.edgePaint)
+        verify(canvas).drawText("myLabel", 500f, 600f, GraphPaint.textPaint)
         verifyNoMoreInteractions(actionColor, canvas)
     }
 

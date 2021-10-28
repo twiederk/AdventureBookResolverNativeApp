@@ -9,7 +9,7 @@ import org.jgrapht.traverse.BreadthFirstIterator
 class BookRenderer(private val game: Game) {
 
     companion object {
-        private const val PADDING = 100f
+        private const val PADDING = 300f
         private const val HEIGHT = 250f
     }
 
@@ -104,17 +104,20 @@ class BookRenderer(private val game: Game) {
     ): GraphEdge {
         val source = entriesMap.getValue(graph.getEdgeSource(edge).id)
         val dest = entriesMap.getValue(graph.getEdgeTarget(edge).id)
-        val startX = source.left + ((source.width / 2) * scale)
+        val startX = source.left + (source.width / 2)
         val startY = source.bottom
-        val endX = dest.left + ((source.width / 2) * scale)
+        val endX = dest.left + (dest.width / 2)
         val endY = dest.top
-        return GraphEdge(startX, startY, endX, endY, edge.label, dest.entry)
+        val labelX = (startX + endX) / 2
+        val labelY = (startY + endY) / 2
+
+        return GraphEdge(startX, startY, endX, endY, edge.label, labelX, labelY, dest.entry)
     }
 
     fun center(): Pair<Float, Float> {
         val graphEntry = graphEntries.find { it.entry.id == game.book.getEntryId() }
         return graphEntry?.let {
-            val centerX = it.left + ((it.width / 2) * scale)
+            val centerX = it.left + (it.width / 2)
             val centerY = it.top + ((HEIGHT / 2) * scale)
             Pair(centerX, centerY)
         } ?: Pair((HEIGHT / 2) * scale, (HEIGHT / 2) * scale)
@@ -144,5 +147,7 @@ data class GraphEdge(
     val endX: Float,
     val endY: Float,
     val label: String,
+    val labelX: Float,
+    val labelY: Float,
     val dest: BookEntry
 )

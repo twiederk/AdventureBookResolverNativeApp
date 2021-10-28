@@ -84,6 +84,13 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             GraphPaint.edgePaint
         )
         canvas.drawCircle(graphEdge.endX, graphEdge.endY, 30f * scale, GraphPaint.edgePaint)
+
+        canvas.drawText(
+            graphEdge.label,
+            graphEdge.labelX,
+            graphEdge.labelY,
+            getTextPaint()
+        )
     }
 
     private fun setPaintColor(paint: Paint, entry: BookEntry) {

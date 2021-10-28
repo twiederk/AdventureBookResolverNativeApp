@@ -84,7 +84,7 @@ class GraphViewKoinTest : KoinTest {
             GraphEntry(100f, 200f, 300f, 400f, BookEntry(1), true)
         )
         val edges = listOf(
-            GraphEdge(100f, 200f, 300f, 400f, "myLabel", BookEntry(1))
+            GraphEdge(100f, 200f, 300f, 400f, "myLabel", 0f, 0f, BookEntry(1))
         )
         whenever(bookRenderer.render()) doReturn Pair(entries, edges)
         whenever(bookRenderer.scale) doReturn 1F
