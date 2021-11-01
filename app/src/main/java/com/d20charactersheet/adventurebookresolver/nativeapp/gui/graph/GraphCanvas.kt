@@ -4,19 +4,62 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.view.View
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GraphCanvas(private val view: View, private val actionColor: ActionColor = ActionColor()) {
+class GraphCanvas(
+    private val view: View,
+    private val actionColor: ActionColor = ActionColor(),
+    val graphPaint: GraphPaint = GraphPaint
+) : KoinComponent {
 
-    private var scale = 1F
+    private val bookRenderer: TraversalBookRenderer by inject()
+
+    var scale: Float = 1F
+    private var graphEntries: List<GraphEntry> = emptyList()
+    private var graphEdges: List<GraphEdge> = emptyList()
 
     fun translate(canvas: Canvas, viewportX: Float, viewportY: Float) {
         canvas.translate(viewportX, viewportY)
     }
 
-    fun render(canvas: Canvas, entries: List<GraphEntry>, edges: List<GraphEdge>, scale: Float = 1F) {
-        this.scale = scale
-        entries.forEach { drawGraphEntry(it, canvas) }
-        edges.forEach { drawGraphEdge(it, canvas) }
+    fun render(canvas: Canvas) {
+        val (entries, edges) = bookRenderer.render()
+        if (scale != 1.0F) {
+            val scaledEntries = mutableListOf<GraphEntry>()
+            entries.stream().forEach { graphEntry ->
+                scaledEntries.add(
+                    graphEntry.copy(
+                        left = graphEntry.left * scale,
+                        top = graphEntry.top * scale,
+                        right = graphEntry.right * scale,
+                        bottom = graphEntry.bottom * scale,
+                    )
+                )
+            }
+            graphEntries = scaledEntries
+
+            val scaledEdges = mutableListOf<GraphEdge>()
+            edges.stream().forEach { graphEdge ->
+                scaledEdges.add(
+                    graphEdge.copy(
+                        startX = graphEdge.startX * scale,
+                        startY = graphEdge.startY * scale,
+                        endX = graphEdge.endX * scale,
+                        endY = graphEdge.endY * scale,
+                        labelX = graphEdge.labelX * scale,
+                        labelY = graphEdge.labelY * scale
+                    )
+                )
+            }
+            graphEdges = scaledEdges
+
+        } else {
+            graphEntries = entries
+            graphEdges = edges
+        }
+        graphEntries.forEach { drawGraphEntry(it, canvas) }
+        graphEdges.forEach { drawGraphEdge(it, canvas) }
     }
 
     private fun drawGraphEntry(graphEntry: GraphEntry, canvas: Canvas) {
@@ -45,34 +88,20 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             graphEntry.bottom,
             GraphPaint.entryPaint
         )
-        val textPaint = getTextPaint()
+        val scaledTextPaint = graphPaint.getScaledTextPaint(scale)
         canvas.drawText(
             "(${graphEntry.entry.id})",
             graphEntry.left,
             graphEntry.top + (100 * scale),
-            textPaint
+            scaledTextPaint
         )
         canvas.drawText(
             graphEntry.entry.title,
             graphEntry.left,
             graphEntry.bottom,
-            textPaint
+            scaledTextPaint
         )
     }
-
-    private fun getTextPaint(): Paint {
-        var textPaint = GraphPaint.textPaint
-        if (scale != 1F) {
-            textPaint = scaledTextPaint()
-        }
-        return textPaint
-    }
-
-    private fun scaledTextPaint(): Paint = Paint(GraphPaint.textPaint)
-        .apply {
-            textSize *= scale
-        }
-
 
     private fun drawGraphEdge(graphEdge: GraphEdge, canvas: Canvas) {
         setPaintColor(GraphPaint.edgePaint, graphEdge.dest)
@@ -89,7 +118,7 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
             graphEdge.label,
             graphEdge.labelX,
             graphEdge.labelY,
-            getTextPaint()
+            graphPaint.getScaledTextPaint(scale)
         )
     }
 
@@ -97,5 +126,18 @@ class GraphCanvas(private val view: View, private val actionColor: ActionColor =
         paint.color = actionColor.getColor(view, entry.wayMark, entry.visit)
     }
 
+    fun getCenterOfCurrentGraphEntry(): Pair<Float, Float> {
+        val currentGraphEntry = graphEntries.find { graphEntry -> graphEntry.current }
+        if (currentGraphEntry != null) {
+            val centerX = currentGraphEntry.left + (currentGraphEntry.width / 2)
+            val centerY = currentGraphEntry.top + (currentGraphEntry.height / 2)
+            return Pair(centerX, centerY)
+        }
+        return Pair(0F, 0F)
+    }
+
+    fun touch(x: Float, y: Float): BookEntry? {
+        return graphEntries.find { it.left <= x && it.right >= x && it.top <= y && it.bottom >= y }?.entry
+    }
 
 }

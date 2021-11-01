@@ -23,4 +23,9 @@ object GraphPaint {
         color = Color.RED
     }
 
+    fun getScaledTextPaint(scale: Float): Paint = Paint(textPaint)
+        .apply {
+            textSize *= scale
+        }
+
 }

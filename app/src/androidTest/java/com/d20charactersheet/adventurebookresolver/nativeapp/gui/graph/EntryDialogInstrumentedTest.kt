@@ -40,7 +40,7 @@ class EntryDialogInstrumentedTest : KoinTest {
         launchFragmentInContainer<GraphFragment>(themeResId = R.style.AppTheme)
 
         // act
-        onView(withId(R.id.graph_view)).perform(clickCenter())
+        onView(withId(R.id.graph_view)).perform(clickCenter(10, 10))
 
         // assert
         onView(withId(R.id.entry_title_edit_text)).check(matches(withText("myTitle")))
@@ -52,7 +52,7 @@ class EntryDialogInstrumentedTest : KoinTest {
     fun modify_title_and_note_of_current_entry() {
         // arrange
         launchFragmentInContainer<GraphFragment>(themeResId = R.style.AppTheme)
-        onView(withId(R.id.graph_view)).perform(clickCenter())
+        onView(withId(R.id.graph_view)).perform(clickCenter(10, 10))
         onView(withId(R.id.entry_title_edit_text)).perform(ViewActions.replaceText("myTitle"))
         onView(withId(R.id.entry_note_edit_text)).perform(ViewActions.typeText("myNote"))
 
@@ -70,7 +70,7 @@ class EntryDialogInstrumentedTest : KoinTest {
         // Arrange
         game.book.addAction("to delete", 2)
         launchFragmentInContainer<GraphFragment>(themeResId = R.style.AppTheme)
-        onView(withId(R.id.graph_view)).perform(clickCenter())
+        onView(withId(R.id.graph_view)).perform(clickCenter(10, 10))
 
         // Act
         onView(withId(R.id.move_action_label_text_view)).perform(ViewActions.swipeLeft())
@@ -89,17 +89,17 @@ class EntryDialogInstrumentedTest : KoinTest {
     }
 
     companion object {
-        fun clickCenter(): ViewAction {
+        fun clickCenter(additionalX: Int = 0, additionalY: Int = 0): ViewAction {
             return GeneralClickAction(
                 Tap.SINGLE,
                 { view ->
                     val screenPos = IntArray(2)
                     view.getLocationOnScreen(screenPos)
-                    val x = view.width / 2
-                    val y = view.height / 2
+                    val componentX = view.width / 2
+                    val componentY = view.height / 2
 
-                    val screenX = (screenPos[0] + x).toFloat()
-                    val screenY = (screenPos[1] + y).toFloat()
+                    val screenX = (screenPos[0] + componentX + additionalX).toFloat()
+                    val screenY = (screenPos[1] + componentY + additionalY).toFloat()
 
                     floatArrayOf(screenX, screenY)
                 },

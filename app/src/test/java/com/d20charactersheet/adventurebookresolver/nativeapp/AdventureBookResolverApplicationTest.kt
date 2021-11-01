@@ -6,10 +6,10 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookRenderer
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryDialog
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.TraversalBookRenderer
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.GoldPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ItemPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory.ProvisionsPanel
@@ -31,7 +31,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val provisionsPanel: ProvisionsPanel by inject()
     private val itemPanel: ItemPanel by inject()
     private val graphPanel: GraphPanel by inject()
-    private val bookRenderer: BookRenderer by inject()
+    private val bookRenderer: TraversalBookRenderer by inject()
     private val billing: Billing by inject()
     private val entryDialog: EntryDialog by inject()
     private val graphViewTouchEventHandler: GraphViewTouchEventHandler by inject()

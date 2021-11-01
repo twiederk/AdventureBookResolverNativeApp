@@ -10,17 +10,15 @@ import org.koin.core.component.inject
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), KoinComponent {
 
-    private val bookRenderer: BookRenderer by inject()
     private val touchEventHandler: GraphViewTouchEventHandler by inject()
 
-    internal var viewportX = 0f
-    internal var viewportY = 0f
+    internal var viewportX = 0F
+    internal var viewportY = 0F
 
-    internal var touchX: Float = 0f
-    internal var touchY: Float = 0f
+    internal var touchX: Float = 0F
+    internal var touchY: Float = 0F
 
     internal var graphCanvas = GraphCanvas(this)
-
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(
@@ -30,39 +28,38 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
     }
 
     public override fun onDraw(canvas: Canvas) {
-        initialCentering()
+        initialCenteringOnCurrentBookEntry()
         graphCanvas.translate(canvas, viewportX, viewportY)
-        val (entries, edges) = bookRenderer.render()
-        graphCanvas.render(canvas, entries, edges, bookRenderer.scale)
+        graphCanvas.render(canvas)
     }
 
-    private fun initialCentering() {
+    private fun initialCenteringOnCurrentBookEntry() {
         if (viewportX == 0f && viewportY == 0f) {
-            center()
+            guardedCenteringOnCurrentBookEntry()
         }
     }
 
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        touchEventHandler.onTouchEvent(this, event)
+        touchEventHandler.onTouchEvent(this, graphCanvas, event)
         invalidate()
         return true
     }
 
-    fun center() {
+    fun guardedCenteringOnCurrentBookEntry() {
         if (width != 0 || height != 0) {
-            calculateCenter(width.toFloat(), height.toFloat())
+            centerOnCurrentBookEntry(width.toFloat(), height.toFloat())
         }
     }
 
-    internal fun calculateCenter(width: Float, height: Float) {
-        val (centerX, centerY) = bookRenderer.center()
-        viewportX = (width / 2) - centerX
-        viewportY = (height / 2) - centerY
+    internal fun centerOnCurrentBookEntry(viewportWidth: Float, viewportHeight: Float) {
+        val (centerX, centerY) = graphCanvas.getCenterOfCurrentGraphEntry()
+        viewportX = (viewportWidth / 2) - centerX
+        viewportY = (viewportHeight / 2) - centerY
     }
 
     fun scale(scale: Float) {
-        bookRenderer.scale = scale
+        graphCanvas.scale = scale
         invalidate()
     }
 

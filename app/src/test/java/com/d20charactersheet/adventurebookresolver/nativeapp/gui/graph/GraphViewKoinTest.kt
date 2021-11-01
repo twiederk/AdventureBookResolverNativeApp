@@ -20,7 +20,7 @@ import org.mockito.kotlin.whenever
 
 class GraphViewKoinTest : KoinTest {
 
-    private val bookRenderer: BookRenderer by inject()
+    private val bookRenderer: TraversalBookRenderer by inject()
     private val touchEventHandler: GraphViewTouchEventHandler by inject()
 
     @Before
@@ -28,7 +28,7 @@ class GraphViewKoinTest : KoinTest {
         startKoin {
             modules(appModule)
         }
-        declareMock<BookRenderer>()
+        declareMock<TraversalBookRenderer>()
         declareMock<GraphViewTouchEventHandler>()
     }
 
@@ -43,7 +43,7 @@ class GraphViewKoinTest : KoinTest {
         val underTest = GraphView(mock(), mock())
 
         // Act
-        underTest.center()
+        underTest.guardedCenteringOnCurrentBookEntry()
 
         // Assert
         assertThat(underTest.viewportX).isEqualTo(0f)
@@ -51,13 +51,15 @@ class GraphViewKoinTest : KoinTest {
     }
 
     @Test
-    fun calculateInternal() {
+    fun centerOnBookEntry() {
         // arrange
         val underTest = GraphView(mock(), mock())
-        whenever(bookRenderer.center()).doReturn(Pair(50f, 100f))
+        val graphCanvas: GraphCanvas = mock()
+        whenever(graphCanvas.getCenterOfCurrentGraphEntry()).doReturn(Pair(50f, 100f))
+        underTest.graphCanvas = graphCanvas
 
         // act
-        underTest.calculateCenter(200f, 400f)
+        underTest.centerOnCurrentBookEntry(200f, 400f)
 
         // assert
         assertThat(underTest.viewportX).isEqualTo(50f)
@@ -68,26 +70,27 @@ class GraphViewKoinTest : KoinTest {
     fun onTouchEvent() {
         // arrange
         val motionEvent: MotionEvent = mock()
+        val graphCanvas: GraphCanvas = mock()
         val underTest = GraphView(mock(), mock())
+        underTest.graphCanvas = graphCanvas
 
         // act
         underTest.onTouchEvent(motionEvent)
 
         // assert
-        verify(touchEventHandler).onTouchEvent(underTest, motionEvent)
+        verify(touchEventHandler).onTouchEvent(underTest, graphCanvas, motionEvent)
     }
 
     @Test
     fun onDraw() {
         // Arrange
         val entries = listOf(
-            GraphEntry(100f, 200f, 300f, 400f, BookEntry(1), true)
+            GraphEntry(entry = BookEntry(1), left = 100f, top = 200f, right = 300f, bottom = 400f, current = true)
         )
         val edges = listOf(
             GraphEdge(100f, 200f, 300f, 400f, "myLabel", 0f, 0f, BookEntry(1))
         )
         whenever(bookRenderer.render()) doReturn Pair(entries, edges)
-        whenever(bookRenderer.scale) doReturn 1F
 
         val canvas: Canvas = mock()
 
@@ -101,7 +104,7 @@ class GraphViewKoinTest : KoinTest {
 
         // Assert
         verify(underTest.graphCanvas).translate(canvas, 100f, 200f)
-        verify(underTest.graphCanvas).render(canvas, entries, edges)
+        verify(underTest.graphCanvas).render(canvas)
     }
 
 }

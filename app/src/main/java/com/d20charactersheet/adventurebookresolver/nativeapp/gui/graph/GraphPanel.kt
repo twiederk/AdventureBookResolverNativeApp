@@ -5,7 +5,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.Panel
 
 
-class GraphPanel(internal val bookRenderer: BookRenderer) : Panel {
+class GraphPanel(internal val bookRenderer: TraversalBookRenderer) : Panel {
 
     internal lateinit var graphView: GraphView
 
@@ -14,7 +14,7 @@ class GraphPanel(internal val bookRenderer: BookRenderer) : Panel {
     }
 
     override fun update() {
-        graphView.center()
+        graphView.guardedCenteringOnCurrentBookEntry()
         graphView.invalidate()
     }
 

@@ -17,7 +17,6 @@ import org.mockito.kotlin.*
 
 class GraphViewTouchEventHandlerKoinTest : KoinTest {
 
-    private val bookRenderer: BookRenderer by inject()
     private val game: Game by inject()
     private val entryDialog: EntryDialog by inject()
 
@@ -27,7 +26,6 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             modules(appModule)
         }
         declareMock<Game>()
-        declareMock<BookRenderer>()
         declareMock<EntryDialog>()
     }
 
@@ -46,16 +44,18 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             on { y } doReturn 600f
         }
         val bookEntry = BookEntry(1)
-        whenever(bookRenderer.touch(200f, 400f)).thenReturn(bookEntry)
+        val graphCanvas: GraphCanvas = mock()
+        whenever(graphCanvas.touch(200f, 400f)).thenReturn(bookEntry)
         whenever(game.isCurrentEntry(bookEntry)).doReturn(false)
 
         val graphView = GraphView(mock(), mock())
+        graphView.graphCanvas = graphCanvas
         graphView.viewportX = 100f
         graphView.viewportY = 200f
         val underTest = GraphViewTouchEventHandler()
 
         // Act
-        val result = underTest.onTouchEvent(graphView, motionEvent)
+        val result = underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
 
         // Assert
         assertThat(result).isTrue
@@ -74,17 +74,19 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             on { y } doReturn 600f
         }
         val bookEntry = BookEntry(1)
-        whenever(bookRenderer.touch(any(), any())).thenReturn(bookEntry)
+        val graphCanvas: GraphCanvas = mock()
+        whenever(graphCanvas.touch(any(), any())).thenReturn(bookEntry)
         whenever(game.isCurrentEntry(bookEntry)).doReturn(true)
 
         val graphView: GraphView = mock()
+        graphView.graphCanvas = graphCanvas
         whenever(graphView.viewportX).doReturn(100f)
         whenever(graphView.viewportY).doReturn(200f)
         whenever(graphView.context).doReturn(mock())
         val underTest = GraphViewTouchEventHandler()
 
         // Act
-        val result = underTest.onTouchEvent(graphView, motionEvent)
+        val result = underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
 
         // Assert
         assertThat(result).isTrue
@@ -100,21 +102,23 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             on { x } doReturn 300f
             on { y } doReturn 600f
         }
-        whenever(bookRenderer.touch(200f, 400f)).thenReturn(null)
+        val graphCanvas: GraphCanvas = mock()
+        whenever(graphCanvas.touch(200f, 400f)).thenReturn(null)
 
         val graphView = GraphView(mock(), mock())
+        graphView.graphCanvas = graphCanvas
         graphView.viewportX = 100f
         graphView.viewportY = 200f
         val underTest = GraphViewTouchEventHandler()
 
         // Act
-        val result = underTest.onTouchEvent(graphView, motionEvent)
+        val result = underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
 
         // Assert
         assertThat(result).isTrue
         assertThat(graphView.touchX).isEqualTo(200f)
         assertThat(graphView.touchY).isEqualTo(400f)
-        verify(bookRenderer).touch(200f, 400f)
+        verify(graphCanvas).touch(200f, 400f)
         verifyNoMoreInteractions(game)
     }
 
@@ -133,7 +137,7 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
         val underTest = GraphViewTouchEventHandler()
 
         // Act
-        val result = underTest.onTouchEvent(graphView, motionEvent)
+        val result = underTest.onTouchEvent(graphView, mock(), motionEvent)
 
         // Assert
         assertThat(result).isTrue

@@ -11,9 +11,9 @@ import org.mockito.kotlin.doAnswer
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
-class BookRendererWith3EntriesTest {
+class DepthBookRendererWith3EntriesTest {
 
-    private lateinit var underTest: BookRenderer
+    private lateinit var underTest: DepthBookRenderer
 
     /**
      *  Set up game with the following book:
@@ -43,7 +43,7 @@ class BookRendererWith3EntriesTest {
             setEntryTitle("Planet Earth")
         }
 
-        underTest = BookRenderer(game)
+        underTest = DepthBookRenderer(game)
 
     }
 
@@ -56,11 +56,11 @@ class BookRendererWith3EntriesTest {
         }
 
         // act
-        val (entries, _) = BookRenderer(game).render()
+        val (entries, _) = DepthBookRenderer(game).render()
 
         // assert
         assertThat(entries).contains(
-            GraphEntry(300f, 300f, 490f, 550f, BookEntry(1), true),
+            GraphEntry(entry = BookEntry(1), left = 300f, top = 300f, right = 490f, bottom = 550f, current = true),
         )
     }
 
@@ -72,9 +72,9 @@ class BookRendererWith3EntriesTest {
 
         // assert
         assertThat(entries).contains(
-            GraphEntry(300f, 300f, 400f, 550f, BookEntry(1, "Black hole"), false),
-            GraphEntry(300f, 850f, 470f, 1100f, BookEntry(2, "Parallel universe"), false),
-            GraphEntry(770f, 850f, 890f, 1100f, BookEntry(3, "Planet Earth"), true),
+            GraphEntry(entry = BookEntry(1, "Black hole"), left = 300f, top = 300f, right = 400f, bottom = 550f, current = false),
+            GraphEntry(entry = BookEntry(2, "Parallel universe"), left = 300f, top = 850f, right = 470f, bottom = 1100f, current = false),
+            GraphEntry(entry = BookEntry(3, "Planet Earth"), left = 770f, top = 850f, right = 890f, bottom = 1100f, current = true),
         )
     }
 

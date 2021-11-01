@@ -18,7 +18,7 @@ class GraphPanelTest {
             on { findViewById<GraphView>(R.id.graph_view) } doReturn graphView
         }
 
-        val bookRenderer: BookRenderer = mock()
+        val bookRenderer: TraversalBookRenderer = mock()
         val underTest = GraphPanel(bookRenderer)
 
         // Act
@@ -32,10 +32,7 @@ class GraphPanelTest {
     @Test
     fun `update graph panel`() {
         // Arrange
-        val bookRenderer: BookRenderer = mock {
-            on { center() } doReturn Pair(10f, 20f)
-        }
-        val underTest = GraphPanel(bookRenderer)
+        val underTest = GraphPanel(mock())
 
         val graphView: GraphView = mock()
         underTest.graphView = graphView
@@ -44,7 +41,7 @@ class GraphPanelTest {
         underTest.update()
 
         // Assert
-        verify(graphView).center()
+        verify(graphView).guardedCenteringOnCurrentBookEntry()
         verify(graphView).invalidate()
     }
 

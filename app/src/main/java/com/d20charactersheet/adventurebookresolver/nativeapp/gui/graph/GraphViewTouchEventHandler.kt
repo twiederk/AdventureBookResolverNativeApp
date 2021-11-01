@@ -8,22 +8,21 @@ import org.koin.core.component.inject
 class GraphViewTouchEventHandler : KoinComponent {
 
     private val game: Game by inject()
-    private val bookRenderer: BookRenderer by inject()
     private val entryDialog: EntryDialog by inject()
 
-    fun onTouchEvent(graphView: GraphView, event: MotionEvent): Boolean {
+    fun onTouchEvent(graphView: GraphView, graphCanvas: GraphCanvas, event: MotionEvent): Boolean {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 graphView.touchX = event.x - graphView.viewportX
                 graphView.touchY = event.y - graphView.viewportY
-                val bookEntry = bookRenderer.touch(graphView.touchX, graphView.touchY)
+                val bookEntry = graphCanvas.touch(graphView.touchX, graphView.touchY)
                 bookEntry?.let {
                     if (game.isCurrentEntry(it)) {
                         entryDialog.show(graphView.context)
                     } else {
                         game.move(it.id)
-                        graphView.center()
+                        graphView.guardedCenteringOnCurrentBookEntry()
                     }
                 }
             }
