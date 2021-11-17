@@ -14,7 +14,7 @@ class GraphPanel(internal val bookRenderer: TraversalBookRenderer) : Panel {
     }
 
     override fun update() {
-        graphView.guardedCenteringOnCurrentBookEntry()
+        graphView.renderMode = RenderMode.CENTER
         graphView.invalidate()
     }
 

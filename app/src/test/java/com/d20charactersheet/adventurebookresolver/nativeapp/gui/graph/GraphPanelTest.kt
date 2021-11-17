@@ -34,15 +34,14 @@ class GraphPanelTest {
         // Arrange
         val underTest = GraphPanel(mock())
 
-        val graphView: GraphView = mock()
-        underTest.graphView = graphView
+        underTest.graphView = mock()
 
         // Act
         underTest.update()
 
         // Assert
-        verify(graphView).guardedCenteringOnCurrentBookEntry()
-        verify(graphView).invalidate()
+        verify(underTest.graphView).renderMode = RenderMode.CENTER
+        verify(underTest.graphView).invalidate()
     }
 
 }

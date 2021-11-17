@@ -72,6 +72,7 @@ class GraphCanvasKoinTest : KoinTest {
         val view: View = mock()
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -97,6 +98,7 @@ class GraphCanvasKoinTest : KoinTest {
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
         underTest.scale = 2F
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -121,6 +123,7 @@ class GraphCanvasKoinTest : KoinTest {
         val view: View = mock()
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -147,6 +150,7 @@ class GraphCanvasKoinTest : KoinTest {
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
         underTest.scale = 2F
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -171,6 +175,7 @@ class GraphCanvasKoinTest : KoinTest {
         val view: View = mock()
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -197,6 +202,7 @@ class GraphCanvasKoinTest : KoinTest {
         val canvas: Canvas = mock()
         val underTest = GraphCanvas(view, actionColor, graphPaint)
         underTest.scale = 2F
+        underTest.calculate()
 
         // act
         underTest.render(canvas)
@@ -222,11 +228,12 @@ class GraphCanvasKoinTest : KoinTest {
             listOf(GraphEntry(entry = BookEntry(1), left = 0F, top = 0F, right = 100F, bottom = 250F, current = true)),
             listOf()
         )
-        val graphCanvas = GraphCanvas(mock(), mock())
-        graphCanvas.render(mock())
+        whenever(bookRenderer.currentEntryId) doReturn 1
+        val underTest = GraphCanvas(mock(), mock())
+        underTest.calculate()
 
         // act
-        val (centerX, centerY) = graphCanvas.getCenterOfCurrentGraphEntry()
+        val (centerX, centerY) = underTest.getCenterOfCurrentGraphEntry()
 
         // assert
         assertThat(centerX).isEqualTo(50F)
@@ -252,11 +259,12 @@ class GraphCanvasKoinTest : KoinTest {
             ),
             listOf()
         )
-        val graphCanvas = GraphCanvas(mock(), mock())
-        graphCanvas.render(mock())
+        whenever(bookRenderer.currentEntryId) doReturn 1
+        val underTest = GraphCanvas(mock(), mock())
+        underTest.calculate()
 
         // act
-        val (centerX, centerY) = graphCanvas.getCenterOfCurrentGraphEntry()
+        val (centerX, centerY) = underTest.getCenterOfCurrentGraphEntry()
 
         // assert
         assertThat(centerX).isEqualTo(220f)
@@ -289,7 +297,7 @@ class GraphCanvasKoinTest : KoinTest {
             ), listOf()
         )
         val underTest = GraphCanvas(mock(), mock())
-        underTest.render(mock())
+        underTest.calculate()
 
         // act
         val bookEntry = underTest.touch(315f, 315f)
@@ -323,7 +331,7 @@ class GraphCanvasKoinTest : KoinTest {
             ), listOf()
         )
         val underTest = GraphCanvas(mock(), mock())
-        underTest.render(mock())
+        underTest.calculate()
 
         // act
         val bookEntry = underTest.touch(315f, 900f)

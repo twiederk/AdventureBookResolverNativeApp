@@ -1,5 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
@@ -9,6 +10,8 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), KoinComponent {
+
+    var renderMode = RenderMode.CENTER
 
     private val touchEventHandler: GraphViewTouchEventHandler by inject()
 
@@ -28,25 +31,22 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
     }
 
     public override fun onDraw(canvas: Canvas) {
-        initialCenteringOnCurrentBookEntry()
+        graphCanvas.calculate()
+        if (renderMode == RenderMode.CENTER) {
+            guardedCenterOnCurrentBookEntry()
+        }
         graphCanvas.translate(canvas, viewportX, viewportY)
         graphCanvas.render(canvas)
     }
 
-    private fun initialCenteringOnCurrentBookEntry() {
-        if (viewportX == 0f && viewportY == 0f) {
-            guardedCenteringOnCurrentBookEntry()
-        }
-    }
-
-
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         touchEventHandler.onTouchEvent(this, graphCanvas, event)
         invalidate()
         return true
     }
 
-    fun guardedCenteringOnCurrentBookEntry() {
+    fun guardedCenterOnCurrentBookEntry() {
         if (width != 0 || height != 0) {
             centerOnCurrentBookEntry(width.toFloat(), height.toFloat())
         }

@@ -10,7 +10,7 @@ class GraphViewTouchEventHandler : KoinComponent {
     private val game: Game by inject()
     private val entryDialog: EntryDialog by inject()
 
-    fun onTouchEvent(graphView: GraphView, graphCanvas: GraphCanvas, event: MotionEvent): Boolean {
+    fun onTouchEvent(graphView: GraphView, graphCanvas: GraphCanvas, event: MotionEvent) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -22,19 +22,23 @@ class GraphViewTouchEventHandler : KoinComponent {
                         entryDialog.show(graphView.context)
                     } else {
                         game.move(it.id)
-                        graphView.guardedCenteringOnCurrentBookEntry()
+                        graphView.renderMode = RenderMode.CENTER
                     }
                 }
+                return
             }
 
             MotionEvent.ACTION_MOVE -> {
-                graphView.viewportX = event.x - graphView.touchX
-                graphView.viewportY = event.y - graphView.touchY
-
+                val bookEntry = graphCanvas.touch(graphView.touchX, graphView.touchY)
+                if (bookEntry == null) {
+                    graphView.renderMode = RenderMode.FREE
+                    graphView.viewportX = event.x - graphView.touchX
+                    graphView.viewportY = event.y - graphView.touchY
+                }
+                return
             }
 
         }
-        return true
     }
 
 }

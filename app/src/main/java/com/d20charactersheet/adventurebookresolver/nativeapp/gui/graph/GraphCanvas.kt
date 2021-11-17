@@ -23,43 +23,53 @@ class GraphCanvas(
         canvas.translate(viewportX, viewportY)
     }
 
-    fun render(canvas: Canvas) {
+    fun calculate() {
         val (entries, edges) = bookRenderer.render()
         if (scale != 1.0F) {
-            val scaledEntries = mutableListOf<GraphEntry>()
-            entries.stream().forEach { graphEntry ->
-                scaledEntries.add(
-                    graphEntry.copy(
-                        left = graphEntry.left * scale,
-                        top = graphEntry.top * scale,
-                        right = graphEntry.right * scale,
-                        bottom = graphEntry.bottom * scale,
-                    )
-                )
-            }
-            graphEntries = scaledEntries
-
-            val scaledEdges = mutableListOf<GraphEdge>()
-            edges.stream().forEach { graphEdge ->
-                scaledEdges.add(
-                    graphEdge.copy(
-                        startX = graphEdge.startX * scale,
-                        startY = graphEdge.startY * scale,
-                        endX = graphEdge.endX * scale,
-                        endY = graphEdge.endY * scale,
-                        labelX = graphEdge.labelX * scale,
-                        labelY = graphEdge.labelY * scale
-                    )
-                )
-            }
-            graphEdges = scaledEdges
-
+            graphEntries = scaleEntries(entries)
+            graphEdges = scaleEdges(edges)
         } else {
             graphEntries = entries
             graphEdges = edges
         }
+    }
+
+    fun render(canvas: Canvas) {
         graphEntries.forEach { drawGraphEntry(it, canvas) }
         graphEdges.forEach { drawGraphEdge(it, canvas) }
+    }
+
+    private fun scaleEntries(entries: List<GraphEntry>): List<GraphEntry> {
+        val scaledEntries = mutableListOf<GraphEntry>()
+        entries.stream().forEach { graphEntry ->
+            scaledEntries.add(
+                graphEntry.copy(
+                    left = graphEntry.left * scale,
+                    top = graphEntry.top * scale,
+                    right = graphEntry.right * scale,
+                    bottom = graphEntry.bottom * scale,
+                )
+            )
+        }
+        return scaledEntries
+    }
+
+
+    private fun scaleEdges(edges: List<GraphEdge>): List<GraphEdge> {
+        val scaledEdges = mutableListOf<GraphEdge>()
+        edges.stream().forEach { graphEdge ->
+            scaledEdges.add(
+                graphEdge.copy(
+                    startX = graphEdge.startX * scale,
+                    startY = graphEdge.startY * scale,
+                    endX = graphEdge.endX * scale,
+                    endY = graphEdge.endY * scale,
+                    labelX = graphEdge.labelX * scale,
+                    labelY = graphEdge.labelY * scale
+                )
+            )
+        }
+        return scaledEdges
     }
 
     private fun drawGraphEntry(graphEntry: GraphEntry, canvas: Canvas) {
@@ -127,7 +137,7 @@ class GraphCanvas(
     }
 
     fun getCenterOfCurrentGraphEntry(): Pair<Float, Float> {
-        val currentGraphEntry = graphEntries.find { graphEntry -> graphEntry.current }
+        val currentGraphEntry = graphEntries.find { graphEntry -> graphEntry.entry.id == bookRenderer.currentEntryId }
         if (currentGraphEntry != null) {
             val centerX = currentGraphEntry.left + (currentGraphEntry.width / 2)
             val centerY = currentGraphEntry.top + (currentGraphEntry.height / 2)

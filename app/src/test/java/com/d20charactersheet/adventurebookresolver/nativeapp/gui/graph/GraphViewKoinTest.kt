@@ -7,21 +7,26 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
+import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
-import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
-import org.mockito.kotlin.whenever
+import org.mockito.Mockito
+import org.mockito.kotlin.*
 
 class GraphViewKoinTest : KoinTest {
 
     private val bookRenderer: TraversalBookRenderer by inject()
     private val touchEventHandler: GraphViewTouchEventHandler by inject()
+
+    @get:Rule
+    val mockProvider = MockProviderRule.create { clazz ->
+        Mockito.mock(clazz.java)
+    }
 
     @Before
     fun before() {
@@ -43,7 +48,7 @@ class GraphViewKoinTest : KoinTest {
         val underTest = GraphView(mock(), mock())
 
         // Act
-        underTest.guardedCenteringOnCurrentBookEntry()
+        underTest.guardedCenterOnCurrentBookEntry()
 
         // Assert
         assertThat(underTest.viewportX).isEqualTo(0f)
@@ -103,8 +108,11 @@ class GraphViewKoinTest : KoinTest {
         underTest.onDraw(canvas)
 
         // Assert
-        verify(underTest.graphCanvas).translate(canvas, 100f, 200f)
-        verify(underTest.graphCanvas).render(canvas)
+        inOrder(underTest.graphCanvas) {
+            verify(underTest.graphCanvas).calculate()
+            verify(underTest.graphCanvas).translate(canvas, 100f, 200f)
+            verify(underTest.graphCanvas).render(canvas)
+        }
     }
 
 }

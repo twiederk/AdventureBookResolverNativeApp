@@ -29,6 +29,16 @@
         app:showAsAction="never">
         <menu>
             <item
+                android:id="@+id/option_zoom_10"
+                android:title="@string/option_zoom_10"
+                android:orderInCategory="410"
+                app:showAsAction="never" />
+            <item
+                android:id="@+id/option_zoom_25"
+                android:title="@string/option_zoom_25"
+                android:orderInCategory="410"
+                app:showAsAction="never" />
+            <item
                 android:id="@+id/option_zoom_50"
                 android:title="@string/option_zoom_50"
                 android:orderInCategory="410"

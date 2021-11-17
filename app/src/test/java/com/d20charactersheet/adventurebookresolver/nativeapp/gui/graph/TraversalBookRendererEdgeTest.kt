@@ -59,7 +59,7 @@ class TraversalBookRendererEdgeTest {
 
         // assert
         assertThat(edges).containsExactly(
-            GraphEdge(startX = 50F, startY = 250F, endX = 50F, endY = 500F, "to throne", labelX = 50F, labelY = 375F, BookEntry(2))
+            GraphEdge(startX = 50F, startY = 250F, endX = 50F, endY = 500F, "to throne", labelX = 5F, labelY = 375F, BookEntry(2))
         )
     }
 
@@ -89,8 +89,8 @@ class TraversalBookRendererEdgeTest {
 
         // assert
         assertThat(edges).containsExactly(
-            GraphEdge(startX = 130F, startY = 250F, endX = 40F, endY = 500F, "to throne", labelX = 85F, labelY = 375F, BookEntry(2)),
-            GraphEdge(startX = 130F, startY = 250F, endX = 220F, endY = 500F, "to library", labelX = 175F, labelY = 375F, BookEntry(3)),
+            GraphEdge(startX = 130F, startY = 250F, endX = 40F, endY = 500F, "to throne", labelX = 40F, labelY = 375F, BookEntry(2)),
+            GraphEdge(startX = 130F, startY = 250F, endX = 220F, endY = 500F, "to library", labelX = 125F, labelY = 375F, BookEntry(3)),
         )
 
     }

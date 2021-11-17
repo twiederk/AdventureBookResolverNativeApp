@@ -87,9 +87,9 @@ class DepthBookRendererWith3EntriesTest {
 
         // assert
         assertThat(edges).contains(
-            GraphEdge(350f, 550f, 385f, 850f, "to two", 367.5f, 700f, BookEntry(2)),
-            GraphEdge(350f, 550f, 830f, 850f, "to three", 590f, 700f, BookEntry(3)),
-            GraphEdge(385f, 1100f, 830f, 850f, "to three", 607.5f, 975f, BookEntry(3)),
+            GraphEdge(350f, 550f, 385f, 850f, "to two", 337.5f, 700f, BookEntry(2)),
+            GraphEdge(350f, 550f, 830f, 850f, "to three", 550f, 700f, BookEntry(3)),
+            GraphEdge(385f, 1100f, 830f, 850f, "to three", 567.5f, 975f, BookEntry(3)),
         )
     }
 

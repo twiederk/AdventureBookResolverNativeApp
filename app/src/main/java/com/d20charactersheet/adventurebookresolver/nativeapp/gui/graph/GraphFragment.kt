@@ -27,6 +27,14 @@ open class GraphFragment : LogFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean =
         when (item.itemId) {
+            R.id.option_zoom_10 -> {
+                scale(0.1f)
+                true
+            }
+            R.id.option_zoom_25 -> {
+                scale(0.25f)
+                true
+            }
             R.id.option_zoom_50 -> {
                 scale(0.5f)
                 true

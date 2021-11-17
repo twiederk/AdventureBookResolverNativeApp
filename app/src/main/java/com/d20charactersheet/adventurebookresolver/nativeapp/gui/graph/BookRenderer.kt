@@ -4,6 +4,8 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 
 interface BookRenderer {
 
+    val currentEntryId: Int
+
     fun render(): Pair<List<GraphEntry>, List<GraphEdge>>
 
 }
