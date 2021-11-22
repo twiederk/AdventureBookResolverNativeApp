@@ -7,7 +7,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class FloatingActionButtonOnClickListenerTest {
+class AddActionOnClickListenerTest {
 
     @Test
     fun onClick() {
@@ -18,7 +18,7 @@ class FloatingActionButtonOnClickListenerTest {
         val actionAddDialog: ActionAddDialog = mock()
 
         // Act
-        FloatingActionButtonOnClickListener(actionAddDialog).onClick(view)
+        AddActionOnClickListener(actionAddDialog).onClick(view)
 
         // Assert
         verify(actionAddDialog).show(any())

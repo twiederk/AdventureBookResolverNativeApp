@@ -8,6 +8,10 @@ import org.jgrapht.traverse.BreadthFirstIterator
 
 abstract class AbstractBookRenderer(protected val game: Game) : BookRenderer {
 
+    companion object {
+        const val OFFSET_LABEL_Y = 100
+    }
+
     override val currentEntryId: Int
         get() = game.book.getEntryId()
 
@@ -32,8 +36,8 @@ abstract class AbstractBookRenderer(protected val game: Game) : BookRenderer {
         val graphEdges = mutableListOf<GraphEdge>()
         val entriesMap: Map<Int, GraphEntry> = graphEntries.map { it.entry.id to it }.toMap()
 
-        for (edge in edges) {
-            val graphEdge = createGraphEdge(entriesMap, graph, edge)
+        for ((counter, edge) in edges.withIndex()) {
+            val graphEdge = createGraphEdge(entriesMap, graph, edge, counter)
             graphEdges.add(graphEdge)
         }
         return graphEdges
@@ -43,7 +47,8 @@ abstract class AbstractBookRenderer(protected val game: Game) : BookRenderer {
     private fun createGraphEdge(
         entriesMap: Map<Int, GraphEntry>,
         graph: Graph<BookEntry, LabeledEdge>,
-        edge: LabeledEdge
+        edge: LabeledEdge,
+        counter: Int
     ): GraphEdge {
 
         val source = entriesMap.getValue(graph.getEdgeSource(edge).id)
@@ -54,7 +59,7 @@ abstract class AbstractBookRenderer(protected val game: Game) : BookRenderer {
         val endY = dest.top
         val labelWidth = GraphPaint.textPaint.measureText(edge.label)
         val labelX = (startX + endX - labelWidth) / 2
-        val labelY = (startY + endY) / 2
+        val labelY = (startY + endY) / 2 + (OFFSET_LABEL_Y * (counter % 2))
 
         return GraphEdge(startX, startY, endX, endY, edge.label, labelX, labelY, dest.entry)
     }

@@ -10,4 +10,8 @@
     <color name="entryWayPoint">#41d541</color>
     <color name="entryDeadEnd">#d43939</color>
 
+    <!-- Material Design -->
+    <color name="secondary">#1763dd</color>
+
+
 </resources>

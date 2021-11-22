@@ -3,8 +3,11 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.getSystemService
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.koin.core.component.KoinComponent
@@ -15,18 +18,48 @@ class ActionAddDialog(private val messageDisplay: MessageDisplay = MessageDispla
 
     private val game: Game by inject()
     private val graphPanel: GraphPanel by inject()
+    private var alertDialog: AlertDialog? = null
 
+    @Suppress("DEPRECATION")
     fun show(context: Context) {
 
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
         val view = inflater.inflate(R.layout.dialog_action_add, null)
-        AlertDialog.Builder(context)
+
+        setDoneActionHandler(view)
+        requestFocusAndShowKeyboard(view, context)
+
+        alertDialog?.setOnDismissListener {
+            val inputMethodManager: InputMethodManager? = getSystemService(context, InputMethodManager::class.java)
+            inputMethodManager?.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+        }
+
+        alertDialog = AlertDialog.Builder(context)
             .setView(view)
             .setPositiveButton("OK") { _, _ -> addAction(view) }
             .setNegativeButton("CANCEL") { dialog, _ -> dialog.cancel() }
             .create()
-            .show()
+        alertDialog?.show()
+    }
+
+    @Suppress("DEPRECATION")
+    private fun requestFocusAndShowKeyboard(view: View, context: Context) {
+        val labelEditText = view.findViewById<EditText>(R.id.action_label_edit_text)
+        labelEditText.requestFocus()
+
+        val inputMethodManager: InputMethodManager? = getSystemService(context, InputMethodManager::class.java)
+        inputMethodManager?.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+    }
+
+    private fun setDoneActionHandler(view: View) {
+        val idEditText = view.findViewById<EditText>(R.id.action_id_edit_text)
+        idEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                addAction(view)
+                alertDialog?.dismiss()
+            }
+            true
+        }
     }
 
     internal fun addAction(view: View) {

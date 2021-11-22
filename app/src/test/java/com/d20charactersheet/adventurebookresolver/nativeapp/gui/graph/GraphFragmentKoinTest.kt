@@ -39,8 +39,10 @@ internal class GraphFragmentKoinTest : KoinTest {
         // Arrange
         val container: ViewGroup = mock()
         val rootView: View = mock()
-        val fab: FloatingActionButton = mock()
-        whenever(rootView.findViewById<FloatingActionButton>(R.id.action_add_floating_action_button)).doReturn(fab)
+        val addActionFAB: FloatingActionButton = mock()
+        val saveFAB: FloatingActionButton = mock()
+        whenever(rootView.findViewById<FloatingActionButton>(R.id.action_add_floating_action_button)).doReturn(addActionFAB)
+        whenever(rootView.findViewById<FloatingActionButton>(R.id.save_floating_action_button)).doReturn(saveFAB)
         val inflater: LayoutInflater = mock()
         whenever(inflater.inflate(R.layout.fragment_graph, container, false)).doReturn(rootView)
 
@@ -49,7 +51,8 @@ internal class GraphFragmentKoinTest : KoinTest {
 
         // Assert
         verify(inflater).inflate(R.layout.fragment_graph, container, false)
-        verify(fab).setOnClickListener(any())
+        verify(addActionFAB).setOnClickListener(any())
+        verify(saveFAB).setOnClickListener(any())
         verify(graphPanel).create(any())
     }
 

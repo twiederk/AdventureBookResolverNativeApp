@@ -1,5 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventory
 
+import android.annotation.SuppressLint
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -50,6 +51,7 @@ class ItemPanel : Panel {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun update() {
         itemRecyclerView.adapter?.notifyDataSetChanged()
     }

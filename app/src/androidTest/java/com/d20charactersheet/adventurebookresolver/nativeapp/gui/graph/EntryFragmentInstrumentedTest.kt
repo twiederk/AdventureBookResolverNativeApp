@@ -19,6 +19,7 @@ class EntryFragmentInstrumentedTest : KoinTest {
         // Assert
         onView(withId(R.id.graph_view)).check(matches(isDisplayed()))
         onView(withId(R.id.action_add_floating_action_button)).check(matches(isDisplayed()))
+        onView(withId(R.id.save_floating_action_button)).check(matches(isDisplayed()))
     }
 
 }
