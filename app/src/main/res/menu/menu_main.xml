@@ -11,8 +11,8 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/option_save"
-        android:title="@string/option_save"
+        android:id="@+id/option_load"
+        android:title="@string/option_load"
         android:orderInCategory="200"
         app:showAsAction="never" />
 

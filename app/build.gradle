@@ -21,8 +21,8 @@ android {
         applicationId "com.d20charactersheet.adventurebookresolver.nativeapp"
         minSdkVersion 26
         targetSdkVersion 31
-        versionCode 31
-        versionName "4.9.0"
+        versionCode 32
+        versionName "4.10.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,9 +37,9 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.3.1"
-    implementation "androidx.fragment:fragment-ktx:1.3.6"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.1"
+    implementation "androidx.appcompat:appcompat:1.4.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.2"
     implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     implementation "com.google.android.material:material:1.4.0"
@@ -48,7 +48,7 @@ dependencies {
     implementation 'com.d20charactersheet.adventurebookresolver:abr-core:2.0.0'
     implementation 'com.android.billingclient:billing-ktx:4.0.0'
 
-    debugImplementation('androidx.fragment:fragment-testing:1.3.6') { exclude group: 'androidx.test', module: 'core' }
+    debugImplementation('androidx.fragment:fragment-testing:1.4.0') { exclude group: 'androidx.test', module: 'core' }
     debugImplementation 'org.assertj:assertj-core:3.21.0'
 
     androidTestImplementation("io.insert-koin:koin-test:$koin_version") { exclude group: 'org.mockito' }

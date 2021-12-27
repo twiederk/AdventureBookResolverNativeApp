@@ -88,12 +88,13 @@ class AddActionOnClickListener(private val actionAddDialog: ActionAddDialog = Ac
 
 }
 
-class SaveOnClickListener : KoinComponent, View.OnClickListener {
+class SaveOnClickListener(private val messageDisplay: MessageDisplay = MessageDisplay()) : KoinComponent, View.OnClickListener {
 
     private val game: Game by inject()
 
     override fun onClick(view: View) {
         game.saveBook()
+        messageDisplay.display(view, "Saved: ${game.book.title}")
     }
 
 }

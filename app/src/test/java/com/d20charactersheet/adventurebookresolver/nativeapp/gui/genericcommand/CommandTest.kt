@@ -76,19 +76,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun load() {
-        // Arrange
-        val underTest = Command.Load
-
-        // Act
-        underTest.execute(game, "loadBook")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Load")
-        verify(game).loadBook("loadBook")
-    }
-
-    @Test
     fun rollDie() {
         // Arrange
         val underTest = Command.RollDie
@@ -149,7 +136,6 @@ internal class CommandTest {
         // Assert
         assertThat(items.map { it.toString() }).containsExactly(
             "Create",
-            "Load",
             "Path",
             "Roll die",
             "Run",

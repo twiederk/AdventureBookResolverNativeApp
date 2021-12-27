@@ -12,7 +12,6 @@ enum class Command(
     Path("Path", { game, _ -> game.displayPath() }),
     Run("Run", { game, argument -> game.runTo(argument) }),
     Search("Search", { game, argument -> game.search(argument) }),
-    Load("Load", { game, argument -> game.loadBook(argument) }),
     RollDie("Roll die", { game, argument -> game.rollDie(argument) }),
     WayPoints("Way points", { game, _ -> game.displayWayPoints() }),
     Solve("Solve", { game, _ -> game.solve() }),

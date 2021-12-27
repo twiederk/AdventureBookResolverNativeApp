@@ -1,5 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
+import android.view.View
+import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.junit.After
@@ -13,8 +15,10 @@ import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 class SaveOnClickListenerKoinTest : KoinTest {
 
@@ -41,12 +45,19 @@ class SaveOnClickListenerKoinTest : KoinTest {
     @Test
     fun onClick() {
         // arrange
+        val messageDisplay: MessageDisplay = mock()
+        val view: View = mock()
+        val book = AdventureBook("myTitle")
+        whenever(game.book).doReturn(book)
+
 
         // act
-        SaveOnClickListener().onClick(mock())
+        SaveOnClickListener(messageDisplay).onClick(view)
 
         // assert
         verify(game).saveBook()
+        verify(messageDisplay).display(view, "Saved: myTitle")
     }
+
 }
 
