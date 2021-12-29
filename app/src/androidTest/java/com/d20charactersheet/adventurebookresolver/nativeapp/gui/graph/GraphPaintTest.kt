@@ -35,4 +35,34 @@ class GraphPaintTest {
         assertThat(scaledTextPaint.textSize).isEqualTo(144F)
     }
 
+    @Test
+    fun getScaledEdgePaint_withHalfScale2_returnSmallerScaledEdgePaint() {
+
+        // act
+        val scaledEdgePaint = GraphPaint.getScaledEdgePaint(0.5F)
+
+        // assert
+        assertThat(scaledEdgePaint.strokeWidth).isEqualTo(5F)
+    }
+
+    @Test
+    fun getScaledEdgePaint_withScale1_returnUnscaledEdgePaint() {
+
+        // act
+        val scaledEdgePaint = GraphPaint.getScaledEdgePaint(1F)
+
+        // assert
+        assertThat(scaledEdgePaint.strokeWidth).isEqualTo(10F)
+    }
+
+    @Test
+    fun getScaledEdgePaint_withScale2_returnLargerScaledEdgePaint() {
+
+        // act
+        val scaledEdgePaint = GraphPaint.getScaledEdgePaint(2F)
+
+        // assert
+        assertThat(scaledEdgePaint.strokeWidth).isEqualTo(20F)
+    }
+
 }

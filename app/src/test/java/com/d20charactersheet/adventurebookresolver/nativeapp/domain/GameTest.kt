@@ -512,4 +512,28 @@ internal class GameTest {
         assertThat(result).isFalse
     }
 
+    @Test
+    fun isEntryOfNextEntries_entryIsOneOfNextEntries_returnTrue() {
+        // arrange
+        whenever(book.getNextBookEntries()).doReturn(setOf(BookEntry(2)))
+
+        // act
+        val result = underTest.isEntryOfNextEntries(BookEntry(2))
+
+        // assert
+        assertThat(result).isTrue
+    }
+
+    @Test
+    fun isEntryOfNextEntries_entryIsNotOneOfNextEntries_returnFalse() {
+        // arrange
+        whenever(book.getNextBookEntries()).doReturn(setOf())
+
+        // act
+        val result = underTest.isEntryOfNextEntries(BookEntry(2))
+
+        // assert
+        assertThat(result).isFalse
+    }
+
 }

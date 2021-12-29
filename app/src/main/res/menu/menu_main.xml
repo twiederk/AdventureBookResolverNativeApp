@@ -58,9 +58,15 @@
     </item>
 
     <item
+        android:id="@+id/option_export_image"
+        android:title="@string/option_export_image"
+        android:orderInCategory="500"
+        app:showAsAction="never" />
+
+    <item
         android:id="@+id/option_clear_history"
         android:title="@string/option_clear_history"
-        android:orderInCategory="500"
+        android:orderInCategory="600"
         app:showAsAction="never" />
 
 </menu>

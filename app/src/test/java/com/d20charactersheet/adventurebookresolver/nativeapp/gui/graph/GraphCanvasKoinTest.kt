@@ -26,6 +26,7 @@ class GraphCanvasKoinTest : KoinTest {
     private val bookRenderer: TraversalBookRenderer by inject()
 
     private var scaledTextPaint: Paint = mock()
+    private var scaledEdgePaint: Paint = mock()
     private var actionColor: ActionColor = mock()
     private var graphPaint: GraphPaint = mock()
 
@@ -43,6 +44,7 @@ class GraphCanvasKoinTest : KoinTest {
         declareMock<TraversalBookRenderer>()
 
         whenever(graphPaint.getScaledTextPaint(any())).thenReturn(scaledTextPaint)
+        whenever(graphPaint.getScaledEdgePaint(any())).thenReturn(scaledEdgePaint)
     }
 
     @After
@@ -81,7 +83,8 @@ class GraphCanvasKoinTest : KoinTest {
         val scale = underTest.scale
         verify(actionColor).getColor(view, WayMark.NORMAL, Visit.UNVISITED)
         verify(graphPaint).getScaledTextPaint(scale)
-        verify(canvas).drawLine(100f * scale, 200f * scale, 300f * scale, 400f * scale, GraphPaint.edgePaint)
+        verify(graphPaint).getScaledEdgePaint(scale)
+        verify(canvas).drawLine(100f * scale, 200f * scale, 300f * scale, 400f * scale, scaledEdgePaint)
         verify(canvas).drawCircle(300f * scale, 400f * scale, 30f * scale, GraphPaint.edgePaint)
         verify(canvas).drawText("myLabel", 500f * scale, 600f * scale, scaledTextPaint)
         verifyNoMoreInteractions(canvas, actionColor, graphPaint)
@@ -107,7 +110,8 @@ class GraphCanvasKoinTest : KoinTest {
         val scale = underTest.scale
         verify(actionColor).getColor(view, WayMark.NORMAL, Visit.UNVISITED)
         verify(graphPaint).getScaledTextPaint(scale)
-        verify(canvas).drawLine(100f * scale, 200f * scale, 300f * scale, 400f * scale, GraphPaint.edgePaint)
+        verify(graphPaint).getScaledEdgePaint(scale)
+        verify(canvas).drawLine(100f * scale, 200f * scale, 300f * scale, 400f * scale, scaledEdgePaint)
         verify(canvas).drawCircle(300f * scale, 400f * scale, 30f * scale, GraphPaint.edgePaint)
         verify(canvas).drawText("myLabel", 500f * scale, 600f * scale, scaledTextPaint)
         verifyNoMoreInteractions(canvas, actionColor, graphPaint)

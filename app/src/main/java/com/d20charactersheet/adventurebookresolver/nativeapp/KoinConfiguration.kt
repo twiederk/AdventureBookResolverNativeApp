@@ -2,6 +2,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp
 
 import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.GraphViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
@@ -30,5 +31,6 @@ val appModule = module {
     single { Billing() }
     single { EntryDialog() }
     single { GraphViewTouchEventHandler() }
+    single { GraphViewModel() }
 }
 // end::koinConfiguration[]

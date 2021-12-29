@@ -113,6 +113,8 @@ class Game(
 
     fun getEntryFromNextEntries(entryId: Int) = book.getNextBookEntries().first { it.id == entryId }
 
+    fun isEntryOfNextEntries(entry: BookEntry) = book.getNextBookEntries().contains(entry)
+
     fun hasProvisions() = book.getProvisions() > 0
 
     fun setWayMark(wayMark: String): String {

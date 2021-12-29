@@ -23,9 +23,8 @@ object GraphPaint {
         color = Color.RED
     }
 
-    fun getScaledTextPaint(scale: Float): Paint = Paint(textPaint)
-        .apply {
-            textSize *= scale
-        }
+    fun getScaledTextPaint(scale: Float): Paint = Paint(textPaint).apply { textSize *= scale }
+
+    fun getScaledEdgePaint(scale: Float): Paint = Paint(edgePaint).apply { strokeWidth *= scale }
 
 }

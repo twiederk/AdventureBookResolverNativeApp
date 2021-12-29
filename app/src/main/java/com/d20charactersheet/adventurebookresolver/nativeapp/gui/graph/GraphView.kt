@@ -2,6 +2,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -61,6 +62,14 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
     fun scale(scale: Float) {
         graphCanvas.scale = scale
         invalidate()
+    }
+
+    fun createBitmap(): Bitmap? {
+        val width = graphCanvas.maxRight
+        val height = graphCanvas.maxBottom
+        val bitmap = Bitmap.createBitmap(width.toInt(), height.toInt(), Bitmap.Config.ARGB_8888)
+        graphCanvas.render(Canvas(bitmap))
+        return bitmap
     }
 
 }

@@ -19,6 +19,12 @@ class GraphCanvas(
     private var graphEntries: List<GraphEntry> = emptyList()
     private var graphEdges: List<GraphEdge> = emptyList()
 
+    val maxRight: Float
+        get() = graphEntries.maxOf { it.right }
+
+    val maxBottom: Float
+        get() = graphEntries.maxOf { it.bottom }
+
     fun translate(canvas: Canvas, viewportX: Float, viewportY: Float) {
         canvas.translate(viewportX, viewportY)
     }
@@ -120,7 +126,7 @@ class GraphCanvas(
             graphEdge.startY,
             graphEdge.endX,
             graphEdge.endY,
-            GraphPaint.edgePaint
+            graphPaint.getScaledEdgePaint(scale)
         )
         canvas.drawCircle(graphEdge.endX, graphEdge.endY, 30f * scale, GraphPaint.edgePaint)
 

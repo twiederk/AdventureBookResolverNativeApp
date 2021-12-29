@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.GraphViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import org.junit.After
 import org.junit.Before
@@ -19,6 +20,7 @@ import org.mockito.kotlin.*
 internal class GraphFragmentKoinTest : KoinTest {
 
     private val graphPanel: GraphPanel by inject()
+    private val graphViewModel: GraphViewModel by inject()
 
     @Before
     fun before() {
@@ -26,6 +28,7 @@ internal class GraphFragmentKoinTest : KoinTest {
             modules(appModule)
         }
         declareMock<GraphPanel>()
+        declareMock<GraphViewModel>()
     }
 
 
@@ -45,6 +48,7 @@ internal class GraphFragmentKoinTest : KoinTest {
         whenever(rootView.findViewById<FloatingActionButton>(R.id.save_floating_action_button)).doReturn(saveFAB)
         val inflater: LayoutInflater = mock()
         whenever(inflater.inflate(R.layout.fragment_graph, container, false)).doReturn(rootView)
+        whenever(graphViewModel.scale).doReturn(mock())
 
         // Act
         GraphFragment().onCreateView(inflater, container, mock())
