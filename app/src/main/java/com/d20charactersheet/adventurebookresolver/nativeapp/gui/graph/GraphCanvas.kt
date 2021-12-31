@@ -79,8 +79,30 @@ class GraphCanvas(
     }
 
     private fun drawGraphEntry(graphEntry: GraphEntry, canvas: Canvas) {
+        drawShadow(graphEntry, canvas)
         drawCurrentEntryRect(graphEntry, canvas)
         drawEntry(graphEntry, canvas)
+    }
+
+    private fun drawShadow(graphEntry: GraphEntry, canvas: Canvas) {
+        val shadowOffset = 30 * scale
+        val currentOffset = calculateCurrentOffset(graphEntry)
+
+        canvas.drawRect(
+            graphEntry.left - currentOffset + shadowOffset,
+            graphEntry.top - currentOffset + shadowOffset,
+            graphEntry.right + currentOffset + shadowOffset,
+            graphEntry.bottom + currentOffset + shadowOffset,
+            GraphPaint.shadowPaint
+        )
+
+    }
+
+    private fun calculateCurrentOffset(graphEntry: GraphEntry): Float {
+        if (graphEntry.current) {
+            return 50 * scale
+        }
+        return 0F
     }
 
     private fun drawCurrentEntryRect(graphEntry: GraphEntry, canvas: Canvas) {

@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -49,8 +50,17 @@ class EntryDialog : KoinComponent {
     private fun createEntryTextFields(view: View) {
         entryTitleEditText = view.findViewById(R.id.entry_title_edit_text)
         entryTitleEditText.setText(game.book.getEntryTitle())
+        entryTitleEditText.setOnEditorActionListener { textView, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                game.book.setEntryTitle(textView.text.toString())
+                dialog?.dismiss()
+            }
+            true
+        }
+
         val entryIdTextView: TextView = view.findViewById(R.id.entry_id_text_view)
         entryIdTextView.text = displayEntryId()
+
         entryNoteEditText = view.findViewById(R.id.entry_note_edit_text)
         entryNoteEditText.setText(game.book.getEntryNote())
     }

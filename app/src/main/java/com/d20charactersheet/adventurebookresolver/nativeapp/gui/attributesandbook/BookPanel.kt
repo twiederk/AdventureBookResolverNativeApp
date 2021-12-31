@@ -1,5 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook
 
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -18,10 +20,7 @@ class BookPanel(private val game: Game) :
         triesValueTextView = rootView.findViewById(R.id.tries_value_text_view)
         entriesValueTextView = rootView.findViewById(R.id.entries_value_text_view)
         bookNoteEditText = rootView.findViewById(R.id.book_note_edit_text)
-        bookNoteEditText.onFocusChangeListener =
-            BookOnFocusChangeListener { text ->
-                game.book.note = text
-            }
+        bookNoteEditText.addTextChangedListener(NoteTextWatcher(game))
     }
 
     override fun update() {
@@ -38,14 +37,13 @@ class BookPanel(private val game: Game) :
 
 }
 
-class BookOnFocusChangeListener(private val gameFunction: (text: String) -> Unit) :
-    View.OnFocusChangeListener {
+class NoteTextWatcher(private val game: Game) : TextWatcher {
+    override fun afterTextChanged(s: Editable) {}
 
-    override fun onFocusChange(view: View, hasFocus: Boolean) {
-        if (!hasFocus) {
-            val editText = view as EditText
-            gameFunction(editText.text.toString())
-        }
+    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+        game.book.note = s.toString()
     }
 
 }

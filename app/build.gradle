@@ -21,8 +21,8 @@ android {
         applicationId "com.d20charactersheet.adventurebookresolver.nativeapp"
         minSdkVersion 26
         targetSdkVersion 31
-        versionCode 33
-        versionName "4.11.0"
+        versionCode 34
+        versionName "4.12.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -45,7 +45,7 @@ dependencies {
     implementation "com.google.android.material:material:1.4.0"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
-    implementation 'com.d20charactersheet.adventurebookresolver:abr-core:2.0.0'
+    implementation 'com.d20charactersheet.adventurebookresolver:abr-core:2.1.0'
     implementation 'com.android.billingclient:billing-ktx:4.0.0'
 
     debugImplementation('androidx.fragment:fragment-testing:1.4.0') { exclude group: 'androidx.test', module: 'core' }

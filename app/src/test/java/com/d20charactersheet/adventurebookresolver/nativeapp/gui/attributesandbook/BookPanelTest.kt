@@ -26,10 +26,7 @@ class BookPanelTest {
             on { findViewById<TextView>(R.id.entries_value_text_view) } doReturn entriesValueTextView
             on { findViewById<EditText>(R.id.book_note_edit_text) } doReturn bookNoteEditText
         }
-        val underTest =
-            BookPanel(
-                Game()
-            )
+        val underTest = BookPanel(Game())
 
         // Act
         underTest.create(rootView)
@@ -37,9 +34,9 @@ class BookPanelTest {
         // Assert
         assertThat(underTest.triesValueTextView).isSameAs(triesValueTextView)
         assertThat(underTest.entriesValueTextView).isSameAs(entriesValueTextView)
-        argumentCaptor<BookOnFocusChangeListener> {
-            verify(bookNoteEditText).onFocusChangeListener = capture()
-            assertThat(firstValue).isInstanceOf(BookOnFocusChangeListener::class.java)
+        argumentCaptor<NoteTextWatcher> {
+            verify(bookNoteEditText).addTextChangedListener(capture())
+            assertThat(firstValue).isInstanceOf(NoteTextWatcher::class.java)
         }
     }
 
