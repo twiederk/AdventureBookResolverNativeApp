@@ -10,11 +10,11 @@ import android.view.MenuItem
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.viewpager.widget.ViewPager
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -34,7 +34,8 @@ class MainActivity : LogActivity() {
         toolbarPanel.create(findViewById(android.R.id.content))
         setSupportActionBar(toolbarPanel.getToolbar())
 
-        container.adapter = SectionsPagerAdapter(supportFragmentManager)
+        val viewPager = findViewById<ViewPager>(R.id.container)
+        viewPager.adapter = SectionsPagerAdapter(supportFragmentManager)
 
         billing.startConnection(this)
         update()

@@ -59,4 +59,8 @@
     <string name="restart">Restart</string>
     <string name="cancel">Cancel</string>
 
+    <!-- WayMarkDrownDown -->
+    <string name="drop_down_arrow">Drop-Down Arrow Icon</string>
+
+
 </resources>

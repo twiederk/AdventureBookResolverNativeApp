@@ -1,6 +1,12 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.domain
 
-import com.d20charactersheet.adventurebookresolver.core.domain.*
+import com.d20charactersheet.adventurebookresolver.core.domain.Action
+import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
+import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
+import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
+import com.d20charactersheet.adventurebookresolver.core.domain.Die
+import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
 import java.io.File
 
@@ -64,12 +70,7 @@ class Game(
         return "Ran to entry $entryId"
     }
 
-    fun search(criteria: String): String =
-        book.search(criteria).joinToString(
-            separator = "\n",
-            transform = { entry -> "(${entry.id}) - ${entry.title}: ${entry.note}" }
-        )
-
+    fun search(criteria: String): List<BookEntry> = book.search(criteria)
 
     fun rollDie(dieRoll: String): String = "You rolled ${die.convert(dieRoll)} and scored: ${die.roll(dieRoll)}"
 

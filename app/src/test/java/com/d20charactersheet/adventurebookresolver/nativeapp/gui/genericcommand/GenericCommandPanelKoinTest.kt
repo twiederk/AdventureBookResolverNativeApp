@@ -1,16 +1,38 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
-import android.text.Editable
+import androidx.lifecycle.MutableLiveData
+import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.After
+import org.junit.Before
 import org.junit.Test
+import org.koin.core.context.startKoin
+import org.koin.core.context.stopKoin
+import org.koin.test.KoinTest
+import org.koin.test.inject
+import org.koin.test.mock.declareMock
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
-class GenericCommandPanelTest {
+class GenericCommandPanelKoinTest : KoinTest {
 
-    private val underTest =
-        GenericCommandPanel()
+    private val underTest: GenericCommandPanel by inject()
+    private val genericCommandViewModel: GenericCommandViewModel by inject()
+
+    @Before
+    fun before() {
+        startKoin {
+            modules(appModule)
+        }
+        declareMock<GenericCommandViewModel>()
+    }
+
+    @After
+    fun after() {
+        stopKoin()
+    }
 
     @Test
     fun `get selected command`() {
@@ -29,12 +51,7 @@ class GenericCommandPanelTest {
     @Test
     fun `get argument`() {
         // Arrange
-        val editable = mock<Editable> {
-            on { toString() } doReturn "myArgument"
-        }
-        underTest.argumentEditText = mock {
-            on { text } doReturn editable
-        }
+        whenever(genericCommandViewModel.argument).thenReturn(MutableLiveData("myArgument"))
 
         // Act
         val argument = underTest.getArgument()

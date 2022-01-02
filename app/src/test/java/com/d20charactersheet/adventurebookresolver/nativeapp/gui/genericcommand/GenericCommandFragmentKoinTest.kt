@@ -8,6 +8,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
 import com.d20charactersheet.adventurebookresolver.core.domain.Attribute
 import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
@@ -18,18 +20,26 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
+import org.junit.rules.TestRule
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
 
 class GenericCommandFragmentKoinTest : KoinTest {
 
-    private val underTest =
-        GenericCommandFragment()
+    @get:Rule
+    var rule: TestRule = InstantTaskExecutorRule()
+
+    private val underTest = GenericCommandFragment()
     private val game: Game by inject()
     private val genericCommandPanel: GenericCommandPanel by inject()
 
@@ -61,12 +71,14 @@ class GenericCommandFragmentKoinTest : KoinTest {
         val executeButton = mock<Button>()
         val clearButton = mock<Button>()
         val outputTextView = mock<TextView>()
+        val composeView = mock<ComposeView>()
         val rootView = mock<View> {
             on { findViewById<Spinner>(R.id.command_spinner) } doReturn commandSpinner
             on { findViewById<EditText>(R.id.argument_edit_text) } doReturn argumentEditText
             on { findViewById<Button>(R.id.execute_button) } doReturn executeButton
             on { findViewById<Button>(R.id.clear_button) } doReturn clearButton
             on { findViewById<TextView>(R.id.output_text_view) } doReturn outputTextView
+            on { findViewById<ComposeView>(R.id.search_result) } doReturn composeView
         }
         val inflater = mock<LayoutInflater> {
             on { inflate(R.layout.fragment_generic_command, container, false) } doReturn rootView

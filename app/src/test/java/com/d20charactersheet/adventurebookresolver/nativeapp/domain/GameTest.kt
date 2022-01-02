@@ -1,11 +1,25 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.domain
 
-import com.d20charactersheet.adventurebookresolver.core.domain.*
+import com.d20charactersheet.adventurebookresolver.core.domain.Action
+import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
+import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
+import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
+import com.d20charactersheet.adventurebookresolver.core.domain.Die
+import com.d20charactersheet.adventurebookresolver.core.domain.DieRoll
+import com.d20charactersheet.adventurebookresolver.core.domain.Inventory
+import com.d20charactersheet.adventurebookresolver.core.domain.Item
+import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
-import org.mockito.kotlin.*
+import org.mockito.kotlin.any
+import org.mockito.kotlin.argumentCaptor
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 import java.io.File
 import java.nio.file.Paths
 
@@ -135,17 +149,14 @@ internal class GameTest {
     @Test
     fun search() {
         // Arrange
-        whenever(book.search("start")).doReturn(
-            listOf(
-                BookEntry(id = 1, title = "Hallway", note = "Start of adventure")
-            )
-        )
+        val searchResult = listOf(BookEntry(id = 1, title = "Hallway", note = "Start of adventure"))
+        whenever(book.search("start")).doReturn(searchResult)
 
         // Act
         val result = underTest.search("start")
 
         // Assert
-        assertThat(result).isEqualTo("(1) - Hallway: Start of adventure")
+        assertThat(result).isEqualTo(searchResult)
         verify(book).search("start")
     }
 

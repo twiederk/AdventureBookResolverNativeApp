@@ -1,25 +1,40 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.TextView
+import androidx.compose.material.MaterialTheme
+import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
-import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.Panel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.SearchResult
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
-class GenericCommandPanel : Panel {
+class GenericCommandPanel : Panel, KoinComponent {
 
     internal lateinit var commandSpinner: Spinner
-    internal lateinit var argumentEditText: EditText
+    private lateinit var argumentEditText: EditText
     internal lateinit var outputTextView: TextView
+
+    private val genericCommandViewModel: GenericCommandViewModel by inject()
 
     override fun create(rootView: View) {
         createCommandSpinner(rootView)
         createArgumentEditText(rootView)
         createExecuteButton(rootView)
         createOutputButton(rootView)
+
+        val composeView = rootView.findViewById<ComposeView>(R.id.search_result)
+        composeView.setContent {
+            MaterialTheme {
+                SearchResult(genericCommandViewModel.searchResult)
+            }
+        }
+
         createOutputTextView(rootView)
     }
 
@@ -41,6 +56,7 @@ class GenericCommandPanel : Panel {
 
     private fun createArgumentEditText(rootView: View) {
         argumentEditText = rootView.findViewById(R.id.argument_edit_text)
+        argumentEditText.addTextChangedListener(ArgumentTextWatcher())
     }
 
     private fun createExecuteButton(rootView: View) {
@@ -60,45 +76,13 @@ class GenericCommandPanel : Panel {
 
     fun getSelectedCommand(): Command = commandSpinner.selectedItem as Command
 
-    fun getArgument(): String = argumentEditText.text.toString()
+    fun getArgument(): String = checkNotNull(genericCommandViewModel.argument.value)
 
     fun appendOutput(output: String) = outputTextView.append("$output\n")
 
     fun clearOutput() {
         outputTextView.text = ""
-    }
-
-}
-
-class ExecuteOnClickListener : View.OnClickListener, KoinComponent {
-
-    private val game: Game by inject()
-    private val genericCommandPanel: GenericCommandPanel by inject()
-    private val toolbarPanel: ToolbarPanel by inject()
-
-    override fun onClick(v: View?) {
-        val output = executeCommand()
-        genericCommandPanel.appendOutput(output)
-        toolbarPanel.update()
-    }
-
-    private fun executeCommand(): String {
-        val command = genericCommandPanel.getSelectedCommand()
-        val argument = genericCommandPanel.getArgument()
-        return try {
-            command.execute(game, argument)
-        } catch (exception: Exception) {
-            exception.message ?: "Exception throw with no message"
-        }
-    }
-}
-
-class ClearOnClickListener : View.OnClickListener, KoinComponent {
-
-    private val genericCommandPanel: GenericCommandPanel by inject()
-
-    override fun onClick(v: View?) {
-        genericCommandPanel.clearOutput()
+        genericCommandViewModel.onSearchResultChange(emptyList())
     }
 
 }

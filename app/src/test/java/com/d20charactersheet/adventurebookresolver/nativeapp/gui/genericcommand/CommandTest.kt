@@ -50,19 +50,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun search() {
-        // Arrange
-        val underTest = Command.Search
-
-        // Act
-        underTest.execute(game, "start")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Search")
-        verify(game).search("start")
-    }
-
-    @Test
     fun create() {
         // Arrange
         val underTest = Command.Create
@@ -86,20 +73,6 @@ internal class CommandTest {
         // Assert
         assertThat(underTest.toString()).isEqualTo("Roll die")
         verify(game).rollDie("2d6+3")
-    }
-
-    @Test
-    fun `mark way point`() {
-        // Arrange
-        val underTest = Command.SetWayMark
-
-        // Act
-        underTest.execute(game, "WAY_POINT")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Set way mark")
-        verify(game).setWayMark("WAY_POINT")
-
     }
 
     @Test
@@ -140,7 +113,6 @@ internal class CommandTest {
             "Roll die",
             "Run",
             "Search",
-            "Set way mark",
             "Solve",
             "Unvisited",
             "Way points"

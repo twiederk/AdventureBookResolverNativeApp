@@ -7,6 +7,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryDialog
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
@@ -32,5 +33,6 @@ val appModule = module {
     single { EntryDialog() }
     single { GraphViewTouchEventHandler() }
     single { GraphViewModel() }
+    single { GenericCommandViewModel() }
 }
 // end::koinConfiguration[]
