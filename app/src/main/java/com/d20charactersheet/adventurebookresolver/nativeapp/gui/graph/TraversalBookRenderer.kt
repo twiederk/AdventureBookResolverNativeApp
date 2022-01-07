@@ -3,11 +3,13 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import java.lang.Float.max
+import java.lang.Float.min
 import kotlin.streams.toList
 
 class TraversalBookRenderer(game: Game) : AbstractBookRenderer(game) {
 
-    var debug = false
+    @Suppress("MemberVisibilityCanBePrivate")
+    internal var debug = false
 
     private companion object {
         const val DEPTH_HEIGHT = 500
@@ -42,12 +44,30 @@ class TraversalBookRenderer(game: Game) : AbstractBookRenderer(game) {
             return ChildCords(graphEntry.left, graphEntry.right)
         }
 
-        val childCords = traverseChildren(wall, bookEntry, depth)
+        // if I have no node to the left of me my children can break the wall
+        val childCords = if (siblingsToTheLeft(depth)) {
+            traverseChildren(wall, bookEntry, depth)
+        } else {
+            log("*** breaking the wall with children of $bookEntry *** ")
+            traverseChildren(0F, bookEntry, depth)
+        }
 
-        val left = centerEntryAboveChildren(childCords.left, childCords.right, wall, width, bookEntry, depth)
+        val left = centerEntryAboveChildren(wall, width, bookEntry, depth)
         val graphEntry = createGraphEntry(bookEntry, left, top, width, bottom)
         log("* parent = $graphEntry")
-        return ChildCords(graphEntry.left, max(graphEntry.right, childCords.right))
+        return ChildCords(min(graphEntry.left, childCords.left), max(graphEntry.right, childCords.right))
+    }
+
+    private fun siblingsToTheLeft(depth: Int): Boolean {
+        val siblings: MutableList<BookEntry> = checkNotNull(entriesByDepth[depth])
+        val graphSiblings = mutableListOf<GraphEntry>()
+        for (sibling in siblings) {
+            val graphEntry = graphEntries.find { graphEntry -> graphEntry.entry.id == sibling.id }
+            if (graphEntry != null) {
+                graphSiblings.add(graphEntry)
+            }
+        }
+        return graphSiblings.isNotEmpty()
     }
 
     private fun traverseChildren(
@@ -80,15 +100,18 @@ class TraversalBookRenderer(game: Game) : AbstractBookRenderer(game) {
     }
 
     private fun centerEntryAboveChildren(
-        childrenLeft: Float,
-        childrenRight: Float,
         wall: Float,
         width: Float,
         bookEntry: BookEntry,
         depth: Int
     ): Float {
+        val graphEntryChildren = getGraphEntryChildren(bookEntry, depth)
+        val childrenLeft = graphEntryChildren.minOf { it.left }
+        val childrenRight = graphEntryChildren.maxOf { it.right }
+
         val childrenWidth = childrenRight - childrenLeft
         var left = childrenLeft + ((childrenWidth - width) / 2)
+
         if (left < wall) {
             log("*** never break the wall ***")
             val distanceToWall = wall - left
@@ -101,6 +124,11 @@ class TraversalBookRenderer(game: Game) : AbstractBookRenderer(game) {
             }
         }
         return left
+    }
+
+    private fun getGraphEntryChildren(bookEntry: BookEntry, depth: Int): List<GraphEntry> {
+        val bookEntryChildren = getDeeperExistingChildren(bookEntry, depth)
+        return bookEntryChildren.map { checkNotNull(graphEntries.find { graphEntry -> graphEntry.entry == it }) }
     }
 
     private fun createGraphEntry(

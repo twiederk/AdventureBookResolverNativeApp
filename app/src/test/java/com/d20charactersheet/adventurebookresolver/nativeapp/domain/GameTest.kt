@@ -450,23 +450,18 @@ internal class GameTest {
     @Test
     fun displayWayPoints() {
         // Arrange
-        whenever(book.getWayPoints()).doReturn(
-            listOf(
-                BookEntry(id = 10, title = "Hallway", note = "my note"), //
-                BookEntry(id = 20, title = "Library") //
-            )
+        val wayPoints = listOf(
+            BookEntry(id = 10, title = "Hallway", note = "my note"), //
+            BookEntry(id = 20, title = "Library") //
         )
+
+        whenever(book.getWayPoints()).doReturn(wayPoints)
 
         // Act
         val output = underTest.displayWayPoints()
 
         // Assert
-        assertThat(output).isEqualToIgnoringNewLines(
-            """       
-            (10) Hallway: my note
-            (20) Library: 
-        """.trimIndent()
-        )
+        assertThat(output).isSameAs(wayPoints)
     }
 
     @Test

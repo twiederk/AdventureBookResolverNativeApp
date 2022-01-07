@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.GraphViewModel
@@ -67,7 +68,12 @@ open class GraphFragment : LogFragment() {
     }
 
     private fun exportImage() {
-        GraphBitmap().createAndSaveBitmap(graphPanel.graphView)
+        try {
+            GraphBitmap().createAndSaveBitmap(graphPanel.graphView)
+            Toast.makeText(context, "Exported graph.", Toast.LENGTH_LONG).show()
+        } catch (exception: Exception) {
+            Toast.makeText(context, "Graph is to large to export. Reduce zoom and try to export again.", Toast.LENGTH_LONG).show()
+        }
     }
 
     override fun onResume() {

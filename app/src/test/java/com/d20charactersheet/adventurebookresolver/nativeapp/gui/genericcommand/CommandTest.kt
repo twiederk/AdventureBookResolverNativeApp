@@ -76,19 +76,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun `display way points`() {
-        // Arrange
-        val underTest = Command.WayPoints
-
-        // Act
-        underTest.execute(game, "")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Way points")
-        verify(game).displayWayPoints()
-    }
-
-    @Test
     fun solve() {
         // Arrange
         val underTest = Command.Solve

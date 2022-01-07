@@ -5,6 +5,7 @@ import android.view.MotionEvent
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -16,7 +17,11 @@ import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.inOrder
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 class GraphViewKoinTest : KoinTest {
 
@@ -113,6 +118,23 @@ class GraphViewKoinTest : KoinTest {
             verify(underTest.graphCanvas).translate(canvas, 100f, 200f)
             verify(underTest.graphCanvas).render(canvas)
         }
+    }
+
+    @Test
+    fun createBitmap_bitmapLargerThan10MB_throwIllegalArgumentException() {
+        // arrange
+        val graphCanvas: GraphCanvas = mock()
+        whenever(graphCanvas.maxRight).thenReturn(10_485_760F)
+        whenever(graphCanvas.maxBottom).thenReturn(10F)
+
+        val underTest = GraphView(mock(), mock())
+        underTest.graphCanvas = graphCanvas
+
+        // act
+        val thrown = catchThrowable { underTest.createBitmap() }
+
+        // assert
+        assertThat(thrown).isInstanceOf(IllegalStateException::class.java).hasMessage("bitmap to large (>10 MB)")
     }
 
 }

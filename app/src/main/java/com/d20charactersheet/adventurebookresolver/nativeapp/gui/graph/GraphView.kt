@@ -12,6 +12,8 @@ import org.koin.core.component.inject
 
 class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), KoinComponent {
 
+    private val maxBitmapSize = 10_485_760
+
     var renderMode = RenderMode.CENTER
 
     private val touchEventHandler: GraphViewTouchEventHandler by inject()
@@ -67,6 +69,9 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
     fun createBitmap(): Bitmap? {
         val width = graphCanvas.maxRight
         val height = graphCanvas.maxBottom
+        if (width * height > maxBitmapSize) {
+            throw IllegalStateException("bitmap to large (>10 MB)")
+        }
         val bitmap = Bitmap.createBitmap(width.toInt(), height.toInt(), Bitmap.Config.ARGB_8888)
         graphCanvas.render(Canvas(bitmap))
         return bitmap

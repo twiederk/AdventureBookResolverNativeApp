@@ -14,7 +14,7 @@ enum class Command(
     Run("Run", { game, argument -> game.runTo(argument) }),
     Search("Search", { game, argument -> SearchCommand().execute(game, argument) }),
     RollDie("Roll die", { game, argument -> game.rollDie(argument) }),
-    WayPoints("Way points", { game, _ -> game.displayWayPoints() }),
+    WayPoints("Way points", { game, _ -> DisplayWayPointsCommand().execute(game) }),
     Solve("Solve", { game, _ -> game.solve() });
 
     fun execute(game: Game, argument: String): String = gameFunction(game, argument)

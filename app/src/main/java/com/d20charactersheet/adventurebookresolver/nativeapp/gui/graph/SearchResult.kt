@@ -3,7 +3,9 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -16,7 +18,9 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.
 
 @Composable
 fun SearchResult(searchResult: List<BookEntry>) {
-    Column {
+    Column(
+        modifier = Modifier.verticalScroll(rememberScrollState())
+    ) {
         for (bookEntry in searchResult) {
             BookEntryCard(BookEntryViewModel(bookEntry))
         }

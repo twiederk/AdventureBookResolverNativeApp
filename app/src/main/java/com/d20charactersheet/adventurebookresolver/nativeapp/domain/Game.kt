@@ -123,10 +123,7 @@ class Game(
         return "Set (${book.getEntryId()}) - ${book.getEntryTitle()} to ${book.getEntryWayMark()}"
     }
 
-    fun displayWayPoints(): String = book.getWayPoints().joinToString(
-        separator = "\n",
-        transform = { "(${it.id}) ${it.title}: ${it.note}" }
-    )
+    fun displayWayPoints(): List<BookEntry> = book.getWayPoints()
 
     fun solve(): String = book.solve()
         .joinToString(
