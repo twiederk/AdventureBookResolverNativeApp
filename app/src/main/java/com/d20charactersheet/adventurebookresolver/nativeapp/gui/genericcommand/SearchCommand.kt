@@ -10,7 +10,7 @@ class SearchCommand : KoinComponent {
 
     fun execute(game: Game, argument: String): String {
         val searchResult = game.search(argument)
-        genericCommandViewModel.onSearchResultChange(searchResult)
+        genericCommandViewModel.onBookEntryListChange(searchResult)
         return ""
     }
 

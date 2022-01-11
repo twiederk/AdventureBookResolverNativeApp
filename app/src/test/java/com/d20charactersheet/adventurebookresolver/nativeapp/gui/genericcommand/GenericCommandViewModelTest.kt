@@ -25,16 +25,15 @@ class GenericCommandViewModelTest {
     }
 
     @Test
-    fun onSearchResultChange() {
+    fun onBookEntryListChange() {
         // arrange
-        val searchResult = listOf(BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"))
-
+        val bookEntryList = listOf(BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"))
 
         // act
-        underTest.onSearchResultChange(searchResult)
+        underTest.onBookEntryListChange(bookEntryList)
 
         // assert
-        assertThat(underTest.searchResult).isEqualTo(searchResult)
+        assertThat(underTest.bookEntryList).isEqualTo(bookEntryList)
     }
 
 }

@@ -6,21 +6,21 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryCard
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryList
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.SearchResult
 import org.junit.Rule
 import org.junit.Test
 
-class SearchResultTest {
+class BookEntryListTest {
 
     @Rule
     @JvmField
     val composeTestRule = createComposeRule()
 
     @Test
-    fun searchResult() {
+    fun should_dislay_list_of_book_entries() {
         // arrange
-        val searchResult = listOf(
+        val bookEntryList = listOf(
             BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"),
             BookEntry(id = 2, title = "Throne")
         )
@@ -28,7 +28,7 @@ class SearchResultTest {
         // act
         composeTestRule.setContent {
             MaterialTheme {
-                SearchResult(searchResult)
+                BookEntryList(bookEntryList)
             }
         }
 
@@ -39,7 +39,7 @@ class SearchResultTest {
     }
 
     @Test
-    fun bookEntryCard_with_note() {
+    fun should_display_book_entry_with_note() {
         // arrange
         val bookEntry = BookEntry(
             id = 1,
@@ -61,7 +61,7 @@ class SearchResultTest {
     }
 
     @Test
-    fun bookEntryCard_without_note() {
+    fun should_display_book_entry_without_note() {
         // arrange
         val bookEntry = BookEntry(
             id = 1,

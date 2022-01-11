@@ -16,6 +16,7 @@ import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -43,13 +44,12 @@ class SaveOnClickListenerKoinTest : KoinTest {
     }
 
     @Test
-    fun onClick() {
+    fun should_display_a_success_message_when_saving_th_game_succeeds() {
         // arrange
         val messageDisplay: MessageDisplay = mock()
         val view: View = mock()
         val book = AdventureBook("myTitle")
         whenever(game.book).doReturn(book)
-
 
         // act
         SaveOnClickListener(messageDisplay).onClick(view)
@@ -57,6 +57,20 @@ class SaveOnClickListenerKoinTest : KoinTest {
         // assert
         verify(game).saveBook()
         verify(messageDisplay).display(view, "Saved: myTitle")
+    }
+
+    @Test
+    fun should_display_an_error_message_when_saving_the_game_fails() {
+        // arrange
+        val messageDisplay: MessageDisplay = mock()
+        val view: View = mock()
+        whenever(game.book).doThrow(RuntimeException("error occurred"))
+
+        // act
+        SaveOnClickListener(messageDisplay).onClick(view)
+
+        // assert
+        verify(messageDisplay).display(view, "Save failed: error occurred")
     }
 
 }

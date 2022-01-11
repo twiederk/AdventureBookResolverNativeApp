@@ -3,14 +3,11 @@ apply plugin: 'kotlin-android'
 
 android {
     compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
+        sourceCompatibility 11
+        targetCompatibility 11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    lintOptions {
-        abortOnError false
+        jvmTarget = "11"
     }
     testOptions {
         unitTests.returnDefaultValues = true
@@ -20,8 +17,8 @@ android {
         applicationId "com.d20charactersheet.adventurebookresolver.nativeapp"
         minSdkVersion 26
         targetSdkVersion 31
-        versionCode 36
-        versionName "4.14.0"
+        versionCode 37
+        versionName "4.15.0-SNAPSHOT"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -37,12 +34,13 @@ android {
         kotlinCompilerExtensionVersion compose_version
     }
     packagingOptions {
-        excludes += "/META-INF/AL2.0"
-        excludes += "/META-INF/LGPL2.1"
-        // for byte-buddy
-        exclude "META-INF/licenses/ASM"
-        pickFirst "win32-x86-64/attach_hotspot_windows.dll"
-        pickFirst "win32-x86/attach_hotspot_windows.dll"
+        resources {
+            excludes += ['/META-INF/AL2.0', '/META-INF/LGPL2.1', 'META-INF/licenses/ASM', 'META-INF/LICENSE.md', 'META-INF/LICENSE-notice.md']
+            pickFirsts += ['win32-x86-64/attach_hotspot_windows.dll', 'win32-x86/attach_hotspot_windows.dll']
+        }
+    }
+    lint {
+        abortOnError false
     }
 
 }
@@ -50,16 +48,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:1.4.0"
-    implementation "androidx.fragment:fragment-ktx:1.4.0"
-    implementation "androidx.constraintlayout:constraintlayout:2.1.2"
-    implementation "androidx.coordinatorlayout:coordinatorlayout:1.1.0"
+    implementation "androidx.appcompat:appcompat:1.4.1"
+    implementation "androidx.fragment:fragment-ktx:1.4.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:1.2.0"
     implementation "androidx.recyclerview:recyclerview:1.2.1"
-    implementation "com.google.android.material:material:1.4.0"
+    implementation "com.google.android.material:material:1.5.0"
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
-    implementation 'com.d20charactersheet.adventurebookresolver:abr-core:2.1.0'
-    implementation 'com.android.billingclient:billing-ktx:4.0.0'
+    implementation 'com.d20charactersheet.adventurebookresolver:abr-core:2.2.0'
+    implementation 'com.android.billingclient:billing-ktx:4.1.0'
 
     // Compose
     implementation "androidx.compose.runtime:runtime:$compose_version"
@@ -70,8 +68,8 @@ dependencies {
     implementation "androidx.compose.runtime:runtime-livedata:$compose_version"
     implementation "androidx.compose.ui:ui-tooling:$compose_version"
 
-    debugImplementation('androidx.fragment:fragment-testing:1.4.0') { exclude group: 'androidx.test', module: 'core' }
-    debugImplementation 'org.assertj:assertj-core:3.21.0'
+    debugImplementation('androidx.fragment:fragment-testing:1.4.1') { exclude group: 'androidx.test', module: 'core' }
+    debugImplementation 'org.assertj:assertj-core:3.22.0'
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
     androidTestImplementation("io.insert-koin:koin-test:$koin_version") { exclude group: 'org.mockito' }
@@ -82,7 +80,7 @@ dependencies {
     androidTestImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_version"
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
 
-    testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation 'org.assertj:assertj-core:3.22.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:$mockito_version"
     testImplementation "io.insert-koin:koin-test:$koin_version"
     testImplementation "io.insert-koin:koin-test-junit4:$koin_version"

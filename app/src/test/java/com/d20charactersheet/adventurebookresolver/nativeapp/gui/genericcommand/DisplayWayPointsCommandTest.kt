@@ -54,7 +54,7 @@ class DisplayWayPointsCommandTest : KoinTest {
         // assert
         assertThat(wayPoints).isEmpty()
         verify(game).displayWayPoints()
-        verify(genericCommandViewModel).onSearchResultChange(expectedWayPoints)
+        verify(genericCommandViewModel).onBookEntryListChange(expectedWayPoints)
     }
 
 }

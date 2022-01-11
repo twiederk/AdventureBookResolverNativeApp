@@ -13,15 +13,15 @@ class GenericCommandViewModel : ViewModel() {
     private val _argument = MutableLiveData("")
     val argument: LiveData<String> = _argument
 
-    var searchResult by mutableStateOf<List<BookEntry>>(emptyList())
+    var bookEntryList by mutableStateOf<List<BookEntry>>(emptyList())
         private set
 
     fun onArgumentChange(argument: String) {
         _argument.value = argument
     }
 
-    fun onSearchResultChange(searchResult: List<BookEntry>) {
-        this.searchResult = searchResult
+    fun onBookEntryListChange(bookEntryList: List<BookEntry>) {
+        this.bookEntryList = bookEntryList
     }
 
 }

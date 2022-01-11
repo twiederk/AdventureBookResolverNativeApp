@@ -34,7 +34,7 @@ abstract class AbstractBookRenderer(protected val game: Game) : BookRenderer {
 
 
         val graphEdges = mutableListOf<GraphEdge>()
-        val entriesMap: Map<Int, GraphEntry> = graphEntries.map { it.entry.id to it }.toMap()
+        val entriesMap: Map<Int, GraphEntry> = graphEntries.associateBy { it.entry.id }
 
         for ((counter, edge) in edges.withIndex()) {
             val graphEdge = createGraphEdge(entriesMap, graph, edge, counter)

@@ -29,7 +29,7 @@ open class GraphFragment : LogFragment() {
 
         setHasOptionsMenu(true)
 
-        graphViewModel.scale.observe(this, { scale(it) })
+        graphViewModel.scale.observe(viewLifecycleOwner) { scale(it) }
 
         return rootView
     }
@@ -109,8 +109,12 @@ class SaveOnClickListener(private val messageDisplay: MessageDisplay = MessageDi
     private val game: Game by inject()
 
     override fun onClick(view: View) {
-        game.saveBook()
-        messageDisplay.display(view, "Saved: ${game.book.title}")
+        try {
+            game.saveBook()
+            messageDisplay.display(view, "Saved: ${game.book.title}")
+        } catch (exception: java.lang.Exception) {
+            messageDisplay.display(view, "Save failed: ${exception.localizedMessage}")
+        }
     }
 
 }

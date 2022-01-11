@@ -54,7 +54,7 @@ class SearchCommandKoinTest : KoinTest {
         // assert
         assertThat(searchResult).isEmpty()
         verify(game).search("start")
-        verify(genericCommandViewModel).onSearchResultChange(expectedSearchResult)
+        verify(genericCommandViewModel).onBookEntryListChange(expectedSearchResult)
     }
 
 }

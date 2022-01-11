@@ -10,7 +10,7 @@ class DisplayWayPointsCommand : KoinComponent {
 
     fun execute(game: Game): String {
         val wayPoints = game.displayWayPoints()
-        genericCommandViewModel.onSearchResultChange(wayPoints)
+        genericCommandViewModel.onBookEntryListChange(wayPoints)
         return ""
     }
 
