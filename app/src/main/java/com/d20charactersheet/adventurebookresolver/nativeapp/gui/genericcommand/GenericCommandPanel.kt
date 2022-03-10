@@ -6,11 +6,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
 import android.widget.TextView
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.Panel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryList
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -30,8 +30,9 @@ class GenericCommandPanel : Panel, KoinComponent {
 
         val composeView = rootView.findViewById<ComposeView>(R.id.search_result)
         composeView.setContent {
-            MaterialTheme {
+            AdventureBookResolverTheme {
                 BookEntryList(genericCommandViewModel.bookEntryList)
+                ActionList(genericCommandViewModel.actionList)
             }
         }
 
@@ -83,6 +84,7 @@ class GenericCommandPanel : Panel, KoinComponent {
     fun clearOutput() {
         outputTextView.text = ""
         genericCommandViewModel.onBookEntryListChange(emptyList())
+        genericCommandViewModel.onActionListChange(emptyList())
     }
 
 }

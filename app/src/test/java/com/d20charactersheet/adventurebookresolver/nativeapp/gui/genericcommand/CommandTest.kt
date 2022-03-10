@@ -11,19 +11,6 @@ internal class CommandTest {
     private val game = mock<Game>()
 
     @Test
-    fun `display actions to unvisited entries`() {
-        // Arrange
-        val underTest = Command.Unvisited
-
-        // Act
-        underTest.execute(game, "")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Unvisited")
-        verify(game).displayActionsToUnvisitedEntries()
-    }
-
-    @Test
     fun `display path`() {
         // Arrange
         val underTest = Command.Path

@@ -1,5 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
+import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
@@ -20,7 +21,7 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class SearchCommandKoinTest : KoinTest {
+class DisplayActionsToUnvisitedEntriesCommandTest : KoinTest {
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
@@ -45,16 +46,19 @@ class SearchCommandKoinTest : KoinTest {
     fun execute() {
         // arrange
         val game: Game = mock()
-        val expectedSearchResult = listOf(BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"))
-        whenever(game.search("start")).doReturn(expectedSearchResult)
+        val unvisitedEntries = listOf(
+            Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200)),
+            Action("left", BookEntry(100, "Tower"), BookEntry(300))
+        )
+        whenever(game.displayActionsToUnvisitedEntries()).doReturn(unvisitedEntries)
 
         // act
-        val textOutput = SearchCommand().execute(game, "start")
+        val textOutput = DisplayActionsToUnvisitedEntriesCommand().execute(game)
 
         // assert
         assertThat(textOutput).isEmpty()
-        verify(game).search("start")
-        verify(genericCommandViewModel).onBookEntryListChange(expectedSearchResult)
+        verify(game).displayActionsToUnvisitedEntries()
+        verify(genericCommandViewModel).onActionListChange(unvisitedEntries)
     }
 
 }

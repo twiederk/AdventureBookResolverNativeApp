@@ -51,11 +51,7 @@ class Game(
 
     fun delete(entryId: Int) = book.delete(entryId)
 
-    fun displayActionsToUnvisitedEntries(): String =
-        book.getActionsToUnvisitedEntries().joinToString(
-            separator = "\n",
-            transform = { action -> "(${action.source.id}) - ${action.source.title}: ${action.label} -> ${action.destination.id}" }
-        )
+    fun displayActionsToUnvisitedEntries() = book.getActionsToUnvisitedEntries()
 
     fun displayPath(): String =
         book.getPath().joinToString(

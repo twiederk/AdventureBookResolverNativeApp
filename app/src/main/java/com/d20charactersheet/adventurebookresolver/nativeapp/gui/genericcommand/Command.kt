@@ -8,14 +8,17 @@ enum class Command(
     val gameFunction: ((game: Game, argument: String) -> String)
 ) {
 
+    // use view stack
     Create("Create", { game, argument -> game.createBook(argument) }),
-    Unvisited("Unvisited", { game, _ -> game.displayActionsToUnvisitedEntries() }),
     Path("Path", { game, _ -> game.displayPath() }),
     Run("Run", { game, argument -> game.runTo(argument) }),
-    Search("Search", { game, argument -> SearchCommand().execute(game, argument) }),
     RollDie("Roll die", { game, argument -> game.rollDie(argument) }),
+    Solve("Solve", { game, _ -> game.solve() }),
+
+    // use compose
+    Search("Search", { game, argument -> SearchCommand().execute(game, argument) }),
     WayPoints("Way points", { game, _ -> DisplayWayPointsCommand().execute(game) }),
-    Solve("Solve", { game, _ -> game.solve() });
+    Unvisited("Unvisited", { game, _ -> DisplayActionsToUnvisitedEntriesCommand().execute(game) });
 
     fun execute(game: Game, argument: String): String = gameFunction(game, argument)
 

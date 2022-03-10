@@ -1,6 +1,5 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
-import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -8,6 +7,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryCard
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryList
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
 
@@ -18,7 +18,7 @@ class BookEntryListTest {
     val composeTestRule = createComposeRule()
 
     @Test
-    fun should_dislay_list_of_book_entries() {
+    fun should_display_list_of_book_entries() {
         // arrange
         val bookEntryList = listOf(
             BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"),
@@ -27,7 +27,7 @@ class BookEntryListTest {
 
         // act
         composeTestRule.setContent {
-            MaterialTheme {
+            AdventureBookResolverTheme {
                 BookEntryList(bookEntryList)
             }
         }
@@ -49,7 +49,7 @@ class BookEntryListTest {
 
         // act
         composeTestRule.setContent {
-            MaterialTheme {
+            AdventureBookResolverTheme {
                 BookEntryCard(BookEntryViewModel(bookEntry))
             }
         }
@@ -70,7 +70,7 @@ class BookEntryListTest {
 
         // act
         composeTestRule.setContent {
-            MaterialTheme {
+            AdventureBookResolverTheme {
                 BookEntryCard(BookEntryViewModel(bookEntry))
             }
         }

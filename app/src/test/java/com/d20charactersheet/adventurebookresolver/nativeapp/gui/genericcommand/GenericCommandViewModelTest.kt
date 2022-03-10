@@ -1,6 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
@@ -34,6 +35,18 @@ class GenericCommandViewModelTest {
 
         // assert
         assertThat(underTest.bookEntryList).isEqualTo(bookEntryList)
+    }
+
+    @Test
+    fun onActionListChange() {
+        // arrange
+        val actionList = listOf(Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200)))
+
+        // act
+        underTest.onActionListChange(actionList)
+
+        // assert
+        assertThat(underTest.actionList).isEqualTo(actionList)
     }
 
 }

@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.WayMarkDropDown
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
 fun BookEntryList(bookEntryList: List<BookEntry>) {
@@ -37,7 +38,7 @@ fun BookEntryListPreview() {
         BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure"),
         BookEntry(id = 2, title = "Throne")
     )
-    MaterialTheme {
+    AdventureBookResolverTheme {
         BookEntryList(bookEntryList)
     }
 }
@@ -72,7 +73,7 @@ fun BookEntryCardPreview() {
         title = "Entry Hall",
         note = "Start of adventure"
     )
-    MaterialTheme {
+    AdventureBookResolverTheme {
         BookEntryCard(BookEntryViewModel(bookEntry))
     }
 }

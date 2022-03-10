@@ -89,25 +89,20 @@ internal class GameTest {
     }
 
     @Test
-    fun `display actions to unvisited entries`() {
+    fun `should return list of actions to unvisited book entries`() {
         // Arrange
-        whenever(book.getActionsToUnvisitedEntries()).doReturn(
-            listOf(
-                Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200)),
-                Action("left", BookEntry(100, "Tower"), BookEntry(300))
-            )
+        val unvisitedEntries = listOf(
+            Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200)),
+            Action("left", BookEntry(100, "Tower"), BookEntry(300))
         )
+
+        whenever(book.getActionsToUnvisitedEntries()).doReturn(unvisitedEntries)
 
         // Act
         val result = underTest.displayActionsToUnvisitedEntries()
 
         // Assert
-        assertThat(result).isEqualToIgnoringNewLines(
-            """
-            (1) - Hallway: downstairs -> 200
-            (100) - Tower: left -> 300
-        """.trimIndent()
-        )
+        assertThat(result).isSameAs(unvisitedEntries)
         verify(book).getActionsToUnvisitedEntries()
     }
 
