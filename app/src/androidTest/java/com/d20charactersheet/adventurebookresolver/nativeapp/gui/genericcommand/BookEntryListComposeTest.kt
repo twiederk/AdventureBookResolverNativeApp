@@ -11,7 +11,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class BookEntryListTest {
+class BookEntryListComposeTest {
 
     @Rule
     @JvmField

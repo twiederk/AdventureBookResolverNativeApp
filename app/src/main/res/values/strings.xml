@@ -35,8 +35,9 @@
     <string name="book_note_hint">enter book note</string>
 
     <!-- EntryDialog -->
-    <string name="entry_title_hint">enter title</string>
-    <string name="entry_note_hint">enter entry note</string>
+    <string name="entry_title">Title</string>
+    <string name="entry_note">Note</string>
+    <string name="entry_action_delete">Delete</string>
 
     <!-- ActionPanel -->
     <string name="action_label_hint">enter action label</string>

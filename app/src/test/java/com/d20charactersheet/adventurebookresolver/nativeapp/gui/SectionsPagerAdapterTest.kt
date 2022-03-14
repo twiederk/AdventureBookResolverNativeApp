@@ -36,7 +36,7 @@ class SectionsPagerAdapterTest {
         val fragment = underTest.getItem(1)
 
         // Assert
-        assertThat(fragment).isInstanceOf(AttributesAndBookFragment::class.java)
+        assertThat(fragment).isInstanceOf(GenericCommandFragment::class.java)
     }
 
     @Test
@@ -45,7 +45,7 @@ class SectionsPagerAdapterTest {
         val fragment = underTest.getItem(2)
 
         // Assert
-        assertThat(fragment).isInstanceOf(InventoryFragment::class.java)
+        assertThat(fragment).isInstanceOf(AttributesAndBookFragment::class.java)
     }
 
     @Test
@@ -54,7 +54,7 @@ class SectionsPagerAdapterTest {
         val fragment = underTest.getItem(3)
 
         // Assert
-        assertThat(fragment).isInstanceOf(GenericCommandFragment::class.java)
+        assertThat(fragment).isInstanceOf(InventoryFragment::class.java)
     }
 
 }

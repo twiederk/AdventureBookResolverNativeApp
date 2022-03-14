@@ -13,9 +13,9 @@ class SectionsPagerAdapter(fragmentManager: FragmentManager) :
 
     private val fragments = arrayOf(
         GraphFragment(),
+        GenericCommandFragment(),
         AttributesAndBookFragment(),
-        InventoryFragment(),
-        GenericCommandFragment()
+        InventoryFragment()
     )
 
     override fun getItem(position: Int): Fragment = fragments[position]

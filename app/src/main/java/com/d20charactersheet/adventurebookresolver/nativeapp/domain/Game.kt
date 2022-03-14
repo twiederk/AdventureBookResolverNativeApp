@@ -74,6 +74,8 @@ class Game(
 
     fun getNumberOfActions(): Int = book.getActions().size
 
+    fun getActions(): List<Action> = book.getActions().toList()
+
     fun getNumberOfItems(): Int = book.inventory.items.size
 
     fun increaseAttribute(attributeName: AttributeName, value: Int) {

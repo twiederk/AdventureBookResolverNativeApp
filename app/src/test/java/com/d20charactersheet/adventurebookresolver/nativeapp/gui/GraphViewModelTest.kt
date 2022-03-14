@@ -1,6 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewModel
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test

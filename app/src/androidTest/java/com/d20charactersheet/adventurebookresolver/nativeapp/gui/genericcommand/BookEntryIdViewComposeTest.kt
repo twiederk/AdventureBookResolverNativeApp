@@ -8,7 +8,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class BookEntryIdViewTest {
+class BookEntryIdViewComposeTest {
 
     @Rule
     @JvmField

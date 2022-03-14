@@ -16,12 +16,15 @@ import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
-import org.mockito.kotlin.*
+import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.verifyNoMoreInteractions
+import org.mockito.kotlin.whenever
 
 class GraphViewTouchEventHandlerKoinTest : KoinTest {
 
     private val game: Game by inject()
-    private val entryDialog: EntryDialog by inject()
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
@@ -34,7 +37,6 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             modules(appModule)
         }
         declareMock<Game>()
-        declareMock<EntryDialog>()
     }
 
     @After
@@ -72,34 +74,6 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
         assertThat(graphView.touchY).isEqualTo(400f)
         assertThat(graphView.renderMode).isEqualTo(RenderMode.CENTER)
         verify(game).move(bookEntry.id)
-    }
-
-    @Test
-    fun onTouchEvent_actionDownOnCurrentEntry_openEntryDialog() {
-
-        // Arrange
-        val motionEvent: MotionEvent = mock {
-            on { action } doReturn MotionEvent.ACTION_DOWN
-            on { x } doReturn 300f
-            on { y } doReturn 600f
-        }
-        val bookEntry = BookEntry(1)
-        val graphCanvas: GraphCanvas = mock()
-        whenever(graphCanvas.touch(any(), any())).thenReturn(bookEntry)
-        whenever(game.isCurrentEntry(bookEntry)).doReturn(true)
-
-        val graphView: GraphView = mock()
-        graphView.graphCanvas = graphCanvas
-        whenever(graphView.viewportX).doReturn(100f)
-        whenever(graphView.viewportY).doReturn(200f)
-        whenever(graphView.context).doReturn(mock())
-        val underTest = GraphViewTouchEventHandler()
-
-        // Act
-        underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
-
-        // Assert
-        verify(entryDialog).show(any())
     }
 
     @Test

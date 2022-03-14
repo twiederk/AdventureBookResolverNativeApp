@@ -11,14 +11,14 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class ActionListTest {
+class ActionListComposeTest {
 
     @Rule
     @JvmField
     val composeTestRule = createComposeRule()
 
     @Test
-    fun should_display_info_of_action() {
+    fun should_display_action_card_with_info_of_action() {
         // arrange
         val action = Action(
             label = "myLabel",

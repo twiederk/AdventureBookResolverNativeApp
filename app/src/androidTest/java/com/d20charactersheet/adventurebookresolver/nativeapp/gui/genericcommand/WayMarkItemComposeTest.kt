@@ -8,22 +8,19 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class WayMarkDropDownTest {
+class WayMarkItemComposeTest {
 
     @Rule
     @JvmField
     val composeTestRule = createComposeRule()
 
     @Test
-    fun wayMarkDropDown() {
+    fun wayMarkItem() {
 
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                WayMarkDropDown(
-                    wayMark = WayMark.NORMAL,
-                    onWayMarkSelected = { }
-                )
+                WayMarkItem(WayMark.NORMAL)
             }
         }
 

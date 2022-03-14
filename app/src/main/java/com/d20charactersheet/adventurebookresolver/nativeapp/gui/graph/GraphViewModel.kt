@@ -1,4 +1,4 @@
-package com.d20charactersheet.adventurebookresolver.nativeapp.gui
+package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

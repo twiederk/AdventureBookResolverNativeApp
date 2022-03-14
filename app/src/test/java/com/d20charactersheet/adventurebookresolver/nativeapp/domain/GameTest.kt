@@ -537,4 +537,22 @@ internal class GameTest {
         assertThat(result).isFalse
     }
 
+    @Test
+    fun `should return all actions of the current entry`() {
+        // arrange
+        val action = Action(
+            label = "myLabel",
+            source = BookEntry(1),
+            destination = BookEntry(2)
+        )
+
+        whenever(book.getActions()).doReturn(setOf(action))
+
+        // act
+        val result = underTest.getActions()
+
+        // assert
+        assertThat(result).containsExactly(action)
+    }
+
 }

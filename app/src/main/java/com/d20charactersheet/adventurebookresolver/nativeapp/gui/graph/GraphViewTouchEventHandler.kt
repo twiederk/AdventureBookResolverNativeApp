@@ -1,15 +1,19 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import android.view.MotionEvent
+import android.view.View
+import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class GraphViewTouchEventHandler : KoinComponent {
 
     private val game: Game by inject()
-    private val entryDialog: EntryDialog by inject()
+    private val entryScreenViewModel: EntryScreenViewModel by inject()
 
     fun onTouchEvent(graphView: GraphView, graphCanvas: GraphCanvas, event: MotionEvent) {
         when (event.action) {
@@ -20,14 +24,44 @@ class GraphViewTouchEventHandler : KoinComponent {
 
     private fun actionDown(graphView: GraphView, graphCanvas: GraphCanvas, event: MotionEvent) {
         val bookEntry = getTouchedBookEntry(graphView, event, graphCanvas)
-        bookEntry?.let {
-            if (game.isCurrentEntry(it)) {
-                entryDialog.show(graphView.context)
+        if (bookEntry != null) {
+            if (game.isCurrentEntry(bookEntry)) {
+                showEntryScreen(graphView, bookEntry)
             } else if (game.isEntryOfNextEntries(bookEntry)) {
-                game.move(it.id)
+                game.move(bookEntry.id)
                 graphView.renderMode = RenderMode.CENTER
             }
         }
+    }
+
+    private fun showEntryScreen(graphView: GraphView, bookEntry: BookEntry) {
+        val frameLayout = graphView.parent.parent as View
+        val composeView = frameLayout.findViewById<ComposeView>(R.id.entry_screen)
+        entryScreenViewModel.initBookEntry(bookEntry)
+        composeView.setContent {
+            AdventureBookResolverTheme {
+                EntryScreen(
+                    title = entryScreenViewModel.title,
+                    note = entryScreenViewModel.note,
+                    wayMark = entryScreenViewModel.wayMark,
+                    actions = entryScreenViewModel.actions,
+                    onTitleChanged = { entryScreenViewModel.onTitleChanged(it) },
+                    onNoteChanged = { entryScreenViewModel.onNoteChanged(it) },
+                    onWayMarkSelected = { entryScreenViewModel.onWayMarkSelected(it) },
+                    onActionMoveClicked = {
+                        entryScreenViewModel.onActionMoveClicked(it)
+                        graphView.invalidate()
+                        composeView.visibility = View.INVISIBLE
+                    },
+                    onActionDeleteClicked = { entryScreenViewModel.onActionDeleteClicked(it) },
+                    onBackNavigationClicked = {
+                        graphView.invalidate()
+                        composeView.visibility = View.INVISIBLE
+                    }
+                )
+            }
+        }
+        composeView.visibility = View.VISIBLE
     }
 
     private fun getTouchedBookEntry(graphView: GraphView, event: MotionEvent, graphCanvas: GraphCanvas): BookEntry? {
