@@ -6,12 +6,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
@@ -48,7 +58,7 @@ fun EntryScreen(
             .background(MaterialTheme.colors.background)
             .padding(all = LARGE_PADDING)
     ) {
-        EntryTitle(title, onTitleChanged)
+        EntryTitle(title, onTitleChanged, onBackNavigationClicked)
         EntryWayMark(wayMark, onWayMarkSelected)
         EntryActions(actions, onActionMoveClicked, onActionDeleteClicked)
         EntryNote(note, onNoteChanged)
@@ -57,13 +67,34 @@ fun EntryScreen(
 
 
 @Composable
-private fun EntryTitle(title: String, onTitleChanged: (String) -> Unit) {
+private fun EntryTitle(
+    title: String,
+    onTitleChanged: (String) -> Unit,
+    onBackNavigationClicked: () -> Unit
+) {
+    var textFieldValue by remember { mutableStateOf(TextFieldValue(title)) }
     OutlinedTextField(
+        value = textFieldValue,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = MEDIUM_PADDING),
-        value = title,
-        onValueChange = { onTitleChanged(it) },
+            .padding(bottom = MEDIUM_PADDING)
+            .onFocusChanged { focusState ->
+                if (focusState.isFocused) {
+                    textFieldValue = textFieldValue.copy(selection = TextRange(0, textFieldValue.text.length))
+                }
+            },
+        onValueChange = { text ->
+            onTitleChanged(text.text)
+            textFieldValue = text
+        },
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onBackNavigationClicked()
+            }
+        ),
         label = { Text(text = stringResource(id = R.string.entry_title)) },
         textStyle = MaterialTheme.typography.body1,
         singleLine = true
