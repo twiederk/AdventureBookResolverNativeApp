@@ -73,6 +73,9 @@ private fun EntryTitle(
     onBackNavigationClicked: () -> Unit
 ) {
     var textFieldValue by remember { mutableStateOf(TextFieldValue(title)) }
+    if (textFieldValue.text != title) {
+        textFieldValue = textFieldValue.copy(title)
+    }
     OutlinedTextField(
         value = textFieldValue,
         modifier = Modifier
