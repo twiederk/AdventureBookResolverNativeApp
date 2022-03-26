@@ -41,8 +41,10 @@ class GraphViewTouchEventHandler : KoinComponent {
         composeView.setContent {
             AdventureBookResolverTheme {
                 EntryScreen(
+                    id = entryScreenViewModel.id,
                     title = entryScreenViewModel.title,
                     note = entryScreenViewModel.note,
+                    visit = entryScreenViewModel.visit,
                     wayMark = entryScreenViewModel.wayMark,
                     actions = entryScreenViewModel.actions,
                     onTitleChanged = { entryScreenViewModel.onTitleChanged(it) },

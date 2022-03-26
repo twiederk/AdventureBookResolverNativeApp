@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +17,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
@@ -28,6 +30,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.EntryId
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.WayMarkDropDown
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.LARGE_PADDING
@@ -35,11 +38,13 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PA
 
 @Composable
 fun EntryScreen(
+    id: Int,
     title: String,
     note: String,
+    visit: Visit,
     wayMark: WayMark,
-    actions: List<Action>,
 
+    actions: List<Action>,
     onTitleChanged: (String) -> Unit,
     onNoteChanged: (String) -> Unit,
     onWayMarkSelected: (WayMark) -> Unit,
@@ -58,7 +63,10 @@ fun EntryScreen(
             .background(MaterialTheme.colors.background)
             .padding(all = LARGE_PADDING)
     ) {
-        EntryTitle(title, onTitleChanged, onBackNavigationClicked)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            EntryId(entry = BookEntry(id = id, visit = visit, wayMark = wayMark))
+            EntryTitle(title, onTitleChanged, onBackNavigationClicked)
+        }
         EntryWayMark(wayMark, onWayMarkSelected)
         EntryActions(actions, onActionMoveClicked, onActionDeleteClicked)
         EntryNote(note, onNoteChanged)
@@ -80,7 +88,7 @@ private fun EntryTitle(
         value = textFieldValue,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = MEDIUM_PADDING)
+            .padding(start = MEDIUM_PADDING, bottom = MEDIUM_PADDING)
             .onFocusChanged { focusState ->
                 if (focusState.isFocused) {
                     textFieldValue = textFieldValue.copy(selection = TextRange(0, textFieldValue.text.length))
@@ -147,9 +155,10 @@ fun EntryActions(
 @Composable
 fun EntryScreenPreview() {
     val bookEntry = BookEntry(
-        id = 1,
+        id = 123,
         title = "Entry hall",
         note = "Start of adventure",
+        visit = Visit.VISITED,
         wayMark = WayMark.WAY_POINT
     )
     val actions = listOf(
@@ -172,8 +181,10 @@ fun EntryScreenPreview() {
 
     AdventureBookResolverTheme {
         EntryScreen(
+            id = bookEntry.id,
             title = bookEntry.title,
             note = bookEntry.note,
+            visit = bookEntry.visit,
             wayMark = bookEntry.wayMark,
             actions = actions,
 

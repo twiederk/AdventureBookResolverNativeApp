@@ -8,7 +8,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class BookEntryIdViewComposeTest {
+class EntryIdComposeTest {
 
     @Rule
     @JvmField
@@ -22,7 +22,7 @@ class BookEntryIdViewComposeTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                BookEntryIdView(BookEntry(id = 1))
+                EntryId(BookEntry(id = 1))
             }
         }
 

@@ -2,6 +2,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
@@ -50,6 +51,7 @@ class EntryScreenViewModelKoinTest : KoinTest {
         assertThat(entryScreenViewModel.id).isZero
         assertThat(entryScreenViewModel.title).isEmpty()
         assertThat(entryScreenViewModel.note).isEmpty()
+        assertThat(entryScreenViewModel.visit).isEqualTo(Visit.UNVISITED)
         assertThat(entryScreenViewModel.wayMark).isEqualTo(WayMark.NORMAL)
         assertThat(entryScreenViewModel.actions).isEmpty()
     }
@@ -61,6 +63,7 @@ class EntryScreenViewModelKoinTest : KoinTest {
             id = 1,
             title = "myTitle",
             note = "myNote",
+            visit = Visit.VISITED,
             wayMark = WayMark.DEAD_END
         )
         val action = Action(
@@ -77,6 +80,7 @@ class EntryScreenViewModelKoinTest : KoinTest {
         assertThat(entryScreenViewModel.id).isEqualTo(1)
         assertThat(entryScreenViewModel.title).isEqualTo("myTitle")
         assertThat(entryScreenViewModel.note).isEqualTo("myNote")
+        assertThat(entryScreenViewModel.visit).isEqualTo(Visit.VISITED)
         assertThat(entryScreenViewModel.wayMark).isEqualTo(WayMark.DEAD_END)
         assertThat(entryScreenViewModel.actions).containsExactly(action)
     }

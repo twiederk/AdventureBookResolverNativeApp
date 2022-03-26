@@ -42,11 +42,13 @@ class EntryScreenComposeTest {
         composeTestRule.setContent {
             AdventureBookResolverTheme {
                 EntryScreen(
+                    id = 123,
                     title = "myTitle",
                     note = "myNote",
+                    visit = Visit.VISITED,
                     wayMark = WayMark.WAY_POINT,
-                    actions = actions,
 
+                    actions = actions,
                     onTitleChanged = { },
                     onNoteChanged = { },
                     onWayMarkSelected = { },
@@ -58,6 +60,7 @@ class EntryScreenComposeTest {
         }
 
         // assert
+        composeTestRule.onNodeWithText("123").assertIsDisplayed()
         composeTestRule.onNodeWithText("myTitle").assertIsDisplayed()
         composeTestRule.onNodeWithText("myNote").assertIsDisplayed()
         composeTestRule.onNodeWithText("WAY_POINT").assertIsDisplayed()

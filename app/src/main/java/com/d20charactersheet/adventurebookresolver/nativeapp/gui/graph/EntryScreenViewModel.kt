@@ -19,6 +19,7 @@ class EntryScreenViewModel : KoinComponent, ViewModel() {
     var id = 0
     var title by mutableStateOf("")
     var note by mutableStateOf("")
+    var visit by mutableStateOf(bookEntry.visit)
     var wayMark by mutableStateOf(bookEntry.wayMark)
     var actions by mutableStateOf(emptyList<Action>())
 
@@ -27,6 +28,7 @@ class EntryScreenViewModel : KoinComponent, ViewModel() {
         id = bookEntry.id
         title = bookEntry.title
         note = bookEntry.note
+        visit = bookEntry.visit
         wayMark = bookEntry.wayMark
         actions = game.getActions()
     }

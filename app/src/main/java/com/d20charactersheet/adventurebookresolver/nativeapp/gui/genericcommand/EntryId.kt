@@ -18,7 +18,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
-fun BookEntryIdView(entry: BookEntry) {
+fun EntryId(entry: BookEntry) {
     val entryColor = ActionColorCompose().getColor(entry.wayMark, entry.visit)
     Box(
         modifier = Modifier
@@ -38,7 +38,7 @@ fun BookEntryIdView(entry: BookEntry) {
 @Composable
 fun BookEntryIdViewUnvisitedPreview() {
     AdventureBookResolverTheme {
-        BookEntryIdView(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.UNVISITED))
+        EntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.UNVISITED))
     }
 }
 
@@ -46,7 +46,7 @@ fun BookEntryIdViewUnvisitedPreview() {
 @Composable
 fun BookEntryIdViewVisitedPreview() {
     AdventureBookResolverTheme {
-        BookEntryIdView(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.VISITED))
+        EntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.VISITED))
     }
 }
 
@@ -54,7 +54,7 @@ fun BookEntryIdViewVisitedPreview() {
 @Composable
 fun BookEntryIdViewWayPointPreview() {
     AdventureBookResolverTheme {
-        BookEntryIdView(BookEntry(id = 242, wayMark = WayMark.WAY_POINT, visit = Visit.UNVISITED))
+        EntryId(BookEntry(id = 242, wayMark = WayMark.WAY_POINT, visit = Visit.UNVISITED))
     }
 }
 
@@ -62,6 +62,6 @@ fun BookEntryIdViewWayPointPreview() {
 @Composable
 fun BookEntryIdViewDeadEndPreview() {
     AdventureBookResolverTheme {
-        BookEntryIdView(BookEntry(id = 242, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED))
+        EntryId(BookEntry(id = 242, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED))
     }
 }
