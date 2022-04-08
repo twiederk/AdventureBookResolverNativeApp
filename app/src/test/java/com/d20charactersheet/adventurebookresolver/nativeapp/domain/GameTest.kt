@@ -9,6 +9,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Die
 import com.d20charactersheet.adventurebookresolver.core.domain.DieRoll
 import com.d20charactersheet.adventurebookresolver.core.domain.Inventory
 import com.d20charactersheet.adventurebookresolver.core.domain.Item
+import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
 import org.assertj.core.api.Assertions.assertThat
@@ -460,33 +461,45 @@ internal class GameTest {
     }
 
     @Test
-    fun solve() {
+    fun should_return_empty_string_when_no_solution_is_found() {
         // Arrange
-        whenever(book.solve()).doReturn(
+        whenever(book.solve(any())).doReturn(emptyList())
+
+        // Act
+        val output = underTest.solve(mock())
+
+        // Assert
+        assertThat(output).isEmpty()
+    }
+
+    @Test
+    fun should_return_all_solutions() {
+        // Arrange
+        val solution1: Solution = mock()
+        whenever(solution1.solutionPath).thenReturn(
             listOf(
-                listOf(
-                    BookEntry(11, wayMark = WayMark.WAY_POINT),
-                    BookEntry(22),
-                    BookEntry(33, wayMark = WayMark.WAY_POINT)
-                ),
-                listOf(BookEntry(88, wayMark = WayMark.WAY_POINT), BookEntry(99, wayMark = WayMark.WAY_POINT))
+                BookEntry(11, wayMark = WayMark.WAY_POINT),
+                BookEntry(22),
+                BookEntry(33, wayMark = WayMark.WAY_POINT)
             )
         )
 
+        val solution2: Solution = mock()
+        whenever(solution2.solutionPath).thenReturn(
+            listOf(
+                BookEntry(88, wayMark = WayMark.WAY_POINT),
+                BookEntry(99, wayMark = WayMark.WAY_POINT)
+            )
+        )
+        val solutionList = listOf(solution1, solution2)
+
+        whenever(book.solve(any())).doReturn(solutionList)
+
         // Act
-        val output = underTest.solve()
+        val result: List<Solution> = underTest.solve(mock())
 
         // Assert
-//        - display way points and number of entries:
-//        - Order of way points: 1, 3, 5
-//        - Total of entries: 15
-
-        assertThat(output).isEqualToIgnoringNewLines(
-            """
-            11, 33 (entries: 3)
-            88, 99 (entries: 2)
-            """.trimIndent()
-        )
+        assertThat(result).isEqualTo(solutionList)
     }
 
     @Test

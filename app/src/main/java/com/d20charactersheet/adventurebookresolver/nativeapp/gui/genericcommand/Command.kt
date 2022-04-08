@@ -13,12 +13,13 @@ enum class Command(
     Path("Path", { game, _ -> game.displayPath() }),
     Run("Run", { game, argument -> game.runTo(argument) }),
     RollDie("Roll die", { game, argument -> game.rollDie(argument) }),
-    Solve("Solve", { game, _ -> game.solve() }),
 
     // use compose
     Search("Search", { game, argument -> SearchCommand().execute(game, argument) }),
     WayPoints("Way points", { game, _ -> DisplayWayPointsCommand().execute(game) }),
-    Unvisited("Unvisited", { game, _ -> DisplayActionsToUnvisitedEntriesCommand().execute(game) });
+    Unvisited("Unvisited", { game, _ -> DisplayActionsToUnvisitedEntriesCommand().execute(game) }),
+    Solve("Solve", { game, _ -> SolveCommand().execute(game) });
+
 
     fun execute(game: Game, argument: String): String = gameFunction(game, argument)
 

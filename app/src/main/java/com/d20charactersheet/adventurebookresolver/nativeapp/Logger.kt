@@ -14,4 +14,8 @@ object Logger {
         Log.i(LOG_TAG, message)
     }
 
+    fun error(message: String) {
+        Log.e(LOG_TAG, message)
+    }
+
 }

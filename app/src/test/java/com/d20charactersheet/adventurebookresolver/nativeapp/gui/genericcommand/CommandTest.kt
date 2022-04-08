@@ -63,19 +63,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun solve() {
-        // Arrange
-        val underTest = Command.Solve
-
-        // Act
-        underTest.execute(game, "")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Solve")
-        verify(game).solve()
-    }
-
-    @Test
     fun `list of all commands sorted by name`() {
         // Act
         val items = Command.sortedValues()

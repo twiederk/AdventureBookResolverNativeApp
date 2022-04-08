@@ -11,6 +11,7 @@ class ExecuteOnClickListener : View.OnClickListener, KoinComponent {
     private val game: Game by inject()
     private val genericCommandPanel: GenericCommandPanel by inject()
     private val toolbarPanel: ToolbarPanel by inject()
+    private val genericCommandVieModel: GenericCommandViewModel by inject()
 
     override fun onClick(v: View?) {
         val output = executeCommand()
@@ -22,10 +23,6 @@ class ExecuteOnClickListener : View.OnClickListener, KoinComponent {
         val command = genericCommandPanel.getSelectedCommand()
         val argument = genericCommandPanel.getArgument()
         genericCommandPanel.clearOutput()
-        return try {
-            command.execute(game, argument)
-        } catch (exception: Exception) {
-            exception.message ?: "Exception throw with no message"
-        }
+        return genericCommandVieModel.execute(command, argument, game)
     }
 }

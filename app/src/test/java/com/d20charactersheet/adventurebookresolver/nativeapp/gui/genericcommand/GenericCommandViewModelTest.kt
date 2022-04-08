@@ -3,6 +3,8 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.core.domain.Combination
+import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
 import org.junit.Test
@@ -47,6 +49,51 @@ class GenericCommandViewModelTest {
 
         // assert
         assertThat(underTest.actionList).isEqualTo(actionList)
+    }
+
+    @Test
+    fun onMaxCombinationsChange() {
+
+        // act
+        underTest.onMaxCombinationsChange(200)
+
+        // assert
+        assertThat(underTest.maxCombinations).isEqualTo(200)
+    }
+
+    @Test
+    fun onRemainingCombinationsChange() {
+        // arrange
+        underTest.onMaxCombinationsChange(200)
+
+        // act
+        underTest.onRemainingCombinationsChange(50)
+
+        // assert
+        assertThat(underTest.remainingCombinations).isEqualTo(150)
+    }
+
+    @Test
+    fun onSolutionListChange() {
+
+        // arrange
+        val solutions = listOf(Solution(Combination(arrayOf())))
+
+        // act
+        underTest.onSolutionListChange(solutions)
+
+        // assert
+        assertThat(underTest.solutionList).isEqualTo(solutions)
+    }
+
+    @Test
+    fun onOutputTextChange() {
+
+        // act
+        underTest.onOutputTextChange("myOutputText")
+
+        // assert
+        assertThat(underTest.outputText).isEqualTo("myOutputText")
     }
 
 }

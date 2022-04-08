@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -67,7 +68,7 @@ class ExecuteOnClickListenerKoinTest : KoinTest {
     }
 
     @Test
-    fun `onClick command throws exception`() {
+    fun `onClick command throws exception`() = runBlocking {
         // Arrange
         declareMock<Game> {
             whenever(createBook("myArgs")).doThrow(IllegalStateException("myException"))

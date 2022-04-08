@@ -4,6 +4,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
 import com.d20charactersheet.adventurebookresolver.core.domain.AttributeName
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
+import com.d20charactersheet.adventurebookresolver.core.domain.BookSolverListener
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charactersheet.adventurebookresolver.core.domain.Die
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
@@ -123,18 +124,7 @@ class Game(
 
     fun displayWayPoints(): List<BookEntry> = book.getWayPoints()
 
-    fun solve(): String = book.solve()
-        .joinToString(
-            separator = "\n",
-            transform = { solution ->
-                solution
-                    .filter { bookEntry -> bookEntry.wayMark == WayMark.WAY_POINT }
-                    .joinToString(
-                        transform = { bookEntry -> bookEntry.id.toString() },
-                        postfix = " (entries: ${solution.size})"
-                    )
-            }
-        )
+    fun solve(bookSolverListener: BookSolverListener) = book.solve(bookSolverListener)
 
     fun isCurrentEntry(bookEntry: BookEntry): Boolean = bookEntry.id == book.getEntryId()
 

@@ -92,6 +92,9 @@ class GenericCommandPanelKoinTest : KoinTest {
         verify(underTest.outputTextView).text = ""
         verify(genericCommandViewModel).onBookEntryListChange(emptyList())
         verify(genericCommandViewModel).onActionListChange(emptyList())
+        verify(genericCommandViewModel).onMaxCombinationsChange(0)
+        verify(genericCommandViewModel).onSolutionListChange(emptyList())
+        verify(genericCommandViewModel).onOutputTextChange("")
     }
 
 }
