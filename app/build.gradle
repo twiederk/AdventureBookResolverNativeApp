@@ -18,7 +18,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 31
         versionCode 41
-        versionName "4.21.0-SNAPSHOT"
+        versionName "4.21.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
