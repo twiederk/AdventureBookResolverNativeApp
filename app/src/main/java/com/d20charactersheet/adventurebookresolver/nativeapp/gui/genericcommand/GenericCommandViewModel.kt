@@ -23,10 +23,10 @@ class GenericCommandViewModel : ViewModel() {
     var actionList by mutableStateOf<List<Action>>(emptyList())
         private set
 
-    var remainingCombinations by mutableStateOf(0)
+    var remainingCombinations by mutableStateOf(0L)
         private set
 
-    var maxCombinations by mutableStateOf(0)
+    var maxCombinations by mutableStateOf(0L)
         private set
 
     var solutionList by mutableStateOf<List<Solution>>(emptyList())
@@ -47,11 +47,11 @@ class GenericCommandViewModel : ViewModel() {
         this.actionList = actionList
     }
 
-    fun onMaxCombinationsChange(maxCombinations: Int) {
+    fun onMaxCombinationsChange(maxCombinations: Long) {
         this.maxCombinations = maxCombinations
     }
 
-    fun onRemainingCombinationsChange(numberOfCombinations: Int) {
+    fun onRemainingCombinationsChange(numberOfCombinations: Long) {
         this.remainingCombinations = maxCombinations - numberOfCombinations
     }
 

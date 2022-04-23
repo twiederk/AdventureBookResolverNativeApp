@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.core.domain.Combination
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
@@ -34,14 +33,12 @@ fun SolutionList(solutions: List<Solution>) {
 fun SolutionListPreview() {
     val solutions = listOf(
         Solution(
-            combination = Combination(arrayOf()),
             solutionPath = listOf(
                 BookEntry(1, "Hallway"),
                 BookEntry(2, "Throne"),
             )
         ),
         Solution(
-            combination = Combination(arrayOf()),
             solutionPath = listOf(
                 BookEntry(1, "Hallway"),
                 BookEntry(2, "Throne"),
@@ -59,7 +56,7 @@ fun SolutionListPreview() {
 @Composable
 fun SolutionView(index: Int, solution: Solution) {
     Column {
-        Text(text = "Solution ${index + 1} with ${solution.solutionPath?.size} entries")
+        Text(text = "Solution ${index + 1} with ${solution.solutionPath.size} entries")
         LazyColumn(
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -76,7 +73,6 @@ fun SolutionView(index: Int, solution: Solution) {
 @Composable
 fun SolutionViewPreview() {
     val solution = Solution(
-        combination = Combination(arrayOf()),
         solutionPath = listOf(
             BookEntry(1, "Hallway"),
             BookEntry(2, "Throne"),

@@ -4,17 +4,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.core.domain.Combination
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
 fun SolutionScreen(
-    remainingCombinations: Int,
-    maxCombinations: Int,
+    remainingCombinations: Long,
+    maxCombinations: Long,
     solutions: List<Solution>
 ) {
-    if (maxCombinations == 0) {
+    if (maxCombinations == 0L) {
         return
     }
     Column {
@@ -29,7 +28,6 @@ fun SolutionScreen(
 fun SolutionScreen() {
     val solutions = listOf(
         Solution(
-            combination = Combination(arrayOf()),
             solutionPath = listOf(
                 BookEntry(1, "Hallway"),
                 BookEntry(2, "Throne"),
@@ -37,7 +35,6 @@ fun SolutionScreen() {
             )
         ),
         Solution(
-            combination = Combination(arrayOf()),
             solutionPath = listOf(
                 BookEntry(10, "Entry Hall"),
                 BookEntry(20, "Library"),

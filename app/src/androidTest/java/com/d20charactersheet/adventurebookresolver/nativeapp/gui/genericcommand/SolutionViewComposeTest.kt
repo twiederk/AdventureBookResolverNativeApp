@@ -4,7 +4,6 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.core.domain.Combination
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
@@ -20,7 +19,6 @@ class SolutionViewComposeTest {
     fun should_display_solution_with_entries() {
         // arrange
         val solution = Solution(
-            combination = Combination(arrayOf()),
             solutionPath = listOf(
                 BookEntry(1, "Hallway"),
                 BookEntry(2, "Throne"),

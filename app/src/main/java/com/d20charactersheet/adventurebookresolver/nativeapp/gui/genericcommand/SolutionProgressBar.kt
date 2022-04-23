@@ -17,7 +17,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import java.text.DecimalFormat
 
 @Composable
-fun SolutionProgressBar(remainingCombinations: Int, maxCombinations: Int) {
+fun SolutionProgressBar(remainingCombinations: Long, maxCombinations: Long) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
@@ -41,28 +41,28 @@ fun SolutionProgressBar(remainingCombinations: Int, maxCombinations: Int) {
 
 
 @Composable
-private fun RemainingCombinationsText(modifier: Modifier, remainingCombinations: Int) {
+private fun RemainingCombinationsText(modifier: Modifier, remainingCombinations: Long) {
     val numberFormatter = remember { DecimalFormat("#,###") }
     Text(modifier = modifier, text = numberFormatter.format(remainingCombinations), textAlign = TextAlign.End)
 }
 
 
 @Composable
-private fun SolutionProgressIndicator(modifier: Modifier, remainingCombinations: Int, maxCombinations: Int) {
+private fun SolutionProgressIndicator(modifier: Modifier, remainingCombinations: Long, maxCombinations: Long) {
     LinearProgressIndicator(
         modifier = modifier.padding(20.dp),
         progress = calculateProgress(remainingCombinations, maxCombinations),
     )
 }
 
-private fun calculateProgress(remainingCombinations: Int, maxCombinations: Int): Float {
-    if (maxCombinations == 0) return 0F
+private fun calculateProgress(remainingCombinations: Long, maxCombinations: Long): Float {
+    if (maxCombinations == 0L) return 0F
     return remainingCombinations.toFloat() / maxCombinations.toFloat()
 }
 
 
 @Composable
-private fun MaxCombinationsText(modifier: Modifier, maxCombinations: Int) {
+private fun MaxCombinationsText(modifier: Modifier, maxCombinations: Long) {
     val numberFormatter = remember { DecimalFormat("#,###") }
     Text(modifier = modifier, text = numberFormatter.format(maxCombinations), textAlign = TextAlign.End)
 }

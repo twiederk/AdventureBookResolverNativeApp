@@ -1,6 +1,5 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
-import com.d20charactersheet.adventurebookresolver.core.domain.Combination
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
@@ -45,7 +44,7 @@ class SolveCommandKoinTest : KoinTest {
     @Test
     fun `should start solve method and send solution to view model`() {
         // arrange
-        val solutions = listOf(Solution(Combination(arrayOf())))
+        val solutions = listOf(Solution(listOf()))
         val game: Game = mock()
         whenever(game.solve(any())).thenReturn(solutions)
 

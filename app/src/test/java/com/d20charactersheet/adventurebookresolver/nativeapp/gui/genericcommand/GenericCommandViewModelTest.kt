@@ -3,7 +3,6 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.core.domain.Combination
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Rule
@@ -77,7 +76,7 @@ class GenericCommandViewModelTest {
     fun onSolutionListChange() {
 
         // arrange
-        val solutions = listOf(Solution(Combination(arrayOf())))
+        val solutions = listOf(Solution(listOf()))
 
         // act
         underTest.onSolutionListChange(solutions)

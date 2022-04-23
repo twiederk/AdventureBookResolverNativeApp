@@ -22,7 +22,7 @@ class ComposeBookSolverListener(
         logger.info("Begin of calculation: ${formatter.format(beginTime)}")
     }
 
-    override fun calculateCombinations(numberOfCombinations: Int) {
+    override fun calculateCombinations(numberOfCombinations: Long) {
         logger.info("Remaining combinations: $numberOfCombinations")
         genericCommandViewModel.onRemainingCombinationsChange(numberOfCombinations)
     }
@@ -37,7 +37,7 @@ class ComposeBookSolverListener(
         logger.info("Duration: ${formatDuration(duration)}")
     }
 
-    override fun maxCombinations(maxCombinations: Int) {
+    override fun maxCombinations(maxCombinations: Long) {
         genericCommandViewModel.onMaxCombinationsChange(maxCombinations)
     }
 
