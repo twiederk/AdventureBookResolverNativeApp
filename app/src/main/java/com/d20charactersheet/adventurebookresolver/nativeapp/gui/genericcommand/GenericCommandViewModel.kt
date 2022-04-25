@@ -35,6 +35,9 @@ class GenericCommandViewModel : ViewModel() {
     var outputText by mutableStateOf("")
         private set
 
+    var numberOfSolutions by mutableStateOf(0)
+        private set
+
     fun onArgumentChange(argument: String) {
         _argument.value = argument
     }
@@ -63,6 +66,10 @@ class GenericCommandViewModel : ViewModel() {
 
     fun onOutputTextChange(outputText: String) {
         this.outputText = outputText
+    }
+
+    fun onSolutionFoundChange(numberOfSolutions: Int) {
+        this.numberOfSolutions = numberOfSolutions
     }
 
 }

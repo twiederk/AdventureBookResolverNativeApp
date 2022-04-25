@@ -43,7 +43,6 @@ class SolutionListComposeTest {
         }
 
         // assert
-        composeTestRule.onNodeWithText("Found 2 solution(s)").assertIsDisplayed()
         composeTestRule.onNodeWithText("Solution 1 with 3 entries").assertIsDisplayed()
         composeTestRule.onNodeWithText("Solution 2 with 2 entries").assertIsDisplayed()
     }

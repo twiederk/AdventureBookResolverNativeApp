@@ -33,7 +33,12 @@ class GenericCommandPanel : Panel, KoinComponent {
             AdventureBookResolverTheme {
                 BookEntryList(genericCommandViewModel.bookEntryList)
                 ActionList(genericCommandViewModel.actionList)
-                SolutionScreen(genericCommandViewModel.remainingCombinations, genericCommandViewModel.maxCombinations, genericCommandViewModel.solutionList)
+                SolutionScreen(
+                    genericCommandViewModel.remainingCombinations,
+                    genericCommandViewModel.maxCombinations,
+                    genericCommandViewModel.numberOfSolutions,
+                    genericCommandViewModel.solutionList
+                )
                 OutputText(genericCommandViewModel.outputText)
             }
         }

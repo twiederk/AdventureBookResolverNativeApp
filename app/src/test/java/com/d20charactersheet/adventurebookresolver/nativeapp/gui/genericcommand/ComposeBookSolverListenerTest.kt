@@ -1,6 +1,5 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
-import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.Logger
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -25,16 +24,6 @@ class ComposeBookSolverListenerTest {
     }
 
     @Test
-    fun `should write calculated path to log`() {
-
-        // act
-        composeBookSolverListener.calculatePath(BookEntry(1, "Start"), BookEntry(2, "Stop"), 2)
-
-        // assert
-        verify(logger).info("(1) Start -> (2) Stop: [2]")
-    }
-
-    @Test
     fun `should write end and duration of calculation to log`() {
         // arrange
         composeBookSolverListener.beginCalculation(LocalDateTime.of(2022, 3, 29, 6, 15))
@@ -55,7 +44,6 @@ class ComposeBookSolverListenerTest {
 
         // assert
         verify(genericCommandViewModel).onRemainingCombinationsChange(10)
-        verify(logger).info("Remaining combinations: 10")
     }
 
     @Test
@@ -67,4 +55,15 @@ class ComposeBookSolverListenerTest {
         // assert
         verify(genericCommandViewModel).onMaxCombinationsChange(100)
     }
+
+    @Test
+    fun `should update number of solutions`() {
+
+        // act
+        composeBookSolverListener.foundSolution(1)
+
+        // assert
+        verify(genericCommandViewModel).onSolutionFoundChange(1)
+    }
+
 }

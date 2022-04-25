@@ -19,13 +19,14 @@ class SolutionProgressBarComposeTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                SolutionProgressBar(2000, 10000)
+                SolutionProgressBar(2000, 10000, 0)
             }
         }
 
         // assert
+        composeTestRule.onNodeWithText("Remaining permutations:").assertIsDisplayed()
         composeTestRule.onNodeWithText("2.000").assertIsDisplayed()
-        composeTestRule.onNodeWithText("10.000").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Found Solutions: 0")
     }
 
 }

@@ -11,13 +11,14 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 fun SolutionScreen(
     remainingCombinations: Long,
     maxCombinations: Long,
+    numberOfSolutions: Int,
     solutions: List<Solution>
 ) {
     if (maxCombinations == 0L) {
         return
     }
     Column {
-        SolutionProgressBar(remainingCombinations, maxCombinations)
+        SolutionProgressBar(remainingCombinations, maxCombinations, numberOfSolutions)
         SolutionList(solutions)
     }
 }
@@ -47,6 +48,7 @@ fun SolutionScreen() {
         SolutionScreen(
             remainingCombinations = 2000,
             maxCombinations = 10000,
+            numberOfSolutions = 0,
             solutions = solutions
         )
     }

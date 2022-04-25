@@ -19,7 +19,6 @@ fun SolutionList(solutions: List<Solution>) {
     Column(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        Text("Found ${solutions.size} solution(s)")
         solutions.forEachIndexed { index, solution ->
             SolutionView(index, solution)
         }

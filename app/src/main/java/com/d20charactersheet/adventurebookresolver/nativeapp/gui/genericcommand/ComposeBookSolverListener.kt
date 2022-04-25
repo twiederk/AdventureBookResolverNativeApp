@@ -23,18 +23,21 @@ class ComposeBookSolverListener(
     }
 
     override fun calculateCombinations(numberOfCombinations: Long) {
-        logger.info("Remaining combinations: $numberOfCombinations")
         genericCommandViewModel.onRemainingCombinationsChange(numberOfCombinations)
     }
 
     override fun calculatePath(startEntry: BookEntry, wayPoint: BookEntry, numberOfEntries: Int?) {
-        logger.info("(${startEntry.id}) ${startEntry.title} -> (${wayPoint.id}) ${wayPoint.title}: [$numberOfEntries]")
+        // information is not shown to the user
     }
 
     override fun endCalculation(endTime: LocalDateTime) {
         logger.info("End of calculation: ${formatter.format(endTime)}")
         val duration = Duration.between(beginTime, endTime)
         logger.info("Duration: ${formatDuration(duration)}")
+    }
+
+    override fun foundSolution(numberOfSolutions: Int) {
+        genericCommandViewModel.onSolutionFoundChange(numberOfSolutions)
     }
 
     override fun maxCombinations(maxCombinations: Long) {

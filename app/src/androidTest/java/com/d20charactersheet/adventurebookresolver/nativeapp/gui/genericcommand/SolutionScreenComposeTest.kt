@@ -36,6 +36,7 @@ class SolutionScreenComposeTest {
                 SolutionScreen(
                     remainingCombinations = 200,
                     maxCombinations = 500,
+                    numberOfSolutions = 1,
                     solutions = solutions
                 )
             }
@@ -43,7 +44,7 @@ class SolutionScreenComposeTest {
 
         // assert
         composeTestRule.onNodeWithText("200").assertIsDisplayed()
-        composeTestRule.onNodeWithText("500").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Found solutions: 1").assertIsDisplayed()
         composeTestRule.onNodeWithText("Solution 1 with 3 entries").assertIsDisplayed()
     }
 
@@ -53,7 +54,7 @@ class SolutionScreenComposeTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                SolutionScreen(1, 0, listOf())
+                SolutionScreen(1, 0, 0, listOf())
             }
         }
 

@@ -1,6 +1,7 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,8 +9,8 @@ import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,61 +18,85 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import java.text.DecimalFormat
 
 @Composable
-fun SolutionProgressBar(remainingCombinations: Long, maxCombinations: Long) {
-    Row(
+fun SolutionProgressBar(remainingCombinations: Long, maxCombinations: Long, numberOfSolutions: Int) {
+    Column(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceAround
     ) {
         RemainingCombinationsText(
-            modifier = Modifier.weight(1F),
             remainingCombinations = remainingCombinations
         )
         SolutionProgressIndicator(
-            modifier = Modifier.weight(3F),
             remainingCombinations = remainingCombinations,
-            maxCombinations = maxCombinations
+            maxCombinations = maxCombinations,
+            numberOfSolutions = numberOfSolutions
         )
-        MaxCombinationsText(
-            modifier = Modifier.weight(1F),
-            maxCombinations = maxCombinations
+        SolutionFoundText(
+            numberOfSolutions = numberOfSolutions
         )
     }
 }
 
 
 @Composable
-private fun RemainingCombinationsText(modifier: Modifier, remainingCombinations: Long) {
+private fun RemainingCombinationsText(modifier: Modifier = Modifier, remainingCombinations: Long) {
     val numberFormatter = remember { DecimalFormat("#,###") }
-    Text(modifier = modifier, text = numberFormatter.format(remainingCombinations), textAlign = TextAlign.End)
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text("Remaining permutations:")
+        Text(
+            modifier = modifier,
+            text = numberFormatter.format(remainingCombinations),
+            textAlign = TextAlign.End
+        )
+    }
 }
 
 
 @Composable
-private fun SolutionProgressIndicator(modifier: Modifier, remainingCombinations: Long, maxCombinations: Long) {
+private fun SolutionProgressIndicator(modifier: Modifier = Modifier, remainingCombinations: Long, maxCombinations: Long, numberOfSolutions: Int) {
+    val color = if (numberOfSolutions == 0) Color.Red else Color.Green
     LinearProgressIndicator(
-        modifier = modifier.padding(20.dp),
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(20.dp),
+        color = color,
         progress = calculateProgress(remainingCombinations, maxCombinations),
     )
 }
 
 private fun calculateProgress(remainingCombinations: Long, maxCombinations: Long): Float {
     if (maxCombinations == 0L) return 0F
-    return remainingCombinations.toFloat() / maxCombinations.toFloat()
+    return 1F - (remainingCombinations.toFloat() / maxCombinations.toFloat())
+}
+
+@Composable
+fun SolutionFoundText(numberOfSolutions: Int) {
+    Text("Found solutions: $numberOfSolutions")
 }
 
 
+@Preview(showBackground = true, name = "No solution")
 @Composable
-private fun MaxCombinationsText(modifier: Modifier, maxCombinations: Long) {
-    val numberFormatter = remember { DecimalFormat("#,###") }
-    Text(modifier = modifier, text = numberFormatter.format(maxCombinations), textAlign = TextAlign.End)
-}
-
-
-@Preview
-@Composable
-fun SolutionProgressBarPreview() {
+fun SolutionProgressBarNoSolutionPreview() {
     AdventureBookResolverTheme {
-        SolutionProgressBar(200, 10000)
+        SolutionProgressBar(
+            remainingCombinations = 8000,
+            maxCombinations = 10000,
+            numberOfSolutions = 0
+        )
+    }
+}
+
+@Preview(showBackground = true, name = "With Solution")
+@Composable
+fun SolutionProgressBarWithSolutionPreview() {
+    AdventureBookResolverTheme {
+        SolutionProgressBar(
+            remainingCombinations = 2000,
+            maxCombinations = 10000,
+            numberOfSolutions = 1
+        )
     }
 }

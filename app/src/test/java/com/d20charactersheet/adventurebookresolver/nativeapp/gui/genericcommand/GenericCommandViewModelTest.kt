@@ -95,4 +95,16 @@ class GenericCommandViewModelTest {
         assertThat(underTest.outputText).isEqualTo("myOutputText")
     }
 
+    @Test
+    fun onSolutionFoundChange() {
+        // arrange
+
+        // act
+        underTest.onSolutionFoundChange(1)
+
+        // assert
+        assertThat(underTest.numberOfSolutions).isEqualTo(1)
+
+    }
+
 }
