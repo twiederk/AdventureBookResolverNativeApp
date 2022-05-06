@@ -70,7 +70,6 @@ class MainActivity : LogActivity() {
             R.id.option_restart -> restart()
             R.id.option_load -> load()
             R.id.option_create -> create()
-            R.id.option_clear_history -> clearHistory()
             else -> super.onOptionsItemSelected(item)
         }
 
@@ -109,11 +108,6 @@ class MainActivity : LogActivity() {
 
     private fun create(): Boolean {
         billing.startBillingFlow(this)
-        return true
-    }
-
-    private fun clearHistory(): Boolean {
-        billing.clearHistory()
         return true
     }
 

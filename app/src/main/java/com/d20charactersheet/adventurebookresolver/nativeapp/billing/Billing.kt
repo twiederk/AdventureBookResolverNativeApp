@@ -1,9 +1,18 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.billing
 
 import android.content.Context
-import com.android.billingclient.api.*
+import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClient.BillingResponseCode
 import com.android.billingclient.api.BillingClient.SkuType
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.SkuDetails
+import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.SkuDetailsResponseListener
 import com.d20charactersheet.adventurebookresolver.nativeapp.Logger
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.MainActivity
 
@@ -102,8 +111,8 @@ class Billing(private val logger: Logger = Logger) : PurchasesUpdatedListener, S
             // Consume immediately
             if (billingClient.isReady) {
                 val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(purchase.purchaseToken).build()
-                billingClient.consumeAsync(consumeParams) { billingResult, purchaseToken ->
-                    if (billingResult.responseCode == BillingResponseCode.OK && purchaseToken != null) {
+                billingClient.consumeAsync(consumeParams) { billingResult, _ ->
+                    if (billingResult.responseCode == BillingResponseCode.OK) {
                         logger.debug("consumeAsync success, responseCode: BillingResponseCode.OK")
                     } else {
                         logger.debug("consumeAsync ERROR, responseCode: ${billingResult.responseCode}")
@@ -114,18 +123,4 @@ class Billing(private val logger: Logger = Logger) : PurchasesUpdatedListener, S
         }
     }
 
-    fun clearHistory() {
-        if (billingClient.isReady) {
-            billingClient.queryPurchases(SkuType.INAPP).purchasesList?.forEach {
-                val consumeParams = ConsumeParams.newBuilder().setPurchaseToken(it.purchaseToken).build()
-                billingClient.consumeAsync(consumeParams) { billingResult, purchaseToken ->
-                    if (billingResult.responseCode == BillingResponseCode.OK) {
-                        logger.debug("onPurchases Updated consumeAsync, purchases token removed: $purchaseToken")
-                    } else {
-                        logger.debug("onPurchases some troubles happened: ${billingResult.responseCode}")
-                    }
-                }
-            }
-        }
-    }
 }

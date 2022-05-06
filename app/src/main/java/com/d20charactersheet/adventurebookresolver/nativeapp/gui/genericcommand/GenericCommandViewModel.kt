@@ -3,19 +3,24 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class GenericCommandViewModel : ViewModel() {
+class GenericCommandViewModel : KoinComponent, ViewModel() {
 
-    private val _argument = MutableLiveData("")
-    val argument: LiveData<String> = _argument
+    private val game: Game by inject()
+
+    var command by mutableStateOf(Command.Create)
+        private set
+
+    var argument by mutableStateOf("")
+        private set
 
     var bookEntryList by mutableStateOf<List<BookEntry>>(emptyList())
         private set
@@ -39,7 +44,7 @@ class GenericCommandViewModel : ViewModel() {
         private set
 
     fun onArgumentChange(argument: String) {
-        _argument.value = argument
+        this.argument = argument
     }
 
     fun onBookEntryListChange(bookEntryList: List<BookEntry>) {
@@ -58,7 +63,9 @@ class GenericCommandViewModel : ViewModel() {
         this.remainingCombinations = maxCombinations - numberOfCombinations
     }
 
-    fun execute(command: Command, argument: String, game: Game): String = CommandExecutor().execute(command, argument, game, viewModelScope)
+    fun execute() {
+        onOutputTextChange(CommandExecutor().execute(command, argument, game, viewModelScope))
+    }
 
     fun onSolutionListChange(solutionList: List<Solution>) {
         this.solutionList = solutionList
@@ -70,6 +77,18 @@ class GenericCommandViewModel : ViewModel() {
 
     fun onSolutionFoundChange(numberOfSolutions: Int) {
         this.numberOfSolutions = numberOfSolutions
+    }
+
+    fun onCommandChange(command: Command) {
+        this.command = command
+    }
+
+    fun onClearClick() {
+        bookEntryList = emptyList()
+        actionList = emptyList()
+        maxCombinations = 0
+        solutionList = emptyList()
+        outputText = ""
     }
 
 }

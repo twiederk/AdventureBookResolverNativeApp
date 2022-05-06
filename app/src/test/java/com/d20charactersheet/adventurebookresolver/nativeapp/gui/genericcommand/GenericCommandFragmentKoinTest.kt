@@ -4,10 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
@@ -17,7 +13,6 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Attributes
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.assertj.core.api.Assertions.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -27,9 +22,6 @@ import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin
 import org.koin.test.KoinTest
 import org.koin.test.inject
-import org.koin.test.mock.declareMock
-import org.mockito.kotlin.any
-import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
@@ -41,7 +33,6 @@ class GenericCommandFragmentKoinTest : KoinTest {
 
     private val underTest = GenericCommandFragment()
     private val game: Game by inject()
-    private val genericCommandPanel: GenericCommandPanel by inject()
 
     @Before
     fun before() {
@@ -66,18 +57,8 @@ class GenericCommandFragmentKoinTest : KoinTest {
     fun onCreateView() {
         // Arrange
         val container = mock<ViewGroup>()
-        val commandSpinner = mock<Spinner>()
-        val argumentEditText = mock<EditText>()
-        val executeButton = mock<Button>()
-        val clearButton = mock<Button>()
-        val outputTextView = mock<TextView>()
         val composeView = mock<ComposeView>()
         val rootView = mock<View> {
-            on { findViewById<Spinner>(R.id.command_spinner) } doReturn commandSpinner
-            on { findViewById<EditText>(R.id.argument_edit_text) } doReturn argumentEditText
-            on { findViewById<Button>(R.id.execute_button) } doReturn executeButton
-            on { findViewById<Button>(R.id.clear_button) } doReturn clearButton
-            on { findViewById<TextView>(R.id.output_text_view) } doReturn outputTextView
             on { findViewById<ComposeView>(R.id.search_result) } doReturn composeView
         }
         val inflater = mock<LayoutInflater> {
@@ -90,28 +71,6 @@ class GenericCommandFragmentKoinTest : KoinTest {
 
         // Assert
         verify(inflater).inflate(R.layout.fragment_generic_command, container, false)
-        verify(commandSpinner).adapter = any()
-        argumentCaptor<ExecuteOnClickListener> {
-            verify(executeButton).setOnClickListener(capture())
-            assertThat(firstValue).isInstanceOf(ExecuteOnClickListener::class.java)
-        }
-        argumentCaptor<ClearOnClickListener> {
-            verify(clearButton).setOnClickListener(capture())
-            assertThat(firstValue).isInstanceOf(ClearOnClickListener::class.java)
-        }
-
-    }
-
-    @Test
-    fun onResume() {
-        // Arrange
-        declareMock<GenericCommandPanel>()
-
-        // Act
-        underTest.onResume()
-
-        // Assert
-        verify(genericCommandPanel).update()
     }
 
 }

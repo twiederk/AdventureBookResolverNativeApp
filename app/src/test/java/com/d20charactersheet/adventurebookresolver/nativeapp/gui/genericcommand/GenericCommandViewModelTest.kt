@@ -23,7 +23,7 @@ class GenericCommandViewModelTest {
         underTest.onArgumentChange("myArgument")
 
         // assert
-        assertThat(underTest.argument.value).isEqualTo("myArgument")
+        assertThat(underTest.argument).isEqualTo("myArgument")
     }
 
     @Test
@@ -97,7 +97,6 @@ class GenericCommandViewModelTest {
 
     @Test
     fun onSolutionFoundChange() {
-        // arrange
 
         // act
         underTest.onSolutionFoundChange(1)
@@ -105,6 +104,36 @@ class GenericCommandViewModelTest {
         // assert
         assertThat(underTest.numberOfSolutions).isEqualTo(1)
 
+    }
+
+    @Test
+    fun onClearClick() {
+        // arrange
+        underTest.onBookEntryListChange(listOf(BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure")))
+        underTest.onActionListChange(listOf(Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200))))
+        underTest.onMaxCombinationsChange(1)
+        underTest.onSolutionListChange(listOf(Solution(listOf())))
+        underTest.onOutputTextChange("myOutputText")
+
+        // act
+        underTest.onClearClick()
+
+        // assert
+        assertThat(underTest.bookEntryList).isEmpty()
+        assertThat(underTest.actionList).isEmpty()
+        assertThat(underTest.maxCombinations).isZero
+        assertThat(underTest.solutionList).isEmpty()
+        assertThat(underTest.outputText).isEmpty()
+    }
+
+    @Test
+    fun onCommandChange() {
+
+        // act
+        underTest.onCommandChange(Command.Solve)
+
+        // assert
+        assertThat(underTest.command).isEqualTo(Command.Solve)
     }
 
 }

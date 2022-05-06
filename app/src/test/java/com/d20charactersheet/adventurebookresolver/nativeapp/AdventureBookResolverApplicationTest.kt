@@ -5,7 +5,6 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
@@ -26,7 +25,6 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val toolbarPanel: ToolbarPanel by inject()
     private val attributesPanel: AttributesPanel by inject()
     private val bookPanel: BookPanel by inject()
-    private val genericCommandPanel: GenericCommandPanel by inject()
     private val goldPanel: GoldPanel by inject()
     private val provisionsPanel: ProvisionsPanel by inject()
     private val itemPanel: ItemPanel by inject()
@@ -52,7 +50,6 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(toolbarPanel).isNotNull
         assertThat(attributesPanel).isNotNull
         assertThat(bookPanel).isNotNull
-        assertThat(genericCommandPanel).isNotNull
         assertThat(goldPanel).isNotNull
         assertThat(provisionsPanel).isNotNull
         assertThat(itemPanel).isNotNull

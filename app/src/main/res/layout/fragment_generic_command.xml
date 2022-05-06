@@ -6,7 +6,9 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <include layout="@layout/panel_generic_command" />
-
+    <androidx.compose.ui.platform.ComposeView
+        android:id="@+id/search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

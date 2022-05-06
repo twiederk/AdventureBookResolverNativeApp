@@ -5,7 +5,6 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
@@ -23,7 +22,6 @@ val appModule = module {
     single { ToolbarPanel(get()) }
     single { AttributesPanel(get()) }
     single { BookPanel(get()) }
-    single { GenericCommandPanel() }
     single { GoldPanel(get()) }
     single { ProvisionsPanel(get()) }
     single { ItemPanel() }
