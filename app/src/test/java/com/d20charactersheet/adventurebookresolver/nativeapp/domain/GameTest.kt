@@ -110,26 +110,18 @@ internal class GameTest {
     @Test
     fun `display path`() {
         // Arrange
-        whenever(book.getPath()).doReturn(
-            listOf(
-                BookEntry(id = 1, title = "Hallway", note = "Start of adventure"),
-                BookEntry(100, "Tower"),
-                BookEntry(200, "Balcony")
-            )
+        val path = listOf(
+            BookEntry(id = 1, title = "Hallway", note = "Start of adventure"),
+            BookEntry(100, "Tower"),
+            BookEntry(200, "Balcony")
         )
+        whenever(book.getPath()).doReturn(path)
 
         // Act
         val result = underTest.displayPath()
 
         // Assert
-        assertThat(result).isEqualToIgnoringNewLines(
-            """
-            (1) - Hallway: Start of adventure
-            (100) - Tower: 
-            (200) - Balcony: 
-                    """.trimIndent()
-        )
-        verify(book).getPath()
+        assertThat(result).isEqualTo(path)
     }
 
     @Test

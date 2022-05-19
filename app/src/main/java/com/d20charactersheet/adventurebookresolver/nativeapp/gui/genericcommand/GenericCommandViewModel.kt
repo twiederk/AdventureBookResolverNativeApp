@@ -9,6 +9,8 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
@@ -63,8 +65,14 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
         this.remainingCombinations = maxCombinations - numberOfCombinations
     }
 
-    fun execute() {
-        onOutputTextChange(CommandExecutor().execute(command, argument, game, viewModelScope))
+    fun onExecuteClick() {
+        clear()
+        val result = try {
+            command.execute(game, argument)
+        } catch (exception: Exception) {
+            exception.message ?: "Exception throw with no message"
+        }
+        onOutputTextChange(result)
     }
 
     fun onSolutionListChange(solutionList: List<Solution>) {
@@ -83,12 +91,40 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
         this.command = command
     }
 
-    fun onClearClick() {
+    private fun clear() {
         bookEntryList = emptyList()
         actionList = emptyList()
         maxCombinations = 0
         solutionList = emptyList()
         outputText = ""
     }
+
+    fun onPathClick() {
+        clear()
+        onBookEntryListChange(game.displayPath())
+    }
+
+    fun onWayPointClick() {
+        clear()
+        onBookEntryListChange(game.displayWayPoints())
+    }
+
+    fun onUnvisitedClick() {
+        clear()
+        onActionListChange(game.displayActionsToUnvisitedEntries())
+    }
+
+    fun onSolveClick() {
+        clear()
+        val genericCommandViewModel = this
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                onSolutionListChange(game.solve(ComposeBookSolverListener(genericCommandViewModel)))
+            } catch (throwable: Throwable) {
+                onOutputTextChange(throwable.localizedMessage ?: "Exception without message")
+            }
+        }
+    }
+
 
 }

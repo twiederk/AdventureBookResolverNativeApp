@@ -35,11 +35,12 @@ class GenericCommandFragment : KoinComponent, LogFragment() {
                         argument = genericCommandViewModel.argument,
                         onCommandChange = { genericCommandViewModel.onCommandChange(it) },
                         onArgumentChange = { genericCommandViewModel.onArgumentChange(it) },
-                        onExecuteClick = {
-                            genericCommandViewModel.onClearClick()
-                            genericCommandViewModel.execute()
-                        }
-                    ) { genericCommandViewModel.onClearClick() }
+                        onExecuteClick = { genericCommandViewModel.onExecuteClick() },
+                        onPathClick = { genericCommandViewModel.onPathClick() },
+                        onWayPointClick = { genericCommandViewModel.onWayPointClick() },
+                        onUnvisitedClick = { genericCommandViewModel.onUnvisitedClick() },
+                        onSolveClick = { genericCommandViewModel.onSolveClick() }
+                    )
                     BookEntryList(genericCommandViewModel.bookEntryList)
                     ActionList(genericCommandViewModel.actionList)
                     SolutionScreen(

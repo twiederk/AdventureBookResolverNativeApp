@@ -54,11 +54,7 @@ class Game(
 
     fun displayActionsToUnvisitedEntries() = book.getActionsToUnvisitedEntries()
 
-    fun displayPath(): String =
-        book.getPath().joinToString(
-            separator = "\n",
-            transform = { entry -> "(${entry.id}) - ${entry.title}: ${entry.note}" }
-        )
+    fun displayPath() = book.getPath()
 
     fun removeItemFromInventory(index: Int) = book.removeItemFromInventory(index)
 

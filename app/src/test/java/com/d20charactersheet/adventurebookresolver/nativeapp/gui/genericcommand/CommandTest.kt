@@ -11,19 +11,6 @@ internal class CommandTest {
     private val game = mock<Game>()
 
     @Test
-    fun `display path`() {
-        // Arrange
-        val underTest = Command.Path
-
-        // Act
-        underTest.execute(game, "")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Path")
-        verify(game).displayPath()
-    }
-
-    @Test
     fun `run to entry`() {
         // Arrange
         val underTest = Command.Run
@@ -62,23 +49,6 @@ internal class CommandTest {
         verify(game).rollDie("2d6+3")
     }
 
-    @Test
-    fun `list of all commands sorted by name`() {
-        // Act
-        val items = Command.sortedValues()
-
-        // Assert
-        assertThat(items.map { it.toString() }).containsExactly(
-            "Create",
-            "Path",
-            "Roll die",
-            "Run",
-            "Search",
-            "Solve",
-            "Unvisited",
-            "Way points"
-        )
-    }
 }
 
 

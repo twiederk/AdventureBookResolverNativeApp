@@ -24,7 +24,10 @@ class GenericCommandScreenComposeTest {
                     onCommandChange = { },
                     onArgumentChange = { },
                     onExecuteClick = { },
-                    onClearClick = { }
+                    onPathClick = { },
+                    onWayPointClick = { },
+                    onUnvisitedClick = { },
+                    onSolveClick = { }
                 )
             }
         }
@@ -34,7 +37,10 @@ class GenericCommandScreenComposeTest {
         composeTestRule.onNodeWithText("Create").assertIsDisplayed()
         composeTestRule.onNodeWithText("Argument").assertIsDisplayed()
         composeTestRule.onNodeWithText("Execute").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Clear").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Path").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Way Points").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Unvisited").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Solve").assertIsDisplayed()
     }
 
 }
