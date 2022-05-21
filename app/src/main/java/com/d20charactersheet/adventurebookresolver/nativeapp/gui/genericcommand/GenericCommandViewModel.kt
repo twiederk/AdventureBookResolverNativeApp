@@ -18,7 +18,7 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
 
     private val game: Game by inject()
 
-    var command by mutableStateOf(Command.Create)
+    var command by mutableStateOf(Command.Search)
         private set
 
     var argument by mutableStateOf("")
@@ -91,7 +91,7 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
         this.command = command
     }
 
-    private fun clear() {
+    fun clear() {
         bookEntryList = emptyList()
         actionList = emptyList()
         maxCombinations = 0

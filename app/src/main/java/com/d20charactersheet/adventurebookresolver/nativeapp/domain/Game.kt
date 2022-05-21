@@ -18,9 +18,8 @@ class Game(
     private val fileHelper: FileHelper = FileHelper()
 ) {
 
-    fun createBook(title: String): String {
+    fun createBook(title: String) {
         book = AdventureBook(title)
-        return """Created book "${book.title}""""
     }
 
     fun loadBook(filename: String): String {

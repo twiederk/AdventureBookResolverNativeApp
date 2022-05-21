@@ -214,4 +214,24 @@ class GenericCommandViewModelKoinTest : KoinTest {
         assertThat(underTest.outputText).isEmpty()
     }
 
+    @Test
+    fun clear() {
+        // arrange
+        underTest.onBookEntryListChange(listOf(BookEntry(id = 1, title = "Entry Hall", note = "Start of adventure")))
+        underTest.onActionListChange(listOf(Action("downstairs", BookEntry(1, "Hallway"), BookEntry(200))))
+        underTest.onMaxCombinationsChange(1)
+        underTest.onSolutionListChange(listOf(Solution(listOf())))
+        underTest.onOutputTextChange("myOutputText")
+
+        // act
+        underTest.clear()
+
+        // assert
+        assertThat(underTest.actionList).isEmpty()
+        assertThat(underTest.bookEntryList).isEmpty()
+        assertThat(underTest.maxCombinations).isZero
+        assertThat(underTest.solutionList).isEmpty()
+        assertThat(underTest.outputText).isEmpty()
+    }
+
 }

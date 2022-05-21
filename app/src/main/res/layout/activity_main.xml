@@ -17,6 +17,12 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/book_screen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
     </FrameLayout>
 
 </LinearLayout>

@@ -1,11 +1,11 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp
 
-import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewModel
@@ -27,10 +27,10 @@ val appModule = module {
     single { ItemPanel() }
     single { GraphPanel(get()) }
     single { TraversalBookRenderer(get()) }
-    single { Billing() }
     single { GraphViewTouchEventHandler() }
     single { GraphViewModel() }
     single { GenericCommandViewModel() }
     single { EntryScreenViewModel() }
+    single { CreateBookScreenViewModel() }
 }
 // end::koinConfiguration[]

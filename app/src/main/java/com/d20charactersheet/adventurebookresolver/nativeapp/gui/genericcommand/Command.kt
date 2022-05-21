@@ -6,7 +6,6 @@ enum class Command(
     val value: String,
     val gameFunction: ((game: Game, argument: String) -> String)
 ) {
-    Create("Create", { game, argument -> game.createBook(argument) }),
     Run("Run", { game, argument -> game.runTo(argument) }),
     RollDie("Roll die", { game, argument -> game.rollDie(argument) }),
     Search("Search", { game, argument -> SearchCommand().execute(game, argument) });

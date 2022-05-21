@@ -7,14 +7,19 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.platform.ComposeView
 import androidx.viewpager.widget.ViewPager
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
-import com.d20charactersheet.adventurebookresolver.nativeapp.billing.Billing
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreen
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.android.ext.android.inject
 import java.io.BufferedReader
 import java.io.InputStream
@@ -23,7 +28,8 @@ class MainActivity : LogActivity() {
 
     private val toolbarPanel: ToolbarPanel by inject()
     private val game: Game by inject()
-    private val billing: Billing by inject()
+    private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
+    private val genericCommandViewModel: GenericCommandViewModel by inject()
 
     private var restartDialog: RestartDialog = RestartDialog()
 
@@ -37,7 +43,6 @@ class MainActivity : LogActivity() {
         val viewPager = findViewById<ViewPager>(R.id.container)
         viewPager.adapter = SectionsPagerAdapter(supportFragmentManager)
 
-        billing.startConnection(this)
         update()
     }
 
@@ -104,16 +109,41 @@ class MainActivity : LogActivity() {
         val inputStream: InputStream = checkNotNull(contentResolver.openInputStream(uri))
         val content: List<String> = inputStream.bufferedReader().use(BufferedReader::readLines)
         game.book = BookStore().import(content)
+        genericCommandViewModel.clear()
     }
 
     private fun create(): Boolean {
-        billing.startBillingFlow(this)
+        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
+        bookScreen.setContent {
+            AdventureBookResolverTheme {
+                CreateBookScreen(
+                    title = createBookScreenViewModel.title,
+                    onTitleChange = { createBookScreenViewModel.onTitleChange(it) },
+                    onCreateClick = {
+                        createBookScreenViewModel.onCreateClick()
+                        genericCommandViewModel.clear()
+                        hideCreateBookScreen()
+                    },
+                    onCancelClick = { hideCreateBookScreen() }
+                )
+            }
+        }
+        showCreateBookScreen()
         return true
     }
 
-    fun purchasedBook() {
-        game.createBook("purchased book")
-        update()
+    private fun showCreateBookScreen() {
+        val graphScreen = findViewById<ViewPager>(R.id.container)
+        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
+        graphScreen.visibility = View.GONE
+        bookScreen.visibility = View.VISIBLE
+    }
+
+    private fun hideCreateBookScreen() {
+        val graphScreen = findViewById<ViewPager>(R.id.container)
+        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
+        graphScreen.visibility = View.VISIBLE
+        bookScreen.visibility = View.GONE
     }
 
 }

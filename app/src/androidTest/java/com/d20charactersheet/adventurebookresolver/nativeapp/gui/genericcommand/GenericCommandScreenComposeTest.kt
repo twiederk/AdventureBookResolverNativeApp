@@ -19,7 +19,7 @@ class GenericCommandScreenComposeTest {
         composeTestRule.setContent {
             AdventureBookResolverTheme {
                 GenericCommandScreen(
-                    command = Command.Create,
+                    command = Command.Search,
                     argument = "",
                     onCommandChange = { },
                     onArgumentChange = { },
@@ -34,7 +34,7 @@ class GenericCommandScreenComposeTest {
 
         // assert
         composeTestRule.onNodeWithText("Command").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Create").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Search").assertIsDisplayed()
         composeTestRule.onNodeWithText("Argument").assertIsDisplayed()
         composeTestRule.onNodeWithText("Execute").assertIsDisplayed()
         composeTestRule.onNodeWithText("Path").assertIsDisplayed()

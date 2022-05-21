@@ -24,19 +24,6 @@ internal class CommandTest {
     }
 
     @Test
-    fun create() {
-        // Arrange
-        val underTest = Command.Create
-
-        // Act
-        underTest.execute(game, "my new book")
-
-        // Assert
-        assertThat(underTest.toString()).isEqualTo("Create")
-        verify(game).createBook("my new book")
-    }
-
-    @Test
     fun rollDie() {
         // Arrange
         val underTest = Command.RollDie

@@ -42,7 +42,6 @@ fun GenericCommandScreen(
         CommandDropDown(
             command = command,
             commandList = listOf(
-                Command.Create,
                 Command.RollDie,
                 Command.Run,
                 Command.Search,
@@ -177,7 +176,7 @@ private fun ExecuteButton(onExecuteClick: () -> Unit) {
 fun GenericCommandScreenPreview() {
     AdventureBookResolverTheme {
         GenericCommandScreen(
-            command = Command.Create,
+            command = Command.Search,
             argument = "",
             onCommandChange = { },
             onArgumentChange = { },
