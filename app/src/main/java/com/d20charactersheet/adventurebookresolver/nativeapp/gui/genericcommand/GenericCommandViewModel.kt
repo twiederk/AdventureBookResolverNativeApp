@@ -18,9 +18,6 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
 
     private val game: Game by inject()
 
-    var command by mutableStateOf(Command.Search)
-        private set
-
     var argument by mutableStateOf("")
         private set
 
@@ -65,14 +62,9 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
         this.remainingCombinations = maxCombinations - numberOfCombinations
     }
 
-    fun onExecuteClick() {
+    fun onSearchClick() {
         clear()
-        val result = try {
-            command.execute(game, argument)
-        } catch (exception: Exception) {
-            exception.message ?: "Exception throw with no message"
-        }
-        onOutputTextChange(result)
+        onBookEntryListChange(game.search(argument))
     }
 
     fun onSolutionListChange(solutionList: List<Solution>) {
@@ -85,10 +77,6 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
 
     fun onSolutionFoundChange(numberOfSolutions: Int) {
         this.numberOfSolutions = numberOfSolutions
-    }
-
-    fun onCommandChange(command: Command) {
-        this.command = command
     }
 
     fun clear() {
@@ -124,6 +112,11 @@ class GenericCommandViewModel : KoinComponent, ViewModel() {
                 onOutputTextChange(throwable.localizedMessage ?: "Exception without message")
             }
         }
+    }
+
+    fun onDieRollClick(dieRoll: String) {
+        clear()
+        onOutputTextChange(game.rollDie(dieRoll))
     }
 
 

@@ -4,6 +4,8 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,11 +14,12 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.WayMarkDropDown
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.EntryId
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
@@ -26,7 +29,7 @@ fun BookEntryList(bookEntryList: List<BookEntry>) {
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         items(items = bookEntryList) { bookEntry ->
-            BookEntryCard(BookEntryViewModel(bookEntry))
+            BookEntryCard(bookEntry)
         }
     }
 }
@@ -44,22 +47,27 @@ fun BookEntryListPreview() {
 }
 
 @Composable
-fun BookEntryCard(bookEntryViewModel: BookEntryViewModel) {
+fun BookEntryCard(bookEntry: BookEntry) {
     Surface(
-        border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
+        border = BorderStroke(1.dp, MaterialTheme.colors.primary),
         shape = RoundedCornerShape(8.dp),
     ) {
-        Column {
-            Text(
-                text = "(${bookEntryViewModel.id}) - ${bookEntryViewModel.title}"
-            )
-            WayMarkDropDown(
-                modifier = Modifier.padding(vertical = 8.dp),
-                wayMark = bookEntryViewModel.wayMark,
-                onWayMarkSelected = { bookEntryViewModel.onWayMarkSelected(it) }
-            )
-            if (bookEntryViewModel.note.isNotEmpty()) {
-                Text(bookEntryViewModel.note)
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                EntryId(bookEntry)
+                Text(
+                    modifier = Modifier.padding(start = 8.dp),
+                    text = bookEntry.title
+                )
+            }
+            if (bookEntry.note.isNotEmpty()) {
+                Text(bookEntry.note)
             }
         }
     }
@@ -74,6 +82,6 @@ fun BookEntryCardPreview() {
         note = "Start of adventure"
     )
     AdventureBookResolverTheme {
-        BookEntryCard(BookEntryViewModel(bookEntry))
+        BookEntryCard(bookEntry)
     }
 }

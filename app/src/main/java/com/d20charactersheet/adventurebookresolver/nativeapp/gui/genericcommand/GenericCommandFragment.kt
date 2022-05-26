@@ -31,15 +31,14 @@ class GenericCommandFragment : KoinComponent, LogFragment() {
             AdventureBookResolverTheme {
                 Column {
                     GenericCommandScreen(
-                        command = genericCommandViewModel.command,
                         argument = genericCommandViewModel.argument,
-                        onCommandChange = { genericCommandViewModel.onCommandChange(it) },
                         onArgumentChange = { genericCommandViewModel.onArgumentChange(it) },
-                        onExecuteClick = { genericCommandViewModel.onExecuteClick() },
+                        onSearchClick = { genericCommandViewModel.onSearchClick() },
                         onPathClick = { genericCommandViewModel.onPathClick() },
                         onWayPointClick = { genericCommandViewModel.onWayPointClick() },
                         onUnvisitedClick = { genericCommandViewModel.onUnvisitedClick() },
-                        onSolveClick = { genericCommandViewModel.onSolveClick() }
+                        onSolveClick = { genericCommandViewModel.onSolveClick() },
+                        onRollDieClick = { genericCommandViewModel.onDieRollClick(it) }
                     )
                     BookEntryList(genericCommandViewModel.bookEntryList)
                     ActionList(genericCommandViewModel.actionList)

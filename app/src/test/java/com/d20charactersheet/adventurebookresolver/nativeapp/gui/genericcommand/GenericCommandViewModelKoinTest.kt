@@ -140,16 +140,6 @@ class GenericCommandViewModelKoinTest : KoinTest {
     }
 
     @Test
-    fun onCommandChange() {
-
-        // act
-        underTest.onCommandChange(Command.Search)
-
-        // assert
-        assertThat(underTest.command).isEqualTo(Command.Search)
-    }
-
-    @Test
     fun onPathClick() {
 
         // arrange
@@ -234,4 +224,16 @@ class GenericCommandViewModelKoinTest : KoinTest {
         assertThat(underTest.outputText).isEmpty()
     }
 
+    @Test
+    fun onDieRollClick() {
+        // arrange
+        whenever(game.rollDie("1d6")).thenReturn("You rolled 1d6 and scored 4")
+
+        // act
+        underTest.onDieRollClick("1d6")
+
+        // assert
+        assertThat(underTest.outputText).isEqualTo("You rolled 1d6 and scored 4")
+
+    }
 }

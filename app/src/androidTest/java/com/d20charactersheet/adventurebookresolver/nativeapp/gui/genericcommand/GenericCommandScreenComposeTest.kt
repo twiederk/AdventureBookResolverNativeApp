@@ -19,28 +19,27 @@ class GenericCommandScreenComposeTest {
         composeTestRule.setContent {
             AdventureBookResolverTheme {
                 GenericCommandScreen(
-                    command = Command.Search,
                     argument = "",
-                    onCommandChange = { },
                     onArgumentChange = { },
-                    onExecuteClick = { },
+                    onSearchClick = { },
                     onPathClick = { },
                     onWayPointClick = { },
                     onUnvisitedClick = { },
-                    onSolveClick = { }
+                    onSolveClick = { },
+                    onRollDieClick = { }
                 )
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("Command").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Search").assertIsDisplayed()
         composeTestRule.onNodeWithText("Argument").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Execute").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Search").assertIsDisplayed()
         composeTestRule.onNodeWithText("Path").assertIsDisplayed()
         composeTestRule.onNodeWithText("Way Points").assertIsDisplayed()
         composeTestRule.onNodeWithText("Unvisited").assertIsDisplayed()
         composeTestRule.onNodeWithText("Solve").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Roll 1d6").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Roll 2d6").assertIsDisplayed()
     }
 
 }

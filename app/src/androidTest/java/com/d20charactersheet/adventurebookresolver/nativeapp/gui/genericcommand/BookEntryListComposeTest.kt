@@ -6,7 +6,6 @@ import androidx.compose.ui.test.onNodeWithText
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryCard
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryList
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
@@ -33,9 +32,11 @@ class BookEntryListComposeTest {
         }
 
         // assert
-        composeTestRule.onNodeWithText("(1) - Entry Hall").assertIsDisplayed()
+        composeTestRule.onNodeWithText("1")
+        composeTestRule.onNodeWithText("Entry Hall").assertIsDisplayed()
         composeTestRule.onNodeWithText("Start of adventure").assertIsDisplayed()
-        composeTestRule.onNodeWithText("(2) - Throne").assertIsDisplayed()
+        composeTestRule.onNodeWithText("2")
+        composeTestRule.onNodeWithText("Throne").assertIsDisplayed()
     }
 
     @Test
@@ -50,13 +51,13 @@ class BookEntryListComposeTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                BookEntryCard(BookEntryViewModel(bookEntry))
+                BookEntryCard(bookEntry)
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("(1) - Entry Hall").assertIsDisplayed()
-        composeTestRule.onNodeWithText("NORMAL").assertIsDisplayed()
+        composeTestRule.onNodeWithText("1")
+        composeTestRule.onNodeWithText("Entry Hall").assertIsDisplayed()
         composeTestRule.onNodeWithText("Start of adventure").assertIsDisplayed()
     }
 
@@ -71,12 +72,13 @@ class BookEntryListComposeTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                BookEntryCard(BookEntryViewModel(bookEntry))
+                BookEntryCard(bookEntry)
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("(1) - Entry Hall").assertIsDisplayed()
+        composeTestRule.onNodeWithText("1")
+        composeTestRule.onNodeWithText("Entry Hall").assertIsDisplayed()
     }
 
 }
