@@ -4,6 +4,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.ToolbarPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.AttributesPanel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbook.BookPanel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateActionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphPanel
@@ -33,6 +34,7 @@ class AdventureBookResolverApplicationTest : KoinTest {
     private val graphViewTouchEventHandler: GraphViewTouchEventHandler by inject()
     private val entryScreenViewModel: EntryScreenViewModel by inject()
     private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
+    private val createActionScreenViewModel: CreateActionScreenViewModel by inject()
 
     @After
     fun after() {
@@ -58,5 +60,6 @@ class AdventureBookResolverApplicationTest : KoinTest {
         assertThat(graphViewTouchEventHandler).isNotNull
         assertThat(entryScreenViewModel).isNotNull
         assertThat(createBookScreenViewModel).isNotNull
+        assertThat(createActionScreenViewModel).isNotNull
     }
 }

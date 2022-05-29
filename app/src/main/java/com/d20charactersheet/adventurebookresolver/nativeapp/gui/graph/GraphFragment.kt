@@ -94,15 +94,6 @@ open class GraphFragment : LogFragment() {
 
 }
 
-class AddActionOnClickListener(private val actionAddDialog: ActionAddDialog = ActionAddDialog()) :
-    View.OnClickListener {
-
-    override fun onClick(view: View) {
-        actionAddDialog.show(view.context)
-    }
-
-}
-
 class SaveOnClickListener(private val messageDisplay: MessageDisplay = MessageDisplay()) : KoinComponent, View.OnClickListener {
 
     private val game: Game by inject()
