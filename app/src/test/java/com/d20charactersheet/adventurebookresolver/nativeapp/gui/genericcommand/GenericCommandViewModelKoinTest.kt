@@ -23,12 +23,14 @@ import org.mockito.kotlin.whenever
 
 class GenericCommandViewModelKoinTest : KoinTest {
 
+
+    private val underTest: GenericCommandViewModel by inject()
+    private val game: Game by inject()
+
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
     }
-
-    private val game: Game by inject()
 
     @Before
     fun before() {
@@ -46,8 +48,6 @@ class GenericCommandViewModelKoinTest : KoinTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
-
-    private val underTest = GenericCommandViewModel()
 
     @Test
     fun onArgumentChange() {

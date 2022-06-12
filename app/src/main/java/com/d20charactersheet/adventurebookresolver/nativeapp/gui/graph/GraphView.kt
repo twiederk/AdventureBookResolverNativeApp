@@ -4,19 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), KoinComponent {
+class GraphView(context: Context) : View(context) {
 
     private val maxBitmapSize = 10_485_760
 
     var renderMode = RenderMode.CENTER
 
-    private val touchEventHandler: GraphViewTouchEventHandler by inject()
+    private var touchEventHandler: GraphViewTouchEventHandler? = null
 
     internal var viewportX = 0F
     internal var viewportY = 0F
@@ -44,7 +41,7 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        touchEventHandler.onTouchEvent(this, graphCanvas, event)
+        touchEventHandler?.onTouchEvent(this, graphCanvas, event)
         invalidate()
         return true
     }
@@ -75,6 +72,10 @@ class GraphView(context: Context, attrs: AttributeSet) : View(context, attrs), K
         val bitmap = Bitmap.createBitmap(width.toInt(), height.toInt(), Bitmap.Config.ARGB_8888)
         graphCanvas.render(Canvas(bitmap))
         return bitmap
+    }
+
+    fun setOnTouchListener(touchEventHandler: GraphViewTouchEventHandler) {
+        this.touchEventHandler = touchEventHandler
     }
 
 }

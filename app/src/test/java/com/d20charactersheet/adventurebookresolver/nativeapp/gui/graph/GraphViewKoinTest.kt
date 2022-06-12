@@ -50,7 +50,7 @@ class GraphViewKoinTest : KoinTest {
     @Test
     fun center_withHeightNotSetOnViewport_viewportXAndYStayAtZero() {
         // Arrange
-        val underTest = GraphView(mock(), mock())
+        val underTest = GraphView(mock())
 
         // Act
         underTest.guardedCenterOnCurrentBookEntry()
@@ -63,7 +63,7 @@ class GraphViewKoinTest : KoinTest {
     @Test
     fun centerOnBookEntry() {
         // arrange
-        val underTest = GraphView(mock(), mock())
+        val underTest = GraphView(mock())
         val graphCanvas: GraphCanvas = mock()
         whenever(graphCanvas.getCenterOfCurrentGraphEntry()).doReturn(Pair(50f, 100f))
         underTest.graphCanvas = graphCanvas
@@ -81,8 +81,9 @@ class GraphViewKoinTest : KoinTest {
         // arrange
         val motionEvent: MotionEvent = mock()
         val graphCanvas: GraphCanvas = mock()
-        val underTest = GraphView(mock(), mock())
+        val underTest = GraphView(mock())
         underTest.graphCanvas = graphCanvas
+        underTest.setOnTouchListener(touchEventHandler)
 
         // act
         underTest.onTouchEvent(motionEvent)
@@ -104,7 +105,7 @@ class GraphViewKoinTest : KoinTest {
 
         val canvas: Canvas = mock()
 
-        val underTest = GraphView(mock(), mock())
+        val underTest = GraphView(mock())
         underTest.viewportX = 100f
         underTest.viewportY = 200f
         underTest.graphCanvas = mock()
@@ -127,7 +128,7 @@ class GraphViewKoinTest : KoinTest {
         whenever(graphCanvas.maxRight).thenReturn(10_485_760F)
         whenever(graphCanvas.maxBottom).thenReturn(10F)
 
-        val underTest = GraphView(mock(), mock())
+        val underTest = GraphView(mock())
         underTest.graphCanvas = graphCanvas
 
         // act

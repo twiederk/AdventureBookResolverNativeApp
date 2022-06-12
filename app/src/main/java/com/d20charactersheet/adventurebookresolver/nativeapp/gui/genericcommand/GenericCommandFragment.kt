@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.platform.ComposeView
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.LogFragment
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.BookEntryList
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

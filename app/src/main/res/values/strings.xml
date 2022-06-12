@@ -2,7 +2,6 @@
 
     <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
-    <string name="option_create">Create</string>
     <string name="option_load">Load</string>
     <string name="option_restart">Restart</string>
     <string name="option_zoom">Zoom</string>

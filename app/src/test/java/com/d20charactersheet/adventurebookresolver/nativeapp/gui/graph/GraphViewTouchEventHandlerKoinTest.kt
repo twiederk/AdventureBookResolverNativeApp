@@ -59,12 +59,12 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
         whenever(game.isCurrentEntry(bookEntry)).doReturn(false)
         whenever(game.isEntryOfNextEntries(bookEntry)).doReturn(true)
 
-        val graphView = GraphView(mock(), mock())
+        val graphView = GraphView(mock())
         graphView.graphCanvas = graphCanvas
         graphView.viewportX = 100f
         graphView.viewportY = 200f
         graphView.renderMode = RenderMode.FREE
-        val underTest = GraphViewTouchEventHandler()
+        val underTest = GraphViewTouchEventHandler(mock())
 
         // Act
         underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
@@ -88,11 +88,11 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
         val graphCanvas: GraphCanvas = mock()
         whenever(graphCanvas.touch(200f, 400f)).thenReturn(null)
 
-        val graphView = GraphView(mock(), mock())
+        val graphView = GraphView(mock())
         graphView.graphCanvas = graphCanvas
         graphView.viewportX = 100f
         graphView.viewportY = 200f
-        val underTest = GraphViewTouchEventHandler()
+        val underTest = GraphViewTouchEventHandler(mock())
 
         // Act
         underTest.onTouchEvent(graphView, graphCanvas, motionEvent)
@@ -113,10 +113,10 @@ class GraphViewTouchEventHandlerKoinTest : KoinTest {
             on { x } doReturn 300f
             on { y } doReturn 600f
         }
-        val graphView = GraphView(mock(), mock())
+        val graphView = GraphView(mock())
         graphView.touchX = 100f
         graphView.touchY = 200f
-        val underTest = GraphViewTouchEventHandler()
+        val underTest = GraphViewTouchEventHandler(mock())
 
         // Act
         underTest.onTouchEvent(graphView, mock(), motionEvent)

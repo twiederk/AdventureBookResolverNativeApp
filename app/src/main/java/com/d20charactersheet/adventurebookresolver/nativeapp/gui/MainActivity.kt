@@ -5,20 +5,22 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.ui.platform.ComposeView
-import androidx.viewpager.widget.ViewPager
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
-import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen.CreateActionScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreen
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.CreateBookScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.SetupNavGraph
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.android.ext.android.inject
 import java.io.BufferedReader
@@ -26,24 +28,38 @@ import java.io.InputStream
 
 class MainActivity : LogActivity() {
 
-    private val toolbarPanel: ToolbarPanel by inject()
     private val game: Game by inject()
     private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
     private val genericCommandViewModel: GenericCommandViewModel by inject()
+    private val bookViewModel: BookViewModel by inject()
+    private val graphViewModel: GraphViewModel by inject()
+    private val createActionScreenViewModel: CreateActionScreenViewModel by inject()
+    private val entryScreenViewModel: EntryScreenViewModel by inject()
 
     private var restartDialog: RestartDialog = RestartDialog()
 
+    private lateinit var navController: NavHostController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContent {
+            AdventureBookResolverTheme {
+                navController = rememberNavController()
+                SetupNavGraph(
+                    navController = navController,
+                    bookViewModel = bookViewModel,
+                    graphViewModel = graphViewModel,
+                    save = { save() },
+                    load = { load() },
+                    restart = { restart() },
+                    createBookScreenViewModel = createBookScreenViewModel,
+                    genericCommandViewModel = genericCommandViewModel,
+                    createActionScreenViewModel = createActionScreenViewModel,
+                    entryScreenViewModel = entryScreenViewModel
+                )
+            }
+        }
 
-        toolbarPanel.create(findViewById(android.R.id.content))
-        setSupportActionBar(toolbarPanel.getToolbar())
-
-        val viewPager = findViewById<ViewPager>(R.id.container)
-        viewPager.adapter = SectionsPagerAdapter(supportFragmentManager)
-
-        update()
     }
 
     override fun onStart() {
@@ -61,22 +77,19 @@ class MainActivity : LogActivity() {
 
     }
 
-    internal fun update() {
-        toolbarPanel.update()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            R.id.option_restart -> restart()
-            R.id.option_load -> load()
-            R.id.option_create -> create()
-            else -> super.onOptionsItemSelected(item)
+    private fun save() {
+        try {
+            bookViewModel.onSaveClick()
+            Toast.makeText(this, "Saved: ${game.book.title}", Toast.LENGTH_SHORT)
+                .show()
+        } catch (exception: Exception) {
+            Toast.makeText(
+                this,
+                "Save failed: ${exception.localizedMessage}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+    }
 
     private fun restart(): Boolean {
         restartDialog.create(this).show()
@@ -112,38 +125,18 @@ class MainActivity : LogActivity() {
         genericCommandViewModel.clear()
     }
 
-    private fun create(): Boolean {
-        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
-        bookScreen.setContent {
-            AdventureBookResolverTheme {
-                CreateBookScreen(
-                    title = createBookScreenViewModel.title,
-                    onTitleChange = { createBookScreenViewModel.onTitleChange(it) },
-                    onCreateClick = {
-                        createBookScreenViewModel.onCreateClick()
-                        genericCommandViewModel.clear()
-                        hideCreateBookScreen()
-                    },
-                    onCancelClick = { hideCreateBookScreen() }
-                )
-            }
-        }
-        showCreateBookScreen()
-        return true
-    }
-
-    private fun showCreateBookScreen() {
-        val graphScreen = findViewById<ViewPager>(R.id.container)
-        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
-        graphScreen.visibility = View.GONE
-        bookScreen.visibility = View.VISIBLE
-    }
-
-    private fun hideCreateBookScreen() {
-        val graphScreen = findViewById<ViewPager>(R.id.container)
-        val bookScreen = findViewById<ComposeView>(R.id.book_screen)
-        graphScreen.visibility = View.VISIBLE
-        bookScreen.visibility = View.GONE
-    }
+//    private fun exportImage() {
+//        try {
+//            val graphView = findViewById<GraphView>(R.id.graph_view)
+//            GraphBitmap().createAndSaveBitmap(graphView)
+//            Toast.makeText(this, "Exported graph.", Toast.LENGTH_LONG).show()
+//        } catch (exception: Exception) {
+//            Toast.makeText(
+//                this,
+//                "Graph is to large to export. Reduce zoom and try to export again.",
+//                Toast.LENGTH_LONG
+//            ).show()
+//        }
+//    }
 
 }
