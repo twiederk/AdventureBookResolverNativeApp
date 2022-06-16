@@ -10,10 +10,11 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscree
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreen
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 
 @Composable
 fun SetupNavGraph(
@@ -24,7 +25,7 @@ fun SetupNavGraph(
     load: () -> Unit,
     restart: () -> Unit,
     createBookScreenViewModel: CreateBookScreenViewModel,
-    genericCommandViewModel: GenericCommandViewModel,
+    solutionScreenViewModel: SolutionScreenViewModel,
     createActionScreenViewModel: CreateActionScreenViewModel,
     entryScreenViewModel: EntryScreenViewModel
 ) {
@@ -42,6 +43,7 @@ fun SetupNavGraph(
                 onCreateClick = { navController.navigate(ScreenRoute.CreateBookScreenRoute.route) },
                 onLoadClick = { load() },
                 onRestartClick = { restart() },
+                onSolutionClick = { navController.navigate(ScreenRoute.SolutionScreen.route) },
                 onRenderClick = { /*exportImage()*/ },
                 onFabClick = { navController.navigate(ScreenRoute.CreateActionScreen.route) },
                 onEntryTouch = { navController.navigate(ScreenRoute.EntryScreen.route) },
@@ -57,7 +59,7 @@ fun SetupNavGraph(
                 onCreateClick = {
                     createBookScreenViewModel.onCreateClick()
                     bookViewModel.onTitleChange(createBookScreenViewModel.title)
-                    genericCommandViewModel.clear()
+                    solutionScreenViewModel.clear()
                     navController.popBackStack()
                 },
                 onCancelClick = { navController.popBackStack() }
@@ -99,6 +101,33 @@ fun SetupNavGraph(
                 },
                 onActionDeleteClicked = { entryScreenViewModel.onActionDeleteClicked(it) },
                 onBackNavigationClicked = { navController.popBackStack() }
+            )
+        }
+        composable(
+            route = ScreenRoute.SolutionScreen.route
+        ) {
+            SolutionScreen(
+                argument = solutionScreenViewModel.argument,
+                onArgumentChange = { solutionScreenViewModel.onArgumentChange(it) },
+                onSearchClick = { solutionScreenViewModel.onSearchClick() },
+                onPathClick = { solutionScreenViewModel.onPathClick() },
+                onWayPointClick = { solutionScreenViewModel.onWayPointClick() },
+                onUnvisitedClick = { solutionScreenViewModel.onUnvisitedClick() },
+                onSolveClick = { solutionScreenViewModel.onSolveClick() },
+                onRollDieClick = { solutionScreenViewModel.onDieRollClick(it) },
+                onBackClick = { navController.popBackStack() },
+                bookEntryList = solutionScreenViewModel.bookEntryList,
+                onBookEntryClick = {
+                    entryScreenViewModel.initBookEntry(it)
+                    navController.navigate(ScreenRoute.EntryScreen.route)
+                },
+                actions = solutionScreenViewModel.actionList,
+                remainingCombinations = solutionScreenViewModel.remainingCombinations,
+                maxCombinations = solutionScreenViewModel.maxCombinations,
+                numberOfSolutions = solutionScreenViewModel.numberOfSolutions,
+                solutions = solutionScreenViewModel.solutionList,
+                outputText = solutionScreenViewModel.outputText
+
             )
         }
     }

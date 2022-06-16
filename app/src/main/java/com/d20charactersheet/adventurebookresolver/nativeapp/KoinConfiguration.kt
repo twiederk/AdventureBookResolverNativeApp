@@ -6,7 +6,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.attributesandbo
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen.CreateActionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.*
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
@@ -25,7 +25,7 @@ val appModule = module {
     single { ItemPanel() }
     single { TraversalBookRenderer(get()) }
     single { GraphViewModel() }
-    single { GenericCommandViewModel() }
+    single { SolutionScreenViewModel() }
     single { EntryScreenViewModel() }
     single { CreateBookScreenViewModel() }
     single { CreateActionScreenViewModel() }

@@ -17,7 +17,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen.CreateActionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.GenericCommandViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.SetupNavGraph
@@ -30,7 +30,7 @@ class MainActivity : LogActivity() {
 
     private val game: Game by inject()
     private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
-    private val genericCommandViewModel: GenericCommandViewModel by inject()
+    private val solutionScreenViewModel: SolutionScreenViewModel by inject()
     private val bookViewModel: BookViewModel by inject()
     private val graphViewModel: GraphViewModel by inject()
     private val createActionScreenViewModel: CreateActionScreenViewModel by inject()
@@ -53,7 +53,7 @@ class MainActivity : LogActivity() {
                     load = { load() },
                     restart = { restart() },
                     createBookScreenViewModel = createBookScreenViewModel,
-                    genericCommandViewModel = genericCommandViewModel,
+                    solutionScreenViewModel = solutionScreenViewModel,
                     createActionScreenViewModel = createActionScreenViewModel,
                     entryScreenViewModel = entryScreenViewModel
                 )
@@ -122,7 +122,7 @@ class MainActivity : LogActivity() {
         val inputStream: InputStream = checkNotNull(contentResolver.openInputStream(uri))
         val content: List<String> = inputStream.bufferedReader().use(BufferedReader::readLines)
         game.book = BookStore().import(content)
-        genericCommandViewModel.clear()
+        solutionScreenViewModel.clear()
     }
 
 //    private fun exportImage() {

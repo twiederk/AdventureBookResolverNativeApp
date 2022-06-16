@@ -25,7 +25,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.ActionColorCompose
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.ActionColorCompose
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable

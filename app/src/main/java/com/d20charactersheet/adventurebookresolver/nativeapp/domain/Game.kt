@@ -8,7 +8,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookSolverListene
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charactersheet.adventurebookresolver.core.domain.Die
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
 import java.io.File
 
 class Game(

@@ -5,4 +5,5 @@ sealed class ScreenRoute(val route: String) {
     object CreateBookScreenRoute : ScreenRoute(route = "create_book_screen_route")
     object CreateActionScreen : ScreenRoute(route = "create_action_screen_route")
     object EntryScreen : ScreenRoute(route = "entry_screen_route")
+    object SolutionScreen : ScreenRoute(route = "solution_screen_route")
 }

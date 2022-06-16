@@ -2,7 +2,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
 import android.graphics.Bitmap
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import java.io.File

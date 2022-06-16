@@ -22,6 +22,7 @@ fun GraphScreen(
     onCreateClick: () -> Unit,
     onLoadClick: () -> Unit,
     onRestartClick: () -> Unit,
+    onSolutionClick: () -> Unit,
     onRenderClick: () -> Unit,
     onFabClick: () -> Unit,
     onEntryTouch: () -> Unit,
@@ -29,14 +30,15 @@ fun GraphScreen(
 ) {
     Scaffold(
         topBar = {
-            GraphAppBar(
+            GraphScreenAppBar(
                 title = title,
                 onZoomChange = onZoomChange,
                 onSaveClick = onSaveClick,
                 onCreateClick = onCreateClick,
                 onLoadClick = onLoadClick,
                 onRestartClick = onRestartClick,
-                onRenderClick = onRenderClick
+                onRenderClick = onRenderClick,
+                onSolutionClick = onSolutionClick
             )
         },
         content = {
@@ -97,6 +99,7 @@ fun GraphScreenCompose() {
             onCreateClick = { },
             onLoadClick = { },
             onRestartClick = { },
+            onSolutionClick = { },
             onRenderClick = { },
             onFabClick = { },
             onEntryTouch = { },

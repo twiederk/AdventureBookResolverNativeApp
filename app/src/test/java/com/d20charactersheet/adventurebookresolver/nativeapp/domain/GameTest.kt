@@ -11,7 +11,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Inventory
 import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.genericcommand.FileHelper
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Test
