@@ -12,11 +12,8 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 
 
 @Composable
-fun SolutionScreenAppBar(
-    onBackClick: () -> Unit
-) {
+fun SolutionScreenAppBar() {
     TopAppBar(
-        navigationIcon = { BackAction(onBackClick = { onBackClick() }) },
         title = {
             Text(text = "Solution Screen")
         }
@@ -41,8 +38,6 @@ fun BackAction(
 @Composable
 fun SolutionScreenAppBarPreview() {
     AdventureBookResolverTheme {
-        SolutionScreenAppBar(
-            onBackClick = { }
-        )
+        SolutionScreenAppBar()
     }
 }

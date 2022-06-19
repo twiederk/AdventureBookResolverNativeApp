@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
@@ -27,7 +28,6 @@ class SolutionScreenComposeTest {
                     onUnvisitedClick = { },
                     onSolveClick = { },
                     onRollDieClick = { },
-                    onBackClick = { },
                     bookEntryList = listOf(),
                     onBookEntryClick = { },
                     actions = listOf(),
@@ -35,7 +35,8 @@ class SolutionScreenComposeTest {
                     maxCombinations = 0L,
                     numberOfSolutions = 0,
                     solutions = listOf(),
-                    outputText = ""
+                    outputText = "",
+                    navController = rememberNavController()
                 )
             }
         }

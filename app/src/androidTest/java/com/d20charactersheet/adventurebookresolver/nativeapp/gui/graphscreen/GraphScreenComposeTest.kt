@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
@@ -26,11 +27,11 @@ class GraphScreenComposeTest {
                     onCreateClick = { },
                     onLoadClick = { },
                     onRestartClick = { },
-                    onSolutionClick = { },
                     onRenderClick = { },
                     onFabClick = { },
                     onEntryTouch = { },
-                    scale = 1F
+                    scale = 1F,
+                    navController = rememberNavController()
                 )
             }
         }

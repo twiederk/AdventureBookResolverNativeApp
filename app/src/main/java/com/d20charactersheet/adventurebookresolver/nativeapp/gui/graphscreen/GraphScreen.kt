@@ -6,13 +6,19 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphView
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.GraphViewTouchEventHandler
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.BottomBar
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
+import kotlinx.coroutines.launch
 
 @Composable
 fun GraphScreen(
@@ -22,24 +28,40 @@ fun GraphScreen(
     onCreateClick: () -> Unit,
     onLoadClick: () -> Unit,
     onRestartClick: () -> Unit,
-    onSolutionClick: () -> Unit,
     onRenderClick: () -> Unit,
     onFabClick: () -> Unit,
     onEntryTouch: () -> Unit,
-    scale: Float
+    scale: Float,
+    navController: NavHostController
 ) {
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
     Scaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             GraphScreenAppBar(
                 title = title,
+                onNavigationIconClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.open()
+                    }
+                },
                 onZoomChange = onZoomChange,
-                onSaveClick = onSaveClick,
+                onSaveClick = onSaveClick
+            )
+        },
+        drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+        drawerContent = {
+            GraphScreenDrawer(
                 onCreateClick = onCreateClick,
                 onLoadClick = onLoadClick,
                 onRestartClick = onRestartClick,
-                onRenderClick = onRenderClick,
-                onSolutionClick = onSolutionClick
-            )
+                onRenderClick = onRenderClick
+            ) {
+                scope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            }
         },
         content = {
             GraphViewContainer(
@@ -49,7 +71,11 @@ fun GraphScreen(
         },
         floatingActionButton = {
             AddActionFab(onFabClicked = onFabClick)
+        },
+        bottomBar = {
+            BottomBar(navController = navController)
         }
+
     )
 
 }
@@ -99,11 +125,11 @@ fun GraphScreenCompose() {
             onCreateClick = { },
             onLoadClick = { },
             onRestartClick = { },
-            onSolutionClick = { },
             onRenderClick = { },
             onFabClick = { },
             onEntryTouch = { },
             scale = 1.0F,
+            navController = rememberNavController(),
         )
     }
 }

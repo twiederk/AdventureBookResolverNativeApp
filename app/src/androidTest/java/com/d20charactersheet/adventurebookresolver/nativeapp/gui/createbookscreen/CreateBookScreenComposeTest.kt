@@ -28,10 +28,10 @@ class CreateBookScreenComposeTest {
         }
 
         // assert
+        composeTestRule.onNodeWithText("Create Book Screen").assertIsDisplayed()
         composeTestRule.onNodeWithText("Title").assertIsDisplayed()
         composeTestRule.onNodeWithText("myTitle").assertIsDisplayed()
         composeTestRule.onNodeWithText("Create").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Cancel").assertIsDisplayed()
     }
 
 }

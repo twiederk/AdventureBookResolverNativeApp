@@ -1,14 +1,22 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
@@ -24,7 +32,6 @@ import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.EntryId
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.LARGE_PADDING
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PADDING
 
 @Composable
@@ -55,7 +62,7 @@ fun EntryScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .background(MaterialTheme.colors.background)
-                    .padding(all = LARGE_PADDING)
+                    .padding(all = MEDIUM_PADDING)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     EntryId(entry = BookEntry(id = id, visit = visit, wayMark = wayMark))

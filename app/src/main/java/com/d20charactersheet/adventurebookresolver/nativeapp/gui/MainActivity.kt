@@ -17,10 +17,10 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen.CreateActionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.SetupNavGraph
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.koin.android.ext.android.inject
 import java.io.BufferedReader

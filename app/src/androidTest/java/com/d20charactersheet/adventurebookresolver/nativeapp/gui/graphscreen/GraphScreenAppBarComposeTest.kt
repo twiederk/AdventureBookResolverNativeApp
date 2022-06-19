@@ -23,24 +23,18 @@ class GraphScreenAppBarComposeTest {
             AdventureBookResolverTheme {
                 GraphScreenAppBar(
                     title = "myTitle",
+                    onNavigationIconClick = { },
                     onZoomChange = { },
                     onSaveClick = { },
-                    onCreateClick = { },
-                    onLoadClick = { },
-                    onRestartClick = { },
-                    onSolutionClick = { },
-                    onRenderClick = { },
                 )
             }
         }
 
         // assert
         composeTestRule.onNodeWithText("myTitle").assertIsDisplayed()
-        composeTestRule.onNode(hasTestTag("save_icon")).assertContentDescriptionEquals("Save")
-        composeTestRule.onNode(hasTestTag("actions_drop_down_icon"))
-            .assertContentDescriptionEquals("Actions Drop Down")
         composeTestRule.onNode(hasTestTag("zoom_drop_down_icon"))
             .assertContentDescriptionEquals("Zoom Drop Down")
+        composeTestRule.onNode(hasTestTag("save_icon")).assertContentDescriptionEquals("Save")
     }
 
 }

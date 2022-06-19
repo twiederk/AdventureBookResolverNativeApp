@@ -1,7 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +9,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,48 +30,53 @@ fun CreateActionScreen(
     onCancelClick: () -> Unit,
     onCreateClick: () -> Unit
 ) {
-    Column(
-        modifier = Modifier
-            .padding(8.dp)
-            .background(Color.White)
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            OutlinedTextField(
-                value = actionLabel,
-                modifier = Modifier.weight(4F),
-                onValueChange = { onActionLabelChange(it) },
-                label = { Text("Action") },
-                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
-
+    Scaffold(
+        topBar = {
+            CreateActionScreenAppBar(
+                onBackClick = { onCancelClick() }
             )
-            OutlinedTextField(
-                value = entryId,
+        },
+        content = {
+            Column(
                 modifier = Modifier
-                    .weight(1F)
-                    .padding(start = 8.dp),
-                onValueChange = { onEntryIdChange(it) },
-                label = { Text("Id") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-                keyboardActions = KeyboardActions(onDone = { onCreateClick() }),
-            )
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Button(onClick = { onCancelClick() }) {
-                Text("Cancel")
+                    .padding(8.dp)
+                    .background(Color.White)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    OutlinedTextField(
+                        value = actionLabel,
+                        modifier = Modifier.weight(4F),
+                        onValueChange = { onActionLabelChange(it) },
+                        label = { Text("Action") },
+                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
+
+                    )
+                    OutlinedTextField(
+                        value = entryId,
+                        modifier = Modifier
+                            .weight(1F)
+                            .padding(start = 8.dp),
+                        onValueChange = { onEntryIdChange(it) },
+                        label = { Text("Id") },
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+                        keyboardActions = KeyboardActions(onDone = { onCreateClick() }),
+                    )
+                }
+                Button(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClick = { onCreateClick() }
+                ) {
+                    Text("Create")
+                }
+                if (errorMessage.isNotEmpty()) {
+                    Text(text = errorMessage)
+                }
             }
-            Button(onClick = { onCreateClick() }) {
-                Text("Create")
-            }
+
         }
-        if (errorMessage.isNotEmpty()) {
-            Text(text = errorMessage)
-        }
-    }
+    )
 }
 
 @Preview(showBackground = true)

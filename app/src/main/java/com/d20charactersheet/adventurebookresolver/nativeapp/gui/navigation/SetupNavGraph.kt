@@ -43,11 +43,11 @@ fun SetupNavGraph(
                 onCreateClick = { navController.navigate(ScreenRoute.CreateBookScreenRoute.route) },
                 onLoadClick = { load() },
                 onRestartClick = { restart() },
-                onSolutionClick = { navController.navigate(ScreenRoute.SolutionScreen.route) },
                 onRenderClick = { /*exportImage()*/ },
                 onFabClick = { navController.navigate(ScreenRoute.CreateActionScreen.route) },
                 onEntryTouch = { navController.navigate(ScreenRoute.EntryScreen.route) },
-                scale = graphViewModel.scale
+                scale = graphViewModel.scale,
+                navController = navController
             )
         }
         composable(
@@ -115,7 +115,6 @@ fun SetupNavGraph(
                 onUnvisitedClick = { solutionScreenViewModel.onUnvisitedClick() },
                 onSolveClick = { solutionScreenViewModel.onSolveClick() },
                 onRollDieClick = { solutionScreenViewModel.onDieRollClick(it) },
-                onBackClick = { navController.popBackStack() },
                 bookEntryList = solutionScreenViewModel.bookEntryList,
                 onBookEntryClick = {
                     entryScreenViewModel.initBookEntry(it)
@@ -126,8 +125,8 @@ fun SetupNavGraph(
                 maxCombinations = solutionScreenViewModel.maxCombinations,
                 numberOfSolutions = solutionScreenViewModel.numberOfSolutions,
                 solutions = solutionScreenViewModel.solutionList,
-                outputText = solutionScreenViewModel.outputText
-
+                outputText = solutionScreenViewModel.outputText,
+                navController = navController
             )
         }
     }

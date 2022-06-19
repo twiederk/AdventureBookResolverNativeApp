@@ -25,17 +25,16 @@ class CreateActionScreenComposeTest {
                     onActionLabelChange = { },
                     onEntryIdChange = { },
                     onCancelClick = { },
-                    onCreateClick = { }
-                )
+                ) { }
             }
         }
 
         // assert
+        composeTestRule.onNodeWithText("Create Action Screen").assertIsDisplayed()
         composeTestRule.onNodeWithText("Action").assertIsDisplayed()
         composeTestRule.onNodeWithText("myAction").assertIsDisplayed()
         composeTestRule.onNodeWithText("Id").assertIsDisplayed()
         composeTestRule.onNodeWithText("100").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Cancel").assertIsDisplayed()
         composeTestRule.onNodeWithText("Create").assertIsDisplayed()
         composeTestRule.onNodeWithText("myErrorMessage").assertIsDisplayed()
     }
@@ -58,11 +57,11 @@ class CreateActionScreenComposeTest {
         }
 
         // assert
+        composeTestRule.onNodeWithText("Create Action Screen").assertIsDisplayed()
         composeTestRule.onNodeWithText("Action").assertIsDisplayed()
         composeTestRule.onNodeWithText("myAction").assertIsDisplayed()
         composeTestRule.onNodeWithText("Id").assertIsDisplayed()
         composeTestRule.onNodeWithText("100").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Cancel").assertIsDisplayed()
         composeTestRule.onNodeWithText("Create").assertIsDisplayed()
         composeTestRule.onNodeWithText("").assertDoesNotExist()
     }

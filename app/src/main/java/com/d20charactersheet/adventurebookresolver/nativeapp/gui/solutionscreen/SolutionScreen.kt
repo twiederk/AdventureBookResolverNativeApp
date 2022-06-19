@@ -7,9 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.BottomBar
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
@@ -22,7 +25,6 @@ fun SolutionScreen(
     onUnvisitedClick: () -> Unit,
     onSolveClick: () -> Unit,
     onRollDieClick: (String) -> Unit,
-    onBackClick: () -> Unit,
     bookEntryList: List<BookEntry>,
     onBookEntryClick: (BookEntry) -> Unit,
     actions: List<Action>,
@@ -30,11 +32,12 @@ fun SolutionScreen(
     maxCombinations: Long,
     numberOfSolutions: Int,
     solutions: List<Solution>,
-    outputText: String
+    outputText: String,
+    navController: NavHostController
 ) {
     Scaffold(
         topBar = {
-            SolutionScreenAppBar(onBackClick = { onBackClick() })
+            SolutionScreenAppBar()
         },
         content = {
             Column(
@@ -64,6 +67,9 @@ fun SolutionScreen(
                 )
                 OutputText(outputText)
             }
+        },
+        bottomBar = {
+            BottomBar(navController = navController)
         }
     )
 }
@@ -81,7 +87,6 @@ fun SolutionScreenPreview() {
             onUnvisitedClick = { },
             onSolveClick = { },
             onRollDieClick = { },
-            onBackClick = { },
             bookEntryList = listOf(),
             onBookEntryClick = { },
             actions = listOf(),
@@ -89,7 +94,8 @@ fun SolutionScreenPreview() {
             maxCombinations = 0L,
             numberOfSolutions = 0,
             solutions = listOf(),
-            outputText = ""
+            outputText = "",
+            navController = rememberNavController()
         )
     }
 

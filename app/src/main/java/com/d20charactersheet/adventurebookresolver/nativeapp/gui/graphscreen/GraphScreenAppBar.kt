@@ -1,7 +1,18 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
 
-import androidx.compose.material.*
-import androidx.compose.runtime.*
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
@@ -13,28 +24,25 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 @Composable
 fun GraphScreenAppBar(
     title: String,
+    onNavigationIconClick: () -> Unit,
     onZoomChange: (Float) -> Unit,
-    onSaveClick: () -> Unit,
-    onCreateClick: () -> Unit,
-    onLoadClick: () -> Unit,
-    onRestartClick: () -> Unit,
-    onRenderClick: () -> Unit,
-    onSolutionClick: () -> Unit
+    onSaveClick: () -> Unit
 ) {
     TopAppBar(
+        navigationIcon = {
+            IconButton(onClick = onNavigationIconClick) {
+                Icon(
+                    imageVector = Icons.Default.Menu,
+                    contentDescription = "Toggle drawer"
+                )
+            }
+        },
         title = {
             Text(text = title)
         },
         actions = {
-            SaveAction(onSaveClick = onSaveClick)
             ZoomDropDown(onZoomChange = onZoomChange)
-            ActionsDropDown(
-                onCreateClick = onCreateClick,
-                onLoadClick = onLoadClick,
-                onRestartClick = onRestartClick,
-                onRenderClick = onRenderClick,
-                onSolutionClick = onSolutionClick
-            )
+            SaveAction(onSaveClick = onSaveClick)
         }
     )
 }
@@ -57,48 +65,6 @@ fun SaveAction(
 
 
 @Composable
-fun ActionsDropDown(
-    onCreateClick: () -> Unit,
-    onLoadClick: () -> Unit,
-    onRestartClick: () -> Unit,
-    onRenderClick: () -> Unit,
-    onSolutionClick: () -> Unit
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    IconButton(
-        modifier = Modifier.testTag("actions_drop_down_icon"),
-        onClick = { expanded = true }
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_vertical_menu),
-            contentDescription = "Actions Drop Down",
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false }
-        ) {
-            ActionMenuItem(label = "Create", onClick = { expanded = false; onCreateClick() })
-            ActionMenuItem(label = "Load", onClick = { expanded = false; onLoadClick() })
-            ActionMenuItem(label = "Restart", onClick = { expanded = false; onRestartClick() })
-            ActionMenuItem(label = "Solution", onClick = { expanded = false; onSolutionClick() })
-            ActionMenuItem(label = "Render", onClick = { expanded = false; onRenderClick() })
-        }
-    }
-}
-
-
-@Composable
-private fun ActionMenuItem(label: String, onClick: () -> Unit) {
-    DropdownMenuItem(
-        onClick = { onClick() }
-    ) {
-        Text(text = label)
-    }
-}
-
-
-@Composable
 fun ZoomDropDown(
     onZoomChange: (Float) -> Unit
 ) {
@@ -116,12 +82,22 @@ fun ZoomDropDown(
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            ActionMenuItem(label = "10%", onClick = { expanded = false; onZoomChange(0.1F) })
-            ActionMenuItem(label = "25%", onClick = { expanded = false; onZoomChange(0.25F) })
-            ActionMenuItem(label = "50%", onClick = { expanded = false; onZoomChange(0.5F) })
-            ActionMenuItem(label = "100%", onClick = { expanded = false; onZoomChange(1.0F) })
-            ActionMenuItem(label = "200%", onClick = { expanded = false; onZoomChange(2.0F) })
+            ZoomDropdownMenuItem(label = "10%", onClick = { expanded = false; onZoomChange(0.1F) })
+            ZoomDropdownMenuItem(label = "25%", onClick = { expanded = false; onZoomChange(0.25F) })
+            ZoomDropdownMenuItem(label = "50%", onClick = { expanded = false; onZoomChange(0.5F) })
+            ZoomDropdownMenuItem(label = "100%", onClick = { expanded = false; onZoomChange(1.0F) })
+            ZoomDropdownMenuItem(label = "200%", onClick = { expanded = false; onZoomChange(2.0F) })
         }
+    }
+}
+
+
+@Composable
+fun ZoomDropdownMenuItem(label: String, onClick: () -> Unit) {
+    DropdownMenuItem(
+        onClick = { onClick() }
+    ) {
+        Text(text = label)
     }
 }
 
@@ -132,13 +108,9 @@ fun GraphScreenAppBarPreview() {
     AdventureBookResolverTheme {
         GraphScreenAppBar(
             title = "myTitle",
-            onZoomChange = { },
+            onNavigationIconClick = { },
             onSaveClick = { },
-            onCreateClick = { },
-            onLoadClick = { },
-            onRestartClick = { },
-            onRenderClick = { },
-            onSolutionClick = { }
+            onZoomChange = { }
         )
     }
 }
