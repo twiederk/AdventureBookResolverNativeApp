@@ -19,7 +19,7 @@ fun SolutionBookEntryCard(bookEntry: BookEntry) {
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        EntryId(bookEntry)
+        BookEntryId(bookEntry)
         EntryTitle(bookEntry)
     }
 }

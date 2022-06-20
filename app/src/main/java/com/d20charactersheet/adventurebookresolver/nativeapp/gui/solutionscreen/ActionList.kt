@@ -91,7 +91,7 @@ private fun SourceEntry(action: Action) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround
     ) {
-        EntryId(action.source)
+        BookEntryId(action.source)
         Text(
             modifier = Modifier.padding(top = 4.dp),
             text = action.source.title
@@ -119,7 +119,7 @@ private fun DestinationEntry(action: Action) {
             .padding(8.dp),
         contentAlignment = Alignment.Center
     ) {
-        EntryId(action.destination)
+        BookEntryId(action.destination)
     }
 }
 

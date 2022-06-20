@@ -560,4 +560,16 @@ internal class GameTest {
         assertThat(result).containsExactly(action)
     }
 
+    @Test
+    fun `should return inventory items`() {
+        // arrange
+        whenever(book.getItems()).thenReturn(mutableListOf(Item("first item"), Item("second item")))
+
+        // act
+        val result = underTest.getItems()
+
+        // assert
+        assertThat(result).containsExactly(Item("first item"), Item("second item"))
+    }
+
 }

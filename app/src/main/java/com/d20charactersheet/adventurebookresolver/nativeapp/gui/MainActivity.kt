@@ -19,6 +19,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscree
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.SetupNavGraph
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
@@ -35,6 +36,7 @@ class MainActivity : LogActivity() {
     private val graphViewModel: GraphViewModel by inject()
     private val createActionScreenViewModel: CreateActionScreenViewModel by inject()
     private val entryScreenViewModel: EntryScreenViewModel by inject()
+    private val inventoryScreenViewModel: InventoryScreenViewModel by inject()
 
     private var restartDialog: RestartDialog = RestartDialog()
 
@@ -55,7 +57,8 @@ class MainActivity : LogActivity() {
                     createBookScreenViewModel = createBookScreenViewModel,
                     solutionScreenViewModel = solutionScreenViewModel,
                     createActionScreenViewModel = createActionScreenViewModel,
-                    entryScreenViewModel = entryScreenViewModel
+                    entryScreenViewModel = entryScreenViewModel,
+                    inventoryScreenViewModel = inventoryScreenViewModel,
                 )
             }
         }

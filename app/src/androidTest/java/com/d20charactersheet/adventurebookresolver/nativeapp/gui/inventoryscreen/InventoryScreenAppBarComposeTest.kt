@@ -1,33 +1,29 @@
-package com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen
+package com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
 
-class EntryIdComposeTest {
+class InventoryScreenAppBarComposeTest {
 
     @Rule
     @JvmField
     val composeTestRule = createComposeRule()
 
     @Test
-    fun should_display_id_of_book_entry() {
-        // arrange
-
-
+    fun should_display_inventory_app_bar_screen() {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                BookEntryId(BookEntry(id = 1))
+                InventoryScreenAppBar()
+
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("1").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Inventory Screen").assertIsDisplayed()
     }
-
 }

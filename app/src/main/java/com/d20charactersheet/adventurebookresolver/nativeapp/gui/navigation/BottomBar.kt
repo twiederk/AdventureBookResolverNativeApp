@@ -19,7 +19,8 @@ fun BottomBar(navController: NavHostController) {
     val currentDestination = navBackStackEntry?.destination
     val screens = listOf(
         BottomBarScreen.Graph,
-        BottomBarScreen.Solution
+        BottomBarScreen.Solution,
+        BottomBarScreen.Inventory
     )
 
     BottomNavigation {

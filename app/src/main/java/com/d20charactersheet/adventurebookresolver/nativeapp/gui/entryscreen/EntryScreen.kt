@@ -30,7 +30,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.EntryId
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.BookEntryId
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PADDING
 
@@ -65,7 +65,7 @@ fun EntryScreen(
                     .padding(all = MEDIUM_PADDING)
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    EntryId(entry = BookEntry(id = id, visit = visit, wayMark = wayMark))
+                    BookEntryId(entry = BookEntry(id = id, visit = visit, wayMark = wayMark))
                     EntryTitle(title, onTitleChanged, onBackNavigationClicked)
                 }
                 EntryWayMark(wayMark, onWayMarkSelected)

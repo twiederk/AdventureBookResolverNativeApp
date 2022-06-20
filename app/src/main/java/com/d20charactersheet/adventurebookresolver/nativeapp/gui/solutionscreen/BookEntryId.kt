@@ -3,6 +3,7 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
@@ -18,19 +20,29 @@ import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
-fun EntryId(entry: BookEntry) {
+fun BookEntryId(entry: BookEntry) {
     val entryColor = ActionColorCompose().getColor(entry.wayMark, entry.visit)
-    Box(
-        modifier = Modifier
-            .width(50.dp)
-            .height(50.dp)
-            .clip(CircleShape)
-            .background(entryColor),
-        contentAlignment = Alignment.Center
-    ) {
-        Text(
-            text = entry.id.toString(),
+    Box {
+        Box(
+            modifier = Modifier
+                .padding(start = 4.dp, top = 4.dp)
+                .width(50.dp)
+                .height(50.dp)
+                .clip(CircleShape)
+                .background(Color.LightGray)
         )
+        Box(
+            modifier = Modifier
+                .width(50.dp)
+                .height(50.dp)
+                .clip(CircleShape)
+                .background(entryColor),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = entry.id.toString(),
+            )
+        }
     }
 }
 
@@ -38,7 +50,7 @@ fun EntryId(entry: BookEntry) {
 @Composable
 fun BookEntryIdViewUnvisitedPreview() {
     AdventureBookResolverTheme {
-        EntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.UNVISITED))
+        BookEntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.UNVISITED))
     }
 }
 
@@ -46,7 +58,7 @@ fun BookEntryIdViewUnvisitedPreview() {
 @Composable
 fun BookEntryIdViewVisitedPreview() {
     AdventureBookResolverTheme {
-        EntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.VISITED))
+        BookEntryId(BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.VISITED))
     }
 }
 
@@ -54,7 +66,7 @@ fun BookEntryIdViewVisitedPreview() {
 @Composable
 fun BookEntryIdViewWayPointPreview() {
     AdventureBookResolverTheme {
-        EntryId(BookEntry(id = 242, wayMark = WayMark.WAY_POINT, visit = Visit.UNVISITED))
+        BookEntryId(BookEntry(id = 242, wayMark = WayMark.WAY_POINT, visit = Visit.UNVISITED))
     }
 }
 
@@ -62,6 +74,6 @@ fun BookEntryIdViewWayPointPreview() {
 @Composable
 fun BookEntryIdViewDeadEndPreview() {
     AdventureBookResolverTheme {
-        EntryId(BookEntry(id = 242, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED))
+        BookEntryId(BookEntry(id = 242, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED))
     }
 }

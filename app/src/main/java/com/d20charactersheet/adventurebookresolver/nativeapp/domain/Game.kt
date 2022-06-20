@@ -7,6 +7,7 @@ import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.BookSolverListener
 import com.d20charactersheet.adventurebookresolver.core.domain.BookStore
 import com.d20charactersheet.adventurebookresolver.core.domain.Die
+import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
 import java.io.File
@@ -122,5 +123,7 @@ class Game(
     fun solve(bookSolverListener: BookSolverListener) = book.solve(bookSolverListener)
 
     fun isCurrentEntry(bookEntry: BookEntry): Boolean = bookEntry.id == book.getEntryId()
+
+    fun getItems(): List<Item> = book.getItems().toList()
 
 }

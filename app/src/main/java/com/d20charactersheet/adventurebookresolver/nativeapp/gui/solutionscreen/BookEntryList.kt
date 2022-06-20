@@ -67,7 +67,7 @@ fun BookEntryCard(bookEntry: BookEntry, onBookEntryClick: (BookEntry) -> Unit) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                EntryId(bookEntry)
+                BookEntryId(bookEntry)
                 Text(
                     modifier = Modifier.padding(start = 8.dp),
                     text = bookEntry.title

@@ -13,6 +13,8 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.Ent
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreen
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 
@@ -27,7 +29,8 @@ fun SetupNavGraph(
     createBookScreenViewModel: CreateBookScreenViewModel,
     solutionScreenViewModel: SolutionScreenViewModel,
     createActionScreenViewModel: CreateActionScreenViewModel,
-    entryScreenViewModel: EntryScreenViewModel
+    entryScreenViewModel: EntryScreenViewModel,
+    inventoryScreenViewModel: InventoryScreenViewModel
 ) {
     NavHost(
         navController = navController,
@@ -126,6 +129,14 @@ fun SetupNavGraph(
                 numberOfSolutions = solutionScreenViewModel.numberOfSolutions,
                 solutions = solutionScreenViewModel.solutionList,
                 outputText = solutionScreenViewModel.outputText,
+                navController = navController
+            )
+        }
+        composable(
+            route = ScreenRoute.InventoryScreen.route
+        ) {
+            InventoryScreen(
+                inventoryScreenViewModel = inventoryScreenViewModel,
                 navController = navController
             )
         }

@@ -97,6 +97,8 @@ class CreateActionScreenViewModelKoinTest : KoinTest {
         // assert
         assertThat(result).isTrue
         verify(game).addAction("myAction", 10)
+        assertThat(underTest.actionLabel).isEmpty()
+        assertThat(underTest.entryId).isEmpty()
     }
 
     @Test
