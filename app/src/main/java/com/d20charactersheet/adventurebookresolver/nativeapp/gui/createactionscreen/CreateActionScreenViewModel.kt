@@ -35,8 +35,7 @@ class CreateActionScreenViewModel : KoinComponent, ViewModel() {
             return false
         }
         game.addAction(actionLabel, entryId.toInt())
-        actionLabel = ""
-        entryId = ""
+        reset()
         return true
     }
 

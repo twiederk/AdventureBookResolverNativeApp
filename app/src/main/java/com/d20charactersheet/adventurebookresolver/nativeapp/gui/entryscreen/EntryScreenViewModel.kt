@@ -57,4 +57,8 @@ class EntryScreenViewModel : KoinComponent, ViewModel() {
         actions = game.getActions()
     }
 
+    fun onRunClick() {
+        game.runTo(bookEntry.id)
+    }
+
 }

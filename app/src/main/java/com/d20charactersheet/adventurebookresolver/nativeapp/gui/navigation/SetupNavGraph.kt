@@ -63,6 +63,7 @@ fun SetupNavGraph(
                     createBookScreenViewModel.onCreateClick()
                     bookViewModel.onTitleChange(createBookScreenViewModel.title)
                     solutionScreenViewModel.clear()
+                    inventoryScreenViewModel.reset()
                     navController.popBackStack()
                 },
                 onCancelClick = { navController.popBackStack() }
@@ -77,7 +78,10 @@ fun SetupNavGraph(
                 errorMessage = createActionScreenViewModel.errorMessage,
                 onActionLabelChange = { createActionScreenViewModel.onActionLabelChange(it) },
                 onEntryIdChange = { createActionScreenViewModel.onEntryIdChange(it) },
-                onCancelClick = { navController.popBackStack() },
+                onCancelClick = {
+                    createActionScreenViewModel.reset()
+                    navController.popBackStack()
+                },
                 onCreateClick = {
                     if (createActionScreenViewModel.onCreateClick()) {
                         navController.popBackStack()
@@ -98,6 +102,7 @@ fun SetupNavGraph(
                 onTitleChanged = { entryScreenViewModel.onTitleChanged(it) },
                 onNoteChanged = { entryScreenViewModel.onNoteChanged(it) },
                 onWayMarkSelected = { entryScreenViewModel.onWayMarkSelected(it) },
+                onRunClick = { entryScreenViewModel.onRunClick() },
                 onActionMoveClicked = {
                     entryScreenViewModel.onActionMoveClicked(it)
                     navController.popBackStack()

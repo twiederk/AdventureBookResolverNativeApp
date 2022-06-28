@@ -7,7 +7,8 @@ import org.junit.Test
 
 class InventoryScreenViewModelTest {
 
-    private val inventoryScreenViewModel = InventoryScreenViewModel(Game())
+    private val game = Game()
+    private val inventoryScreenViewModel = InventoryScreenViewModel(game)
 
     @Test
     fun `should init with empty item name`() {
@@ -72,6 +73,22 @@ class InventoryScreenViewModelTest {
         inventoryScreenViewModel.onDeleteClick(0)
 
         // assert
+        assertThat(inventoryScreenViewModel.itemList).isEmpty()
+    }
+
+    @Test
+    fun `should reset item name and item list`() {
+        // arrange
+        inventoryScreenViewModel.onItemNameChange("myItem")
+        inventoryScreenViewModel.onAddClick()
+        game.createBook("new book")
+
+
+        // act
+        inventoryScreenViewModel.reset()
+
+        // assert
+        assertThat(inventoryScreenViewModel.itemName).isEmpty()
         assertThat(inventoryScreenViewModel.itemList).isEmpty()
     }
 

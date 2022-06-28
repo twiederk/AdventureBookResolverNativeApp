@@ -154,5 +154,23 @@ class EntryScreenViewModelKoinTest : KoinTest {
         assertThat(entryScreenViewModel.actions).containsExactly(action)
     }
 
+    @Test
+    fun `should run to this entry`() {
+        // arrange
+        val bookEntry = BookEntry(
+            id = 10,
+            title = "myTitle",
+            note = "myNote",
+            visit = Visit.VISITED,
+            wayMark = WayMark.DEAD_END
+        )
+        entryScreenViewModel.initBookEntry(bookEntry)
+
+        // act
+        entryScreenViewModel.onRunClick()
+
+        // assert
+        verify(game).runTo(10)
+    }
 
 }

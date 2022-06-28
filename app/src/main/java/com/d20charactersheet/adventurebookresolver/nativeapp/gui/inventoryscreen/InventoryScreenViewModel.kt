@@ -21,13 +21,17 @@ class InventoryScreenViewModel(private val game: Game) : ViewModel() {
     fun onAddClick() {
         if (itemName.isNotEmpty()) {
             game.addItemToInventory(itemName)
-            itemList = game.getItems()
-            itemName = ""
+            reset()
         }
     }
 
     fun onDeleteClick(index: Int) {
         game.removeItemFromInventory(index)
         itemList = game.getItems()
+    }
+
+    fun reset() {
+        itemList = game.getItems()
+        itemName = ""
     }
 }

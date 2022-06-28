@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
@@ -19,7 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
@@ -46,6 +47,7 @@ fun EntryScreen(
     onTitleChanged: (String) -> Unit,
     onNoteChanged: (String) -> Unit,
     onWayMarkSelected: (WayMark) -> Unit,
+    onRunClick: () -> Unit,
     onActionMoveClicked: (Int) -> Unit,
     onActionDeleteClicked: (Int) -> Unit,
     onBackNavigationClicked: () -> Unit
@@ -70,7 +72,8 @@ fun EntryScreen(
                 }
                 EntryWayMark(wayMark, onWayMarkSelected)
                 EntryActions(actions, onActionMoveClicked, onActionDeleteClicked)
-                EntryNote(note, onNoteChanged)
+                EntryRunToThisButton(onRunClick)
+                EntryNote(note, onNoteChanged, onBackNavigationClicked)
             }
         }
     )
@@ -94,8 +97,8 @@ private fun EntryTitle(
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = MEDIUM_PADDING, bottom = MEDIUM_PADDING)
-            .onFocusChanged { focusState ->
-                if (focusState.isFocused) {
+            .onFocusEvent {
+                if (textFieldValue.text == "Untitled") {
                     textFieldValue =
                         textFieldValue.copy(selection = TextRange(0, textFieldValue.text.length))
                 }
@@ -132,13 +135,26 @@ private fun EntryWayMark(
 
 
 @Composable
-private fun EntryNote(note: String, onNoteChanged: (String) -> Unit) {
+private fun EntryNote(
+    note: String,
+    onNoteChanged: (String) -> Unit,
+    onBackNavigationClicked: () -> Unit
+
+) {
     OutlinedTextField(
         modifier = Modifier.fillMaxSize(),
         value = note,
         onValueChange = { onNoteChanged(it) },
         label = { Text(text = stringResource(id = R.string.entry_note)) },
-        textStyle = MaterialTheme.typography.body1
+        textStyle = MaterialTheme.typography.body1,
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Done
+        ),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onBackNavigationClicked()
+            }
+        )
     )
 }
 
@@ -154,6 +170,19 @@ fun EntryActions(
         onActionMoveClicked = onActionMoveClicked,
         onActionDeleteClicked = onActionDeleteClicked,
     )
+}
+
+
+@Composable
+fun EntryRunToThisButton(
+    onRunClick: () -> Unit
+) {
+    Button(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = { onRunClick() }
+    ) {
+        Text("Run To This Entry")
+    }
 }
 
 
@@ -197,6 +226,7 @@ fun EntryScreenPreview() {
             onTitleChanged = { },
             onNoteChanged = { },
             onWayMarkSelected = { },
+            onRunClick = { },
             onActionMoveClicked = { },
             onActionDeleteClicked = { },
             onBackNavigationClicked = { }

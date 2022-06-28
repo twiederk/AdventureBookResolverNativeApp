@@ -126,6 +126,7 @@ class MainActivity : LogActivity() {
         val content: List<String> = inputStream.bufferedReader().use(BufferedReader::readLines)
         game.book = BookStore().import(content)
         solutionScreenViewModel.clear()
+        inventoryScreenViewModel.reset()
     }
 
 //    private fun exportImage() {

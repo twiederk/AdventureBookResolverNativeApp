@@ -127,7 +127,7 @@ internal class GameTest {
     @Test
     fun `run to book entry`() {
         // Act
-        val result = underTest.runTo("100")
+        val result = underTest.runTo(100)
 
         // Assert
         assertThat(result).isEqualTo("Ran to entry 100")

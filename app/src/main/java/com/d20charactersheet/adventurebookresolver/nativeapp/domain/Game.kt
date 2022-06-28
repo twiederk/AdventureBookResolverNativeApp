@@ -58,8 +58,8 @@ class Game(
 
     fun removeItemFromInventory(index: Int) = book.removeItemFromInventory(index)
 
-    fun runTo(entryId: String): String {
-        book.run(entryId.toInt())
+    fun runTo(entryId: Int): String {
+        book.run(entryId)
         return "Ran to entry $entryId"
     }
 

@@ -52,6 +52,7 @@ class EntryScreenComposeTest {
                     onTitleChanged = { },
                     onNoteChanged = { },
                     onWayMarkSelected = { },
+                    onRunClick = { },
                     onActionMoveClicked = { },
                     onActionDeleteClicked = { },
                     onBackNavigationClicked = { }
@@ -70,6 +71,7 @@ class EntryScreenComposeTest {
         composeTestRule.onNodeWithText("339").assertIsDisplayed()
         composeTestRule.onNodeWithText("Third Label").assertIsDisplayed()
         composeTestRule.onNodeWithText("20").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Run To This Entry").assertIsDisplayed()
     }
 
 }
