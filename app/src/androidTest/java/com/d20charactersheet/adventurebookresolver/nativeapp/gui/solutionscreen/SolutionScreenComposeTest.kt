@@ -4,6 +4,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
@@ -16,32 +18,22 @@ class SolutionScreenComposeTest {
 
     @Test
     fun should_display_solution_screen() {
+        // arrange
+        val game = Game()
+
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
                 SolutionScreen(
-                    argument = "",
-                    onArgumentChange = { },
-                    onSearchClick = { },
-                    onPathClick = { },
-                    onWayPointClick = { },
-                    onUnvisitedClick = { },
-                    onSolveClick = { },
-                    onRollDieClick = { },
-                    bookEntryList = listOf(),
-                    onBookEntryClick = { },
-                    actions = listOf(),
-                    remainingCombinations = 0L,
-                    maxCombinations = 0L,
-                    numberOfSolutions = 0,
-                    solutions = listOf(),
-                    outputText = "",
+                    SolutionScreenViewModel(game),
+                    EntryScreenViewModel(game),
                     navController = rememberNavController()
                 )
             }
         }
 
         // assert
+        composeTestRule.onNodeWithText("Book entries: 1 of 400 (0%)").assertIsDisplayed()
         composeTestRule.onNodeWithText("Argument").assertIsDisplayed()
         composeTestRule.onNodeWithText("Search").assertIsDisplayed()
         composeTestRule.onNodeWithText("Path").assertIsDisplayed()

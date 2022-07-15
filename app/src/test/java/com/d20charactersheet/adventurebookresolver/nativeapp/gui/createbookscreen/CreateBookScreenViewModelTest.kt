@@ -1,42 +1,22 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen
 
-import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
-import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class CreateBookScreenViewModelKoinTest : KoinTest {
+class CreateBookScreenViewModelTest {
 
-    private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
-    private val game: Game by inject()
+    private val game: Game = mock()
+    private val createBookScreenViewModel = CreateBookScreenViewModel(game)
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
-    }
-
-    @Before
-    fun before() {
-        startKoin {
-            modules(appModule)
-        }
-        declareMock<Game>()
-    }
-
-    @After
-    fun after() {
-        stopKoin()
     }
 
     @Test

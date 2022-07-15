@@ -26,57 +26,71 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.R
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.BookEntryId
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PADDING
 
 @Composable
 fun EntryScreen(
-    id: Int,
-    title: String,
-    note: String,
-    visit: Visit,
-    wayMark: WayMark,
-
-    actions: List<Action>,
-    onTitleChanged: (String) -> Unit,
-    onNoteChanged: (String) -> Unit,
-    onWayMarkSelected: (WayMark) -> Unit,
-    onRunClick: () -> Unit,
-    onActionMoveClicked: (Int) -> Unit,
-    onActionDeleteClicked: (Int) -> Unit,
-    onBackNavigationClicked: () -> Unit
+    entryScreenViewModel: EntryScreenViewModel,
+    navController: NavHostController
 ) {
 
     Scaffold(
         topBar = {
             EntryScreenAppBar(
-                onBackClick = { onBackNavigationClicked() }
+                onBackClick = { navController.popBackStack() }
             )
-        },
-        content = {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(MaterialTheme.colors.background)
-                    .padding(all = MEDIUM_PADDING)
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    BookEntryId(entry = BookEntry(id = id, visit = visit, wayMark = wayMark))
-                    EntryTitle(title, onTitleChanged, onBackNavigationClicked)
-                }
-                EntryWayMark(wayMark, onWayMarkSelected)
-                EntryActions(actions, onActionMoveClicked, onActionDeleteClicked)
-                EntryRunToThisButton(onRunClick)
-                EntryNote(note, onNoteChanged, onBackNavigationClicked)
-            }
         }
-    )
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colors.background)
+                .padding(all = MEDIUM_PADDING)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                BookEntryId(
+                    entry = BookEntry(
+                        id = entryScreenViewModel.id,
+                        visit = entryScreenViewModel.visit,
+                        wayMark = entryScreenViewModel.wayMark
+                    )
+                )
+                EntryTitle(
+                    title = entryScreenViewModel.title,
+                    onTitleChanged = { entryScreenViewModel.onTitleChanged(it) },
+                    onBackNavigationClicked = { navController.popBackStack() }
+                )
+            }
+            EntryWayMark(
+                wayMark = entryScreenViewModel.wayMark,
+                onWayMarkSelected = { entryScreenViewModel.onWayMarkSelected(it) }
+            )
+            EntryActions(
+                actions = entryScreenViewModel.actions,
+                onActionDeleteClicked = { entryScreenViewModel.onActionDeleteClicked(it) },
+                onActionMoveClicked = {
+                    entryScreenViewModel.onActionMoveClicked(it)
+                    navController.popBackStack()
+                }
+            )
+            EntryRunToThisButton(onRunClick = { entryScreenViewModel.onRunClick() })
+            EntryNote(
+                note = entryScreenViewModel.note,
+                onNoteChanged = { entryScreenViewModel.onNoteChanged(it) },
+                onBackNavigationClicked = { navController.popBackStack() }
+            )
+        }
+    }
 
 
 }
@@ -213,23 +227,14 @@ fun EntryScreenPreview() {
             destination = BookEntry(id = 20, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED)
         )
     )
+    val entryScreenViewModel = EntryScreenViewModel(Game())
+    entryScreenViewModel.initBookEntry(bookEntry)
+    entryScreenViewModel.actions = actions
 
     AdventureBookResolverTheme {
         EntryScreen(
-            id = bookEntry.id,
-            title = bookEntry.title,
-            note = bookEntry.note,
-            visit = bookEntry.visit,
-            wayMark = bookEntry.wayMark,
-            actions = actions,
-
-            onTitleChanged = { },
-            onNoteChanged = { },
-            onWayMarkSelected = { },
-            onRunClick = { },
-            onActionMoveClicked = { },
-            onActionDeleteClicked = { },
-            onBackNavigationClicked = { }
+            entryScreenViewModel = entryScreenViewModel,
+            navController = rememberNavController()
         )
     }
 }

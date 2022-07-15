@@ -23,7 +23,6 @@ fun SetupNavGraph(
     navController: NavHostController,
     bookViewModel: BookViewModel,
     graphViewModel: GraphViewModel,
-    save: () -> Unit,
     load: () -> Unit,
     restart: () -> Unit,
     createBookScreenViewModel: CreateBookScreenViewModel,
@@ -40,16 +39,11 @@ fun SetupNavGraph(
             route = ScreenRoute.GraphScreenRoute.route
         ) {
             GraphScreen(
-                title = bookViewModel.title,
-                onZoomChange = { graphViewModel.onScaleChange(it) },
-                onSaveClick = { save() },
-                onCreateClick = { navController.navigate(ScreenRoute.CreateBookScreenRoute.route) },
+                bookViewModel = bookViewModel,
+                graphViewModel = graphViewModel,
                 onLoadClick = { load() },
                 onRestartClick = { restart() },
                 onRenderClick = { /*exportImage()*/ },
-                onFabClick = { navController.navigate(ScreenRoute.CreateActionScreen.route) },
-                onEntryTouch = { navController.navigate(ScreenRoute.EntryScreen.route) },
-                scale = graphViewModel.scale,
                 navController = navController
             )
         }
@@ -57,83 +51,35 @@ fun SetupNavGraph(
             route = ScreenRoute.CreateBookScreenRoute.route
         ) {
             CreateBookScreen(
-                title = createBookScreenViewModel.title,
-                onTitleChange = { createBookScreenViewModel.onTitleChange(it) },
-                onCreateClick = {
-                    createBookScreenViewModel.onCreateClick()
-                    bookViewModel.onTitleChange(createBookScreenViewModel.title)
-                    solutionScreenViewModel.clear()
-                    inventoryScreenViewModel.reset()
-                    navController.popBackStack()
-                },
-                onCancelClick = { navController.popBackStack() }
+                createBookScreenViewModel = createBookScreenViewModel,
+                bookViewModel = bookViewModel,
+                solutionScreenViewModel = solutionScreenViewModel,
+                inventoryScreenViewModel = inventoryScreenViewModel,
+                navController = navController
             )
         }
         composable(
             route = ScreenRoute.CreateActionScreen.route
         ) {
             CreateActionScreen(
-                actionLabel = createActionScreenViewModel.actionLabel,
-                entryId = createActionScreenViewModel.entryId,
-                errorMessage = createActionScreenViewModel.errorMessage,
-                onActionLabelChange = { createActionScreenViewModel.onActionLabelChange(it) },
-                onEntryIdChange = { createActionScreenViewModel.onEntryIdChange(it) },
-                onCancelClick = {
-                    createActionScreenViewModel.reset()
-                    navController.popBackStack()
-                },
-                onCreateClick = {
-                    if (createActionScreenViewModel.onCreateClick()) {
-                        navController.popBackStack()
-                    }
-                }
+                createActionScreenViewModel = createActionScreenViewModel,
+                navController = navController
             )
         }
         composable(
             route = ScreenRoute.EntryScreen.route
         ) {
             EntryScreen(
-                id = entryScreenViewModel.id,
-                title = entryScreenViewModel.title,
-                note = entryScreenViewModel.note,
-                visit = entryScreenViewModel.visit,
-                wayMark = entryScreenViewModel.wayMark,
-                actions = entryScreenViewModel.actions,
-                onTitleChanged = { entryScreenViewModel.onTitleChanged(it) },
-                onNoteChanged = { entryScreenViewModel.onNoteChanged(it) },
-                onWayMarkSelected = { entryScreenViewModel.onWayMarkSelected(it) },
-                onRunClick = { entryScreenViewModel.onRunClick() },
-                onActionMoveClicked = {
-                    entryScreenViewModel.onActionMoveClicked(it)
-                    navController.popBackStack()
-                },
-                onActionDeleteClicked = { entryScreenViewModel.onActionDeleteClicked(it) },
-                onBackNavigationClicked = { navController.popBackStack() }
+                entryScreenViewModel = entryScreenViewModel,
+                navController = navController
             )
         }
         composable(
             route = ScreenRoute.SolutionScreen.route
         ) {
             SolutionScreen(
-                argument = solutionScreenViewModel.argument,
-                onArgumentChange = { solutionScreenViewModel.onArgumentChange(it) },
-                onSearchClick = { solutionScreenViewModel.onSearchClick() },
-                onPathClick = { solutionScreenViewModel.onPathClick() },
-                onWayPointClick = { solutionScreenViewModel.onWayPointClick() },
-                onUnvisitedClick = { solutionScreenViewModel.onUnvisitedClick() },
-                onSolveClick = { solutionScreenViewModel.onSolveClick() },
-                onRollDieClick = { solutionScreenViewModel.onDieRollClick(it) },
-                bookEntryList = solutionScreenViewModel.bookEntryList,
-                onBookEntryClick = {
-                    entryScreenViewModel.initBookEntry(it)
-                    navController.navigate(ScreenRoute.EntryScreen.route)
-                },
-                actions = solutionScreenViewModel.actionList,
-                remainingCombinations = solutionScreenViewModel.remainingCombinations,
-                maxCombinations = solutionScreenViewModel.maxCombinations,
-                numberOfSolutions = solutionScreenViewModel.numberOfSolutions,
-                solutions = solutionScreenViewModel.solutionList,
-                outputText = solutionScreenViewModel.outputText,
+                solutionScreenViewModel = solutionScreenViewModel,
+                entryScreenViewModel = entryScreenViewModel,
                 navController = navController
             )
         }

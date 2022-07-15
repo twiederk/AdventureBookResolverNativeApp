@@ -4,7 +4,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 
 @Composable
-fun OutputText(outputText: String) {
+fun SolutionOutputText(outputText: String) {
     if (outputText.isEmpty()) {
         return
     }

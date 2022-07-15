@@ -5,7 +5,6 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
@@ -51,7 +50,6 @@ class MainActivity : LogActivity() {
                     navController = navController,
                     bookViewModel = bookViewModel,
                     graphViewModel = graphViewModel,
-                    save = { save() },
                     load = { load() },
                     restart = { restart() },
                     createBookScreenViewModel = createBookScreenViewModel,
@@ -78,20 +76,6 @@ class MainActivity : LogActivity() {
             )
         }
 
-    }
-
-    private fun save() {
-        try {
-            bookViewModel.onSaveClick()
-            Toast.makeText(this, "Saved: ${game.book.title}", Toast.LENGTH_SHORT)
-                .show()
-        } catch (exception: Exception) {
-            Toast.makeText(
-                this,
-                "Save failed: ${exception.localizedMessage}",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
     }
 
     private fun restart(): Boolean {

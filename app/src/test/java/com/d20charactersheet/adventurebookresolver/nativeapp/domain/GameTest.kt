@@ -18,6 +18,7 @@ import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
@@ -53,6 +54,7 @@ internal class GameTest {
 
         // Assert
         verify(book).restart()
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -62,6 +64,7 @@ internal class GameTest {
 
         // Assert
         verify(book).addItemToInventory("sword")
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -77,6 +80,7 @@ internal class GameTest {
 
         // Assert
         verify(book).removeItemFromInventory(1)
+        verify(bookStore).save(eq(book), any())
     }
 
 
@@ -87,6 +91,7 @@ internal class GameTest {
 
         // Assert
         verify(book).delete(2)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -127,11 +132,11 @@ internal class GameTest {
     @Test
     fun `run to book entry`() {
         // Act
-        val result = underTest.runTo(100)
+        underTest.runTo(100)
 
         // Assert
-        assertThat(result).isEqualTo("Ran to entry 100")
         verify(book).run(100)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -156,6 +161,7 @@ internal class GameTest {
 
         // Assert
         verify(book).increaseAttribute(AttributeName.STRENGTH, 1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -166,6 +172,7 @@ internal class GameTest {
 
         // Assert
         verify(book).decreaseAttribute(AttributeName.STRENGTH, 1)
+        verify(bookStore).save(eq(book), any())
     }
 
 
@@ -197,8 +204,10 @@ internal class GameTest {
         underTest.createBook("myTitle")
 
         // Assert
-        assertThat(underTest.book).isNotSameAs(oldBook)
-        assertThat(underTest.book.title).isEqualTo("myTitle")
+        val newBook = underTest.book
+        assertThat(newBook).isNotSameAs(oldBook)
+        assertThat(newBook.title).isEqualTo("myTitle")
+        verify(bookStore).save(eq(newBook), any())
     }
 
     @Test
@@ -208,6 +217,7 @@ internal class GameTest {
 
         // Assert
         verify(book).addAction("myLabel", 1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -217,6 +227,7 @@ internal class GameTest {
 
         // Assert
         verify(book).moveToBookEntry(1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -226,6 +237,7 @@ internal class GameTest {
 
         // Assert
         verify(book).setEntryTitle("myEntryTitle")
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -235,6 +247,7 @@ internal class GameTest {
 
         // Assert
         verify(book).setEntryNote("myEntryNote")
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -246,7 +259,6 @@ internal class GameTest {
         }
         whenever(fileHelper.getDownloadDirectory()).doReturn(File("downloadDirectory"))
         whenever(bookStore.load(any())).doReturn(loadedBook)
-
 
         // Act
         val output = underTest.loadBook("bookToLoad")
@@ -334,6 +346,7 @@ internal class GameTest {
 
         // Assert
         verify(book).editGold(1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -343,6 +356,7 @@ internal class GameTest {
 
         // Assert
         verify(book).editGold(-1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -364,6 +378,7 @@ internal class GameTest {
 
         // Assert
         verify(book).editProvisions(1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -373,6 +388,7 @@ internal class GameTest {
 
         // Assert
         verify(book).editProvisions(-1)
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -382,6 +398,7 @@ internal class GameTest {
 
         // Assert
         verify(book).eatProvision()
+        verify(bookStore).save(eq(book), any())
     }
 
     @Test
@@ -432,6 +449,7 @@ internal class GameTest {
 
         // Assert
         verify(book).setEntryWayMark(WayMark.NORMAL)
+        verify(bookStore).save(eq(book), any())
         assertThat(output).isEqualTo("Set (1) - myTitle to WAY_POINT")
     }
 
@@ -545,16 +563,17 @@ internal class GameTest {
     @Test
     fun `should return all actions of the current entry`() {
         // arrange
+        val bookEntry = BookEntry(1)
         val action = Action(
             label = "myLabel",
-            source = BookEntry(1),
+            source = bookEntry,
             destination = BookEntry(2)
         )
 
-        whenever(book.getActions()).doReturn(setOf(action))
+        whenever(book.getActions(bookEntry)).doReturn(setOf(action))
 
         // act
-        val result = underTest.getActions()
+        val result = underTest.getActions(bookEntry)
 
         // assert
         assertThat(result).containsExactly(action)
@@ -570,6 +589,50 @@ internal class GameTest {
 
         // assert
         assertThat(result).containsExactly(Item("first item"), Item("second item"))
+    }
+
+    @Test
+    fun `should return actions of given entry`() {
+        // arrange
+        val bookEntry = BookEntry(1)
+        val action = Action(
+            label = "myLabel",
+            source = BookEntry(1),
+            destination = BookEntry(2)
+        )
+        whenever(book.getActions(bookEntry)).thenReturn(setOf(action))
+
+        // act
+        val result = underTest.getActions(bookEntry)
+
+        // assert
+        assertThat(result).containsExactly(action)
+    }
+
+    @Test
+    fun `should return number of book entries`() {
+        // arrange
+        whenever(book.getAllBookEntries()).thenReturn(setOf(BookEntry(1)))
+
+        // act
+        val result = underTest.getNumberOfBookEntries()
+
+        // assert
+        assertThat(result).isEqualTo(1)
+        verify(book).getAllBookEntries()
+    }
+
+    @Test
+    fun `should return max number of book entries`() {
+        // arrange
+        whenever(book.totalNumberOfBookEntries).thenReturn(10)
+
+        // act
+        val result = underTest.getTotalNumberOfBookEntries()
+
+        // assert
+        assertThat(result).isEqualTo(10)
+        verify(book).totalNumberOfBookEntries
     }
 
 }

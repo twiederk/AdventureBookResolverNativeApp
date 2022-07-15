@@ -3,10 +3,11 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.d20charactersheet.adventurebookresolver.core.domain.Action
+import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
@@ -20,21 +21,20 @@ class EntryScreenComposeTest {
     @Test
     fun should_display_info_of_book_entry() {
         // arrange
-        val actions = listOf(
-            Action(
-                label = "First Label",
-                source = BookEntry(id = 182, title = "First Source Title"),
-                destination = BookEntry(id = 242, wayMark = WayMark.NORMAL, visit = Visit.VISITED)
-            ),
-            Action(
-                label = "Second Label",
-                source = BookEntry(id = 169, title = "Second Source Title"),
-                destination = BookEntry(id = 339, wayMark = WayMark.WAY_POINT, visit = Visit.UNVISITED)
-            ),
-            Action(
-                label = "Third Label",
-                source = BookEntry(id = 29, title = "Third Source Title"),
-                destination = BookEntry(id = 20, wayMark = WayMark.DEAD_END, visit = Visit.UNVISITED)
+        val game = Game()
+        game.addAction("First Label", 242)
+        game.addAction("Second Label", 339)
+        game.addAction("Third Label", 20)
+
+        val entryScreenViewModel = EntryScreenViewModel(game)
+
+        entryScreenViewModel.initBookEntry(
+            BookEntry(
+                id = 1,
+                title = "myTitle",
+                note = "myNote",
+                visit = Visit.VISITED,
+                wayMark = WayMark.WAY_POINT,
             )
         )
 
@@ -42,26 +42,14 @@ class EntryScreenComposeTest {
         composeTestRule.setContent {
             AdventureBookResolverTheme {
                 EntryScreen(
-                    id = 123,
-                    title = "myTitle",
-                    note = "myNote",
-                    visit = Visit.VISITED,
-                    wayMark = WayMark.WAY_POINT,
-
-                    actions = actions,
-                    onTitleChanged = { },
-                    onNoteChanged = { },
-                    onWayMarkSelected = { },
-                    onRunClick = { },
-                    onActionMoveClicked = { },
-                    onActionDeleteClicked = { },
-                    onBackNavigationClicked = { }
+                    entryScreenViewModel = entryScreenViewModel,
+                    navController = rememberNavController()
                 )
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("123").assertIsDisplayed()
+        composeTestRule.onNodeWithText("1").assertIsDisplayed()
         composeTestRule.onNodeWithText("myTitle").assertIsDisplayed()
         composeTestRule.onNodeWithText("myNote").assertIsDisplayed()
         composeTestRule.onNodeWithText("WAY_POINT").assertIsDisplayed()

@@ -16,11 +16,11 @@ val appModule = module {
     single { Game() }
     single { TraversalBookRenderer(get()) }
     single { GraphViewModel() }
-    single { SolutionScreenViewModel() }
-    single { EntryScreenViewModel() }
-    single { CreateBookScreenViewModel() }
-    single { CreateActionScreenViewModel() }
-    single { BookViewModel() }
+    single { SolutionScreenViewModel(get()) }
+    single { EntryScreenViewModel(get()) }
+    single { CreateBookScreenViewModel(get()) }
+    single { CreateActionScreenViewModel(get()) }
+    single { BookViewModel(get()) }
     single { InventoryScreenViewModel(get()) }
 }
 // end::koinConfiguration[]

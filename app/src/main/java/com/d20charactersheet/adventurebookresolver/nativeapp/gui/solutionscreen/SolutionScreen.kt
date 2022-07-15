@@ -9,30 +9,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.d20charactersheet.adventurebookresolver.core.domain.Action
-import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
-import com.d20charactersheet.adventurebookresolver.core.domain.Solution
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.BottomBar
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.ScreenRoute
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
 fun SolutionScreen(
-    argument: String,
-    onArgumentChange: (String) -> Unit,
-    onSearchClick: () -> Unit,
-    onPathClick: () -> Unit,
-    onWayPointClick: () -> Unit,
-    onUnvisitedClick: () -> Unit,
-    onSolveClick: () -> Unit,
-    onRollDieClick: (String) -> Unit,
-    bookEntryList: List<BookEntry>,
-    onBookEntryClick: (BookEntry) -> Unit,
-    actions: List<Action>,
-    remainingCombinations: Long,
-    maxCombinations: Long,
-    numberOfSolutions: Int,
-    solutions: List<Solution>,
-    outputText: String,
+    solutionScreenViewModel: SolutionScreenViewModel,
+    entryScreenViewModel: EntryScreenViewModel,
     navController: NavHostController
 ) {
     Scaffold(
@@ -43,29 +29,35 @@ fun SolutionScreen(
             Column(
                 modifier = Modifier.padding(8.dp)
             ) {
-
+                SolutionBookInfo(
+                    numberOfBookEntries = solutionScreenViewModel.numberOfBookEntries,
+                    totalNumberOfBookEntries = solutionScreenViewModel.totalNumberOfBookEntries
+                )
                 SolutionCommandPanel(
-                    argument = argument,
-                    onArgumentChange = { onArgumentChange(it) },
-                    onSearchClick = { onSearchClick() },
-                    onPathClick = { onPathClick() },
-                    onWayPointClick = { onWayPointClick() },
-                    onUnvisitedClick = { onUnvisitedClick() },
-                    onSolveClick = { onSolveClick() },
-                    onRollDieClick = { onRollDieClick(it) },
+                    argument = solutionScreenViewModel.argument,
+                    onArgumentChange = { solutionScreenViewModel.onArgumentChange(it) },
+                    onSearchClick = { solutionScreenViewModel.onSearchClick() },
+                    onPathClick = { solutionScreenViewModel.onPathClick() },
+                    onWayPointClick = { solutionScreenViewModel.onWayPointClick() },
+                    onUnvisitedClick = { solutionScreenViewModel.onUnvisitedClick() },
+                    onSolveClick = { solutionScreenViewModel.onSolveClick() },
+                    onRollDieClick = { solutionScreenViewModel.onDieRollClick(it) },
                 )
                 BookEntryList(
-                    bookEntryList = bookEntryList,
-                    onBookEntryClick = { onBookEntryClick(it) }
+                    bookEntryList = solutionScreenViewModel.bookEntryList,
+                    onBookEntryClick = {
+                        entryScreenViewModel.initBookEntry(it)
+                        navController.navigate(ScreenRoute.EntryScreen.route)
+                    }
                 )
-                ActionList(actions)
+                ActionList(solutionScreenViewModel.actionList)
                 SolutionProgressScreen(
-                    remainingCombinations,
-                    maxCombinations,
-                    numberOfSolutions,
-                    solutions
+                    solutionScreenViewModel.remainingCombinations,
+                    solutionScreenViewModel.maxCombinations,
+                    solutionScreenViewModel.numberOfSolutions,
+                    solutionScreenViewModel.solutionList
                 )
-                OutputText(outputText)
+                SolutionOutputText(solutionScreenViewModel.outputText)
             }
         },
         bottomBar = {
@@ -77,24 +69,11 @@ fun SolutionScreen(
 @Preview(showBackground = true)
 @Composable
 fun SolutionScreenPreview() {
+    val game = Game()
     AdventureBookResolverTheme {
         SolutionScreen(
-            argument = "",
-            onArgumentChange = { },
-            onSearchClick = { },
-            onPathClick = { },
-            onWayPointClick = { },
-            onUnvisitedClick = { },
-            onSolveClick = { },
-            onRollDieClick = { },
-            bookEntryList = listOf(),
-            onBookEntryClick = { },
-            actions = listOf(),
-            remainingCombinations = 0L,
-            maxCombinations = 0L,
-            numberOfSolutions = 0,
-            solutions = listOf(),
-            outputText = "",
+            SolutionScreenViewModel(game),
+            EntryScreenViewModel(game),
             navController = rememberNavController()
         )
     }

@@ -8,7 +8,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class OutputTextTest {
+class SolutionOutputTextTest {
 
     @Rule
     @JvmField
@@ -20,7 +20,7 @@ class OutputTextTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                OutputText("myOutputText")
+                SolutionOutputText("myOutputText")
             }
         }
 
@@ -34,7 +34,7 @@ class OutputTextTest {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                OutputText("")
+                SolutionOutputText("")
             }
         }
 

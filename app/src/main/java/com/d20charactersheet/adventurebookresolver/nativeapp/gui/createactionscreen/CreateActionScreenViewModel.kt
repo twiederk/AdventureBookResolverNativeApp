@@ -5,12 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class CreateActionScreenViewModel : KoinComponent, ViewModel() {
-
-    private val game: Game by inject()
+class CreateActionScreenViewModel(val game: Game) : ViewModel() {
 
     var actionLabel by mutableStateOf("")
         private set
@@ -34,7 +30,7 @@ class CreateActionScreenViewModel : KoinComponent, ViewModel() {
             errorMessage = createErrorMessage()
             return false
         }
-        game.addAction(actionLabel, entryId.toInt())
+        this.game.addAction(actionLabel, entryId.toInt())
         reset()
         return true
     }
@@ -49,7 +45,7 @@ class CreateActionScreenViewModel : KoinComponent, ViewModel() {
         if (!isEntryIdParsable()) {
             return "Can't create action: Id is invalid"
         }
-        if (entryId.toInt() == game.book.getEntryId()) {
+        if (entryId.toInt() == this.game.book.getEntryId()) {
             return "Can't create action: Id is same as current node"
         }
         return "Unknown error"
@@ -66,7 +62,7 @@ class CreateActionScreenViewModel : KoinComponent, ViewModel() {
 
     private fun isEntryIdValid(): Boolean = try {
         val entryId = entryId.toInt()
-        entryId != game.book.getEntryId()
+        entryId != this.game.book.getEntryId()
     } catch (numberFormatException: NumberFormatException) {
         false
     }

@@ -4,10 +4,11 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import org.mockito.kotlin.mock
 
 class InventoryScreenViewModelTest {
 
-    private val game = Game()
+    private val game = Game(fileHelper = mock(), bookStore = mock())
     private val inventoryScreenViewModel = InventoryScreenViewModel(game)
 
     @Test

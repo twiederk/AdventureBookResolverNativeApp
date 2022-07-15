@@ -1,27 +1,21 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
 
 import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
-import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.assertj.core.api.Assertions
-import org.junit.After
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
-import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class BookViewModelTest : KoinTest {
+class BookViewModelTest {
 
-    private val game: Game by inject()
-    private val bookViewModel: BookViewModel by inject()
+    private val game: Game = mock()
+    private lateinit var bookViewModel: BookViewModel
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
@@ -30,16 +24,8 @@ class BookViewModelTest : KoinTest {
 
     @Before
     fun before() {
-        startKoin {
-            modules(appModule)
-        }
-        declareMock<Game>()
         whenever(game.book).thenReturn(AdventureBook())
-    }
-
-    @After
-    fun after() {
-        stopKoin()
+        bookViewModel = BookViewModel(game)
     }
 
     @Test
@@ -49,7 +35,7 @@ class BookViewModelTest : KoinTest {
         val title = bookViewModel.title
 
         // assert
-        Assertions.assertThat(title).isEqualTo("new book")
+        assertThat(title).isEqualTo("new book")
     }
 
     @Test
@@ -69,7 +55,7 @@ class BookViewModelTest : KoinTest {
         bookViewModel.onTitleChange("new title")
 
         // assert
-        Assertions.assertThat(bookViewModel.title).isEqualTo("new title")
+        assertThat(bookViewModel.title).isEqualTo("new title")
     }
 
 }

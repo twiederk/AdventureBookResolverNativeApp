@@ -10,20 +10,27 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PADDING
 
 @Composable
 fun CreateBookScreen(
-    title: String,
-    onTitleChange: (String) -> Unit,
-    onCreateClick: () -> Unit,
-    onCancelClick: () -> Unit
+    createBookScreenViewModel: CreateBookScreenViewModel,
+    bookViewModel: BookViewModel,
+    solutionScreenViewModel: SolutionScreenViewModel,
+    inventoryScreenViewModel: InventoryScreenViewModel,
+    navController: NavHostController
 ) {
     Scaffold(
         topBar = {
             CreateBookScreenAppBar(
-                onBackClick = onCancelClick
+                onBackClick = { navController.popBackStack() }
             )
         },
         content = {
@@ -33,13 +40,19 @@ fun CreateBookScreen(
             ) {
                 OutlinedTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    value = title,
-                    onValueChange = onTitleChange,
+                    value = createBookScreenViewModel.title,
+                    onValueChange = { createBookScreenViewModel.onTitleChange(it) },
                     label = { Text("Title") }
                 )
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { onCreateClick() }) {
+                    onClick = {
+                        createBookScreenViewModel.onCreateClick()
+                        bookViewModel.onTitleChange(createBookScreenViewModel.title)
+                        solutionScreenViewModel.clear()
+                        inventoryScreenViewModel.reset()
+                        navController.popBackStack()
+                    }) {
                     Text("Create")
                 }
             }
@@ -51,13 +64,14 @@ fun CreateBookScreen(
 @Preview(showBackground = true)
 @Composable
 fun CreateBookScreenPreview() {
+    val game = Game()
     AdventureBookResolverTheme {
         CreateBookScreen(
-            title = "",
-            onTitleChange = { },
-            onCreateClick = { }
-        ) {
-
-        }
+            createBookScreenViewModel = CreateBookScreenViewModel(game),
+            bookViewModel = BookViewModel(game),
+            solutionScreenViewModel = SolutionScreenViewModel(game),
+            inventoryScreenViewModel = InventoryScreenViewModel(game),
+            navController = rememberNavController()
+        )
     }
 }

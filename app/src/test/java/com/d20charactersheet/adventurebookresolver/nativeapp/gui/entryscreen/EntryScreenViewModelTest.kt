@@ -4,45 +4,27 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Visit
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
-import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
-import org.koin.test.inject
 import org.koin.test.mock.MockProviderRule
-import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.any
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.inOrder
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class EntryScreenViewModelKoinTest : KoinTest {
+class EntryScreenViewModelTest {
 
-    private val entryScreenViewModel: EntryScreenViewModel by inject()
-    private val game: Game by inject()
+    private val game: Game = mock()
+    private val entryScreenViewModel = EntryScreenViewModel(game)
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
-    }
-
-    @Before
-    fun before() {
-        startKoin {
-            modules(appModule)
-        }
-        declareMock<Game>()
-    }
-
-    @After
-    fun after() {
-        stopKoin()
     }
 
     @Test
@@ -71,7 +53,7 @@ class EntryScreenViewModelKoinTest : KoinTest {
             source = BookEntry(1),
             destination = BookEntry(2)
         )
-        whenever(game.getActions()).doReturn(listOf(action))
+        whenever(game.getActions(bookEntry)).doReturn(listOf(action))
 
         // act
         entryScreenViewModel.initBookEntry(bookEntry)
@@ -138,20 +120,15 @@ class EntryScreenViewModelKoinTest : KoinTest {
 
     @Test
     fun `should delete action and update actions`() {
-        // arrange
-        val action = Action(
-            label = "myLabel",
-            source = BookEntry(1),
-            destination = BookEntry(2)
-        )
-        whenever(game.getActions()).doReturn(listOf(action))
 
         // act
         entryScreenViewModel.onActionDeleteClicked(5)
 
         // assert
-        verify(game).delete(5)
-        assertThat(entryScreenViewModel.actions).containsExactly(action)
+        inOrder(game) {
+            verify(game).delete(5)
+            verify(game).getActions(any())
+        }
     }
 
     @Test

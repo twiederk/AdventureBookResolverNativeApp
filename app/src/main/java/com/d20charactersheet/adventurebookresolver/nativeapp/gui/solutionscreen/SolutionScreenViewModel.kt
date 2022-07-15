@@ -11,12 +11,8 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Solution
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class SolutionScreenViewModel : KoinComponent, ViewModel() {
-
-    private val game: Game by inject()
+class SolutionScreenViewModel(private val game: Game) : ViewModel() {
 
     var argument by mutableStateOf("")
         private set
@@ -42,6 +38,12 @@ class SolutionScreenViewModel : KoinComponent, ViewModel() {
     var numberOfSolutions by mutableStateOf(0)
         private set
 
+    val numberOfBookEntries
+        get() = game.getNumberOfBookEntries()
+
+    val totalNumberOfBookEntries
+        get() = game.getTotalNumberOfBookEntries()
+
     fun onArgumentChange(argument: String) {
         this.argument = argument
     }
@@ -64,7 +66,7 @@ class SolutionScreenViewModel : KoinComponent, ViewModel() {
 
     fun onSearchClick() {
         clear()
-        onBookEntryListChange(game.search(argument))
+        onBookEntryListChange(this.game.search(argument))
     }
 
     fun onSolutionListChange(solutionList: List<Solution>) {
@@ -89,17 +91,17 @@ class SolutionScreenViewModel : KoinComponent, ViewModel() {
 
     fun onPathClick() {
         clear()
-        onBookEntryListChange(game.displayPath())
+        onBookEntryListChange(this.game.displayPath())
     }
 
     fun onWayPointClick() {
         clear()
-        onBookEntryListChange(game.displayWayPoints())
+        onBookEntryListChange(this.game.displayWayPoints())
     }
 
     fun onUnvisitedClick() {
         clear()
-        onActionListChange(game.displayActionsToUnvisitedEntries())
+        onActionListChange(this.game.displayActionsToUnvisitedEntries())
     }
 
     fun onSolveClick() {
@@ -107,7 +109,7 @@ class SolutionScreenViewModel : KoinComponent, ViewModel() {
         val solutionScreenViewModel = this
         viewModelScope.launch(Dispatchers.IO) {
             try {
-                onSolutionListChange(game.solve(ComposeBookSolverListener(solutionScreenViewModel)))
+                onSolutionListChange(this@SolutionScreenViewModel.game.solve(ComposeBookSolverListener(solutionScreenViewModel)))
             } catch (throwable: Throwable) {
                 onOutputTextChange(throwable.localizedMessage ?: "Exception without message")
             }
@@ -116,7 +118,7 @@ class SolutionScreenViewModel : KoinComponent, ViewModel() {
 
     fun onDieRollClick(dieRoll: String) {
         clear()
-        onOutputTextChange(game.rollDie(dieRoll))
+        onOutputTextChange(this.game.rollDie(dieRoll))
     }
 
 

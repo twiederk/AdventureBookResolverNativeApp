@@ -8,12 +8,9 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class EntryScreenViewModel : KoinComponent, ViewModel() {
+class EntryScreenViewModel(private val game: Game) : ViewModel() {
 
-    private val game: Game by inject()
     private var bookEntry: BookEntry = BookEntry(id = 0)
 
     var id = 0
@@ -30,7 +27,7 @@ class EntryScreenViewModel : KoinComponent, ViewModel() {
         note = bookEntry.note
         visit = bookEntry.visit
         wayMark = bookEntry.wayMark
-        actions = game.getActions()
+        actions = this.game.getActions(bookEntry)
     }
 
     fun onTitleChanged(title: String) {
@@ -49,16 +46,16 @@ class EntryScreenViewModel : KoinComponent, ViewModel() {
     }
 
     fun onActionMoveClicked(entryId: Int) {
-        game.move(entryId)
+        this.game.move(entryId)
     }
 
     fun onActionDeleteClicked(entryId: Int) {
-        game.delete(entryId)
-        actions = game.getActions()
+        this.game.delete(entryId)
+        actions = this.game.getActions(bookEntry)
     }
 
     fun onRunClick() {
-        game.runTo(bookEntry.id)
+        this.game.runTo(bookEntry.id)
     }
 
 }

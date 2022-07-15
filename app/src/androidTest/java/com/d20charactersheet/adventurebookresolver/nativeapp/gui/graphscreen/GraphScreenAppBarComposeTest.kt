@@ -24,8 +24,7 @@ class GraphScreenAppBarComposeTest {
                 GraphScreenAppBar(
                     title = "myTitle",
                     onNavigationIconClick = { },
-                    onZoomChange = { },
-                    onSaveClick = { },
+                    onZoomChange = { }
                 )
             }
         }
@@ -34,7 +33,6 @@ class GraphScreenAppBarComposeTest {
         composeTestRule.onNodeWithText("myTitle").assertIsDisplayed()
         composeTestRule.onNode(hasTestTag("zoom_drop_down_icon"))
             .assertContentDescriptionEquals("Zoom Drop Down")
-        composeTestRule.onNode(hasTestTag("save_icon")).assertContentDescriptionEquals("Save")
     }
 
 }

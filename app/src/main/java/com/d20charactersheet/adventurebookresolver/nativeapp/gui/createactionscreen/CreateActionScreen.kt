@@ -18,22 +18,23 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
 fun CreateActionScreen(
-    actionLabel: String,
-    entryId: String,
-    errorMessage: String,
-    onActionLabelChange: (String) -> Unit,
-    onEntryIdChange: (String) -> Unit,
-    onCancelClick: () -> Unit,
-    onCreateClick: () -> Unit
+    createActionScreenViewModel: CreateActionScreenViewModel,
+    navController: NavHostController
 ) {
     Scaffold(
         topBar = {
             CreateActionScreenAppBar(
-                onBackClick = { onCancelClick() }
+                onBackClick = {
+                    createActionScreenViewModel.reset()
+                    navController.popBackStack()
+                }
             )
         },
         content = {
@@ -46,32 +47,40 @@ fun CreateActionScreen(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     OutlinedTextField(
-                        value = actionLabel,
+                        value = createActionScreenViewModel.actionLabel,
                         modifier = Modifier.weight(4F),
-                        onValueChange = { onActionLabelChange(it) },
+                        onValueChange = { createActionScreenViewModel.onActionLabelChange(it) },
                         label = { Text("Action") },
                         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Next)
 
                     )
                     OutlinedTextField(
-                        value = entryId,
+                        value = createActionScreenViewModel.entryId,
                         modifier = Modifier
                             .weight(1F)
                             .padding(start = 8.dp),
-                        onValueChange = { onEntryIdChange(it) },
+                        onValueChange = { createActionScreenViewModel.onEntryIdChange(it) },
                         label = { Text("Id") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
-                        keyboardActions = KeyboardActions(onDone = { onCreateClick() }),
+                        keyboardActions = KeyboardActions(onDone = {
+                            if (createActionScreenViewModel.onCreateClick()) {
+                                navController.popBackStack()
+                            }
+                        }),
                     )
                 }
                 Button(
                     modifier = Modifier.fillMaxWidth(),
-                    onClick = { onCreateClick() }
+                    onClick = {
+                        if (createActionScreenViewModel.onCreateClick()) {
+                            navController.popBackStack()
+                        }
+                    }
                 ) {
                     Text("Create")
                 }
-                if (errorMessage.isNotEmpty()) {
-                    Text(text = errorMessage)
+                if (createActionScreenViewModel.errorMessage.isNotEmpty()) {
+                    Text(text = createActionScreenViewModel.errorMessage)
                 }
             }
 
@@ -82,15 +91,14 @@ fun CreateActionScreen(
 @Preview(showBackground = true)
 @Composable
 fun CreateActionScreenPreview() {
+    val createActionScreenViewModel = CreateActionScreenViewModel(Game())
+    createActionScreenViewModel.onActionLabelChange("myAction")
+    createActionScreenViewModel.onEntryIdChange("10")
+
     AdventureBookResolverTheme {
         CreateActionScreen(
-            actionLabel = "myAction",
-            entryId = "10",
-            errorMessage = "myErrorMessage",
-            onActionLabelChange = { },
-            onEntryIdChange = { },
-            onCancelClick = { },
-            onCreateClick = { }
+            createActionScreenViewModel,
+            navController = rememberNavController()
         )
     }
 }

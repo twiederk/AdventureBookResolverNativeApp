@@ -21,6 +21,7 @@ class Game(
 
     fun createBook(title: String) {
         book = AdventureBook(title)
+        saveBook()
     }
 
     fun loadBook(filename: String): String {
@@ -36,31 +37,53 @@ class Game(
         bookStore.save(book, filename)
     }
 
-    fun addAction(actionLabel: String, destinationId: Int) = book.addAction(actionLabel, destinationId)
+    fun addAction(actionLabel: String, destinationId: Int) {
+        book.addAction(actionLabel, destinationId)
+        saveBook()
+    }
 
-    fun move(entryId: Int) = book.moveToBookEntry(entryId)
+    fun move(entryId: Int) {
+        book.moveToBookEntry(entryId)
+        saveBook()
+    }
 
-    fun setEntryTitle(entryTitle: String) = book.setEntryTitle(entryTitle)
+    fun setEntryTitle(entryTitle: String) {
+        book.setEntryTitle(entryTitle)
+        saveBook()
+    }
 
-    fun setEntryNote(entryNote: String) = book.setEntryNote(entryNote)
+    fun setEntryNote(entryNote: String) {
+        book.setEntryNote(entryNote)
+        saveBook()
+    }
 
     fun restart() {
         book.restart()
+        saveBook()
     }
 
-    fun addItemToInventory(item: String) = book.addItemToInventory(item)
+    fun addItemToInventory(item: String) {
+        book.addItemToInventory(item)
+        saveBook()
+    }
 
-    fun delete(entryId: Int) = book.delete(entryId)
+    fun delete(entryId: Int) {
+        book.delete(entryId)
+        saveBook()
+    }
 
     fun displayActionsToUnvisitedEntries() = book.getActionsToUnvisitedEntries()
 
     fun displayPath() = book.getPath()
 
-    fun removeItemFromInventory(index: Int) = book.removeItemFromInventory(index)
+    fun removeItemFromInventory(index: Int) {
+        book.removeItemFromInventory(index)
+        saveBook()
+    }
 
-    fun runTo(entryId: Int): String {
+    fun runTo(entryId: Int) {
         book.run(entryId)
-        return "Ran to entry $entryId"
+        saveBook()
     }
 
     fun search(criteria: String): List<BookEntry> = book.search(criteria)
@@ -71,40 +94,47 @@ class Game(
 
     fun getNumberOfActions(): Int = book.getActions().size
 
-    fun getActions(): List<Action> = book.getActions().toList()
+    fun getActions(bookEntry: BookEntry): List<Action> = book.getActions(bookEntry).toList()
 
     fun getNumberOfItems(): Int = book.inventory.items.size
 
     fun increaseAttribute(attributeName: AttributeName, value: Int) {
         book.increaseAttribute(attributeName, value)
+        saveBook()
     }
 
     fun decreaseAttribute(attributeName: AttributeName, value: Int) {
         book.decreaseAttribute(attributeName, value)
+        saveBook()
     }
 
     fun getGold() = book.getGold().toString()
 
     fun increaseGold() {
         book.editGold(1)
+        saveBook()
     }
 
     fun decreaseGold() {
         book.editGold(-1)
+        saveBook()
     }
 
     fun getProvisions() = book.getProvisions().toString()
 
     fun increaseProvisions() {
         book.editProvisions(1)
+        saveBook()
     }
 
     fun decreaseProvisions() {
         book.editProvisions(-1)
+        saveBook()
     }
 
     fun eatProvision() {
         book.eatProvision()
+        saveBook()
     }
 
     fun getEntryFromNextEntries(entryId: Int) = book.getNextBookEntries().first { it.id == entryId }
@@ -115,6 +145,7 @@ class Game(
 
     fun setWayMark(wayMark: String): String {
         book.setEntryWayMark(WayMark.valueOf(wayMark))
+        saveBook()
         return "Set (${book.getEntryId()}) - ${book.getEntryTitle()} to ${book.getEntryWayMark()}"
     }
 
@@ -125,5 +156,9 @@ class Game(
     fun isCurrentEntry(bookEntry: BookEntry): Boolean = bookEntry.id == book.getEntryId()
 
     fun getItems(): List<Item> = book.getItems().toList()
+
+    fun getNumberOfBookEntries(): Int = book.getAllBookEntries().size
+
+    fun getTotalNumberOfBookEntries(): Int = book.totalNumberOfBookEntries
 
 }

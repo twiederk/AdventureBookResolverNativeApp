@@ -5,12 +5,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import org.koin.core.component.KoinComponent
-import org.koin.core.component.inject
 
-class CreateBookScreenViewModel : KoinComponent, ViewModel() {
-
-    private val game: Game by inject()
+class CreateBookScreenViewModel(val game: Game) : ViewModel() {
 
     var title by mutableStateOf("")
         private set
@@ -20,7 +16,7 @@ class CreateBookScreenViewModel : KoinComponent, ViewModel() {
     }
 
     fun onCreateClick() {
-        game.createBook(title)
+        this.game.createBook(title)
     }
 
 

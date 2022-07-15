@@ -25,8 +25,7 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 fun GraphScreenAppBar(
     title: String,
     onNavigationIconClick: () -> Unit,
-    onZoomChange: (Float) -> Unit,
-    onSaveClick: () -> Unit
+    onZoomChange: (Float) -> Unit
 ) {
     TopAppBar(
         navigationIcon = {
@@ -42,25 +41,8 @@ fun GraphScreenAppBar(
         },
         actions = {
             ZoomDropDown(onZoomChange = onZoomChange)
-            SaveAction(onSaveClick = onSaveClick)
         }
     )
-}
-
-
-@Composable
-fun SaveAction(
-    onSaveClick: () -> Unit
-) {
-    IconButton(
-        modifier = Modifier.testTag("save_icon"),
-        onClick = { onSaveClick() }
-    ) {
-        Icon(
-            painter = painterResource(id = R.drawable.icon_save),
-            contentDescription = "Save"
-        )
-    }
 }
 
 
@@ -108,9 +90,7 @@ fun GraphScreenAppBarPreview() {
     AdventureBookResolverTheme {
         GraphScreenAppBar(
             title = "myTitle",
-            onNavigationIconClick = { },
-            onSaveClick = { },
-            onZoomChange = { }
-        )
+            onNavigationIconClick = { }
+        ) { }
     }
 }

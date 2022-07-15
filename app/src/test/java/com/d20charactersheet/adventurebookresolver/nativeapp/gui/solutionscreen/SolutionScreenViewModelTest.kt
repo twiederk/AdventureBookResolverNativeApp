@@ -4,47 +4,25 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.d20charactersheet.adventurebookresolver.core.domain.Action
 import com.d20charactersheet.adventurebookresolver.core.domain.BookEntry
 import com.d20charactersheet.adventurebookresolver.core.domain.Solution
-import com.d20charactersheet.adventurebookresolver.nativeapp.appModule
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.After
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
-import org.koin.core.component.inject
-import org.koin.core.context.startKoin
-import org.koin.core.context.stopKoin
-import org.koin.test.KoinTest
 import org.koin.test.mock.MockProviderRule
-import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.mock
 import org.mockito.kotlin.whenever
 
-class SolutionScreenViewModelKoinTest : KoinTest {
+class SolutionScreenViewModelTest {
 
-
-    private val underTest: SolutionScreenViewModel by inject()
-    private val game: Game by inject()
+    private val game: Game = mock()
+    private val underTest = SolutionScreenViewModel(game)
 
     @get:Rule
     val mockProvider = MockProviderRule.create { clazz ->
         Mockito.mock(clazz.java)
     }
-
-    @Before
-    fun before() {
-        startKoin {
-            modules(appModule)
-        }
-        declareMock<Game>()
-    }
-
-    @After
-    fun after() {
-        stopKoin()
-    }
-
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -234,6 +212,31 @@ class SolutionScreenViewModelKoinTest : KoinTest {
 
         // assert
         assertThat(underTest.outputText).isEqualTo("You rolled 1d6 and scored 4")
+
+    }
+
+    @Test
+    fun numberOfBookEntries() {
+        // arrange
+        whenever(game.getNumberOfBookEntries()).thenReturn(10)
+
+        // act
+        val numberOfBookEntries = underTest.numberOfBookEntries
+
+        // assert
+        assertThat(numberOfBookEntries).isEqualTo(10)
+    }
+
+    @Test
+    fun totalNumberOfBookEntries() {
+        // arrange
+        whenever(game.getTotalNumberOfBookEntries()).thenReturn(100)
+
+        // act
+        val totalNumberOfBookEntries = underTest.totalNumberOfBookEntries
+
+        // assert
+        assertThat(totalNumberOfBookEntries).isEqualTo(100)
 
     }
 }
