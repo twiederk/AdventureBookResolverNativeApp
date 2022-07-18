@@ -6,17 +6,24 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 
-class BookViewModel(val game: Game) : ViewModel() {
+class GraphScreenViewModel(private val game: Game) : ViewModel() {
 
-    var title by mutableStateOf(this.game.book.title)
+    var scale by mutableStateOf(1F)
         private set
+
+    val title: String
+        get() = game.book.title
 
     fun onSaveClick() {
         this.game.saveBook()
     }
 
-    fun onTitleChange(title: String) {
-        this.title = title
+    fun onScaleChange(scale: Float) {
+        this.scale = scale
+    }
+
+    fun export() {
+        game.exportBook()
     }
 
 }

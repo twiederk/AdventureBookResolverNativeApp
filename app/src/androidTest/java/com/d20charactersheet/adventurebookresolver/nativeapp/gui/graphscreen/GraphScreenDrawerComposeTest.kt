@@ -3,13 +3,11 @@ package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import androidx.navigation.compose.rememberNavController
-import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 import org.junit.Rule
 import org.junit.Test
 
-class GraphScreenComposeTest {
+class GraphScreenDrawerComposeTest {
 
     @Rule
     @JvmField
@@ -17,25 +15,30 @@ class GraphScreenComposeTest {
 
     @Test
     fun should_display_info_of_book_entry() {
-        // arrange
-        val graphScreenViewModel = GraphScreenViewModel(Game())
-        graphScreenViewModel.onScaleChange(1.0F)
 
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                GraphScreen(
-                    graphScreenViewModel = graphScreenViewModel,
+                GraphScreenDrawer(
+                    onCreateClick = { },
+                    onLoadClick = { },
                     onRestartClick = { },
                     onRenderClick = { },
                     onImportClick = { },
-                    navController = rememberNavController(),
+                    onExportClick = { },
+                    onItemClick = { },
                 )
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("new book").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Actions").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Create").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Load").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Restart").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Render").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Import").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Export").assertIsDisplayed()
     }
 
 }

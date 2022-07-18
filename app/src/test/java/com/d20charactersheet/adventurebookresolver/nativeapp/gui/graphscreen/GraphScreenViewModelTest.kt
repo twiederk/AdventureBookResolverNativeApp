@@ -1,38 +1,47 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.d20charactersheet.adventurebookresolver.core.domain.AdventureBook
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.test.mock.MockProviderRule
-import org.mockito.Mockito
+import org.junit.rules.TestRule
+import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 
-class BookViewModelTest {
+class GraphScreenViewModelTest {
 
     private val game: Game = mock()
-    private lateinit var bookViewModel: BookViewModel
+    private lateinit var graphScreenViewModel: GraphScreenViewModel
 
     @get:Rule
-    val mockProvider = MockProviderRule.create { clazz ->
-        Mockito.mock(clazz.java)
-    }
+    var rule: TestRule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
         whenever(game.book).thenReturn(AdventureBook())
-        bookViewModel = BookViewModel(game)
+        graphScreenViewModel = GraphScreenViewModel(game)
+    }
+
+    @Test
+    fun should_update_scale_when_changed() {
+
+        // act
+        graphScreenViewModel.onScaleChange(2F)
+
+        // assert
+        assertThat(graphScreenViewModel.scale).isEqualTo(2F)
     }
 
     @Test
     fun should_return_title_of_book() {
 
         // act
-        val title = bookViewModel.title
+        val title = graphScreenViewModel.title
 
         // assert
         assertThat(title).isEqualTo("new book")
@@ -42,20 +51,20 @@ class BookViewModelTest {
     fun should_save_book() {
 
         // act
-        bookViewModel.onSaveClick()
+        graphScreenViewModel.onSaveClick()
 
         // assert
         verify(game).saveBook()
     }
 
     @Test
-    fun should_change_book_title() {
+    fun should_export_book() {
 
         // act
-        bookViewModel.onTitleChange("new title")
+        graphScreenViewModel.export()
 
         // assert
-        assertThat(bookViewModel.title).isEqualTo("new title")
+        verify(game).exportBook(any())
     }
 
 }

@@ -10,26 +10,27 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscree
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreen
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen.LoadScreen
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen.LoadScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreen
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 
 @Composable
 fun SetupNavGraph(
     navController: NavHostController,
-    bookViewModel: BookViewModel,
-    graphViewModel: GraphViewModel,
-    load: () -> Unit,
+    graphScreenViewModel: GraphScreenViewModel,
     restart: () -> Unit,
+    import: () -> Unit,
     createBookScreenViewModel: CreateBookScreenViewModel,
     solutionScreenViewModel: SolutionScreenViewModel,
     createActionScreenViewModel: CreateActionScreenViewModel,
     entryScreenViewModel: EntryScreenViewModel,
-    inventoryScreenViewModel: InventoryScreenViewModel
+    inventoryScreenViewModel: InventoryScreenViewModel,
+    loadScreenViewModel: LoadScreenViewModel
 ) {
     NavHost(
         navController = navController,
@@ -39,12 +40,11 @@ fun SetupNavGraph(
             route = ScreenRoute.GraphScreenRoute.route
         ) {
             GraphScreen(
-                bookViewModel = bookViewModel,
-                graphViewModel = graphViewModel,
-                onLoadClick = { load() },
+                graphScreenViewModel = graphScreenViewModel,
                 onRestartClick = { restart() },
                 onRenderClick = { /*exportImage()*/ },
-                navController = navController
+                onImportClick = { import() },
+                navController = navController,
             )
         }
         composable(
@@ -52,14 +52,13 @@ fun SetupNavGraph(
         ) {
             CreateBookScreen(
                 createBookScreenViewModel = createBookScreenViewModel,
-                bookViewModel = bookViewModel,
                 solutionScreenViewModel = solutionScreenViewModel,
                 inventoryScreenViewModel = inventoryScreenViewModel,
                 navController = navController
             )
         }
         composable(
-            route = ScreenRoute.CreateActionScreen.route
+            route = ScreenRoute.CreateActionScreenRoute.route
         ) {
             CreateActionScreen(
                 createActionScreenViewModel = createActionScreenViewModel,
@@ -67,7 +66,7 @@ fun SetupNavGraph(
             )
         }
         composable(
-            route = ScreenRoute.EntryScreen.route
+            route = ScreenRoute.EntryScreenRoute.route
         ) {
             EntryScreen(
                 entryScreenViewModel = entryScreenViewModel,
@@ -75,7 +74,7 @@ fun SetupNavGraph(
             )
         }
         composable(
-            route = ScreenRoute.SolutionScreen.route
+            route = ScreenRoute.SolutionScreenRoute.route
         ) {
             SolutionScreen(
                 solutionScreenViewModel = solutionScreenViewModel,
@@ -84,10 +83,18 @@ fun SetupNavGraph(
             )
         }
         composable(
-            route = ScreenRoute.InventoryScreen.route
+            route = ScreenRoute.InventoryScreenRoute.route
         ) {
             InventoryScreen(
                 inventoryScreenViewModel = inventoryScreenViewModel,
+                navController = navController
+            )
+        }
+        composable(
+            route = ScreenRoute.LoadScreenRoute.route
+        ) {
+            LoadScreen(
+                loadScreenViewModel = loadScreenViewModel,
                 navController = navController
             )
         }

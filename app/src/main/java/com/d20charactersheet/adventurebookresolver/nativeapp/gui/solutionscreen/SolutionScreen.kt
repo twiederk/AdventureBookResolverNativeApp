@@ -47,7 +47,7 @@ fun SolutionScreen(
                     bookEntryList = solutionScreenViewModel.bookEntryList,
                     onBookEntryClick = {
                         entryScreenViewModel.initBookEntry(it)
-                        navController.navigate(ScreenRoute.EntryScreen.route)
+                        navController.navigate(ScreenRoute.EntryScreenRoute.route)
                     }
                 )
                 ActionList(solutionScreenViewModel.actionList)

@@ -5,22 +5,24 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscr
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph.TraversalBookRenderer
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen.LoadScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import org.koin.dsl.module
 
 // tag::koinConfiguration[]
 val appModule = module {
-    single { Game() }
+    single { FileHelper(get()) }
+    single { Game(fileHelper = get()) }
     single { TraversalBookRenderer(get()) }
-    single { GraphViewModel() }
+    single { GraphScreenViewModel(get()) }
     single { SolutionScreenViewModel(get()) }
     single { EntryScreenViewModel(get()) }
     single { CreateBookScreenViewModel(get()) }
     single { CreateActionScreenViewModel(get()) }
-    single { BookViewModel(get()) }
     single { InventoryScreenViewModel(get()) }
+    single { LoadScreenViewModel(get(), get()) }
 }
 // end::koinConfiguration[]

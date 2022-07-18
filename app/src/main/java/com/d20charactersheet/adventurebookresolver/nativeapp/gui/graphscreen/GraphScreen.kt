@@ -24,11 +24,10 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun GraphScreen(
-    bookViewModel: BookViewModel,
-    graphViewModel: GraphViewModel,
-    onLoadClick: () -> Unit,
+    graphScreenViewModel: GraphScreenViewModel,
     onRestartClick: () -> Unit,
     onRenderClick: () -> Unit,
+    onImportClick: () -> Unit,
     navController: NavHostController
 ) {
     val scaffoldState = rememberScaffoldState()
@@ -37,35 +36,38 @@ fun GraphScreen(
         scaffoldState = scaffoldState,
         topBar = {
             GraphScreenAppBar(
-                title = bookViewModel.title,
+                title = graphScreenViewModel.title,
                 onNavigationIconClick = {
                     scope.launch {
                         scaffoldState.drawerState.open()
                     }
                 }
-            ) { graphViewModel.onScaleChange(it) }
+            ) { graphScreenViewModel.onScaleChange(it) }
         },
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
             GraphScreenDrawer(
                 onCreateClick = { navController.navigate(ScreenRoute.CreateBookScreenRoute.route) },
-                onLoadClick = onLoadClick,
+                onLoadClick = { navController.navigate(ScreenRoute.LoadScreenRoute.route) },
                 onRestartClick = onRestartClick,
-                onRenderClick = onRenderClick
-            ) {
-                scope.launch {
-                    scaffoldState.drawerState.close()
-                }
-            }
+                onRenderClick = onRenderClick,
+                onImportClick = onImportClick,
+                onExportClick = { graphScreenViewModel.export() },
+                onItemClick = {
+                    scope.launch {
+                        scaffoldState.drawerState.close()
+                    }
+                },
+            )
         },
         content = {
             GraphViewContainer(
-                scale = graphViewModel.scale,
-                onEntryTouch = { navController.navigate(ScreenRoute.EntryScreen.route) }
+                scale = graphScreenViewModel.scale,
+                onEntryTouch = { navController.navigate(ScreenRoute.EntryScreenRoute.route) }
             )
         },
         floatingActionButton = {
-            AddActionFab(onFabClicked = { navController.navigate(ScreenRoute.CreateActionScreen.route) })
+            AddActionFab(onFabClicked = { navController.navigate(ScreenRoute.CreateActionScreenRoute.route) })
         },
         bottomBar = {
             BottomBar(navController = navController)
@@ -113,21 +115,16 @@ fun AddActionFab(
 @Composable
 fun GraphScreenCompose() {
 
-    val game = Game()
-    val bookViewModel = BookViewModel(game)
-    bookViewModel.onTitleChange("myTitle")
-
-    val graphViewModel = GraphViewModel()
-    graphViewModel.onScaleChange(1.0F)
+    val graphScreenViewModel = GraphScreenViewModel(Game())
+    graphScreenViewModel.onScaleChange(1.0F)
 
     AdventureBookResolverTheme {
         GraphScreen(
-            bookViewModel = bookViewModel,
-            graphViewModel = graphViewModel,
-            onLoadClick = { },
+            graphScreenViewModel = graphScreenViewModel,
             onRestartClick = { },
             onRenderClick = { },
-            navController = rememberNavController(),
+            onImportClick = { },
+            navController = rememberNavController()
         )
     }
 }

@@ -16,9 +16,9 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createactionscreen.CreateActionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen.CreateBookScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.entryscreen.EntryScreenViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.GraphScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
+import com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen.LoadScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.navigation.SetupNavGraph
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
@@ -31,11 +31,11 @@ class MainActivity : LogActivity() {
     private val game: Game by inject()
     private val createBookScreenViewModel: CreateBookScreenViewModel by inject()
     private val solutionScreenViewModel: SolutionScreenViewModel by inject()
-    private val bookViewModel: BookViewModel by inject()
-    private val graphViewModel: GraphViewModel by inject()
+    private val graphScreenViewModel: GraphScreenViewModel by inject()
     private val createActionScreenViewModel: CreateActionScreenViewModel by inject()
     private val entryScreenViewModel: EntryScreenViewModel by inject()
     private val inventoryScreenViewModel: InventoryScreenViewModel by inject()
+    private val loadScreenViewModel: LoadScreenViewModel by inject()
 
     private var restartDialog: RestartDialog = RestartDialog()
 
@@ -48,15 +48,15 @@ class MainActivity : LogActivity() {
                 navController = rememberNavController()
                 SetupNavGraph(
                     navController = navController,
-                    bookViewModel = bookViewModel,
-                    graphViewModel = graphViewModel,
-                    load = { load() },
+                    graphScreenViewModel = graphScreenViewModel,
                     restart = { restart() },
+                    import = { import() },
                     createBookScreenViewModel = createBookScreenViewModel,
                     solutionScreenViewModel = solutionScreenViewModel,
                     createActionScreenViewModel = createActionScreenViewModel,
                     entryScreenViewModel = entryScreenViewModel,
                     inventoryScreenViewModel = inventoryScreenViewModel,
+                    loadScreenViewModel,
                 )
             }
         }
@@ -83,7 +83,7 @@ class MainActivity : LogActivity() {
         return true
     }
 
-    private fun load(): Boolean {
+    private fun import(): Boolean {
         launchIntentForOpenDocumentActivity()
         return true
     }
@@ -99,11 +99,11 @@ class MainActivity : LogActivity() {
     private val openDocumentActivityResultLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
             if (result.resultCode == Activity.RESULT_OK) {
-                loadBookFromIntent(result)
+                importBookFromIntent(result)
             }
         }
 
-    private fun loadBookFromIntent(result: ActivityResult) {
+    private fun importBookFromIntent(result: ActivityResult) {
         val intent = checkNotNull(result.data)
         val uri = checkNotNull(intent.data)
         val inputStream: InputStream = checkNotNull(contentResolver.openInputStream(uri))

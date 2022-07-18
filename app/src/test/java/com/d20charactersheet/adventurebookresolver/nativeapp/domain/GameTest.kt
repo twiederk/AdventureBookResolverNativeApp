@@ -18,12 +18,11 @@ import org.junit.Test
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doReturn
-import org.mockito.kotlin.eq
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 import org.mockito.kotlin.whenever
 import java.io.File
-import java.nio.file.Paths
+import java.time.LocalDateTime
 
 internal class GameTest {
 
@@ -49,27 +48,37 @@ internal class GameTest {
 
     @Test
     fun `restart game`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.restart()
 
         // Assert
         verify(book).restart()
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun `add item to inventory`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.addItemToInventory("sword")
 
         // Assert
         verify(book).addItemToInventory("sword")
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun `remove item from inventory`() {
         // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
         val inventory = Inventory()
         inventory.addItem("Leather armor")
         inventory.addItem("Sword")
@@ -80,18 +89,22 @@ internal class GameTest {
 
         // Assert
         verify(book).removeItemFromInventory(1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
 
     @Test
     fun `delete action`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.delete(2)
 
         // Assert
         verify(book).delete(2)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
@@ -131,12 +144,16 @@ internal class GameTest {
 
     @Test
     fun `run to book entry`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.runTo(100)
 
         // Assert
         verify(book).run(100)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
@@ -155,24 +172,30 @@ internal class GameTest {
 
     @Test
     fun increaseAttribute() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
 
         // Act
         underTest.increaseAttribute(AttributeName.STRENGTH, 1)
 
         // Assert
         verify(book).increaseAttribute(AttributeName.STRENGTH, 1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun decreaseAttribute() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
 
         // Act
         underTest.decreaseAttribute(AttributeName.STRENGTH, 1)
 
         // Assert
         verify(book).decreaseAttribute(AttributeName.STRENGTH, 1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
 
@@ -198,6 +221,7 @@ internal class GameTest {
     @Test
     fun `create book`() {
         // Arrange
+        whenever(bookStore.export(any())).thenReturn("fileContent")
         val oldBook = underTest.book
 
         // Act
@@ -207,47 +231,62 @@ internal class GameTest {
         val newBook = underTest.book
         assertThat(newBook).isNotSameAs(oldBook)
         assertThat(newBook.title).isEqualTo("myTitle")
-        verify(bookStore).save(eq(newBook), any())
+        verify(fileHelper).saveInternal(newBook.title, "fileContent")
     }
 
     @Test
     fun `add action`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.addAction("myLabel", 1)
 
         // Assert
         verify(book).addAction("myLabel", 1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun `move to entry`() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
         // Act
         underTest.move(1)
 
         // Assert
         verify(book).moveToBookEntry(1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun setEntryTitle() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.setEntryTitle("myEntryTitle")
 
         // Assert
         verify(book).setEntryTitle("myEntryTitle")
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun setEntryNote() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.setEntryNote("myEntryNote")
 
         // Assert
         verify(book).setEntryNote("myEntryNote")
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
@@ -272,16 +311,27 @@ internal class GameTest {
     @Test
     fun saveBook() {
         // Arrange
-        whenever(fileHelper.getDownloadDirectory()).doReturn(File("downloadDirectory"))
-        whenever(book.title).doReturn("saved book title")
-        val destPath = Paths.get("x:${File.separator}destination path")
-        whenever(bookStore.save(book, "downloadDirectory${File.separator}saved book title")).doReturn(destPath)
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
 
         // Act
         underTest.saveBook()
 
         // Assert
-        verify(bookStore).save(book, "downloadDirectory${File.separator}saved book title")
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
+    }
+
+    @Test
+    fun exportBook() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
+        // Act
+        underTest.exportBook(date = LocalDateTime.of(2022, 7, 23, 5, 45, 0))
+
+        // Assert
+        verify(fileHelper).saveExternal("bookTitle_20220723_0545", "fileContent")
     }
 
     @Test
@@ -341,22 +391,30 @@ internal class GameTest {
 
     @Test
     fun increaseGold() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.increaseGold()
 
         // Assert
         verify(book).editGold(1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun decreaseGold() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.decreaseGold()
 
         // Assert
         verify(book).editGold(-1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
@@ -373,32 +431,44 @@ internal class GameTest {
 
     @Test
     fun increaseProvisions() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.increaseProvisions()
 
         // Assert
         verify(book).editProvisions(1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun decreaseProvisions() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.decreaseProvisions()
 
         // Assert
         verify(book).editProvisions(-1)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
     fun eatProvision() {
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
+
         // Act
         underTest.eatProvision()
 
         // Assert
         verify(book).eatProvision()
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
     }
 
     @Test
@@ -440,6 +510,9 @@ internal class GameTest {
     @Test
     fun markWayMark_asWayPoint() {
         // Arrange
+        // Arrange
+        whenever(bookStore.export(book)).thenReturn("fileContent")
+        whenever(book.title).doReturn("bookTitle")
         whenever(book.getEntryId()).doReturn(1)
         whenever(book.getEntryTitle()).doReturn("myTitle")
         whenever(book.getEntryWayMark()).doReturn(WayMark.WAY_POINT)
@@ -449,7 +522,7 @@ internal class GameTest {
 
         // Assert
         verify(book).setEntryWayMark(WayMark.NORMAL)
-        verify(bookStore).save(eq(book), any())
+        verify(fileHelper).saveInternal("bookTitle", "fileContent")
         assertThat(output).isEqualTo("Set (1) - myTitle to WAY_POINT")
     }
 

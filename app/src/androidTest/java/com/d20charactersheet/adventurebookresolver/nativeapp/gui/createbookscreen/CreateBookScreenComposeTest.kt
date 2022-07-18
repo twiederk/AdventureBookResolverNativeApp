@@ -5,7 +5,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
@@ -30,7 +29,6 @@ class CreateBookScreenComposeTest {
             AdventureBookResolverTheme {
                 CreateBookScreen(
                     createBookScreenViewModel = createBookScreenViewModel,
-                    bookViewModel = BookViewModel(game),
                     solutionScreenViewModel = SolutionScreenViewModel(game),
                     inventoryScreenViewModel = InventoryScreenViewModel(game),
                     navController = rememberNavController()

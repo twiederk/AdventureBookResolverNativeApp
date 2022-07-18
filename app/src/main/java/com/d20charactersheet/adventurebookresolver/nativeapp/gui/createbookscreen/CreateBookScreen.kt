@@ -13,7 +13,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
-import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.BookViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.inventoryscreen.InventoryScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.SolutionScreenViewModel
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
@@ -22,7 +21,6 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.MEDIUM_PA
 @Composable
 fun CreateBookScreen(
     createBookScreenViewModel: CreateBookScreenViewModel,
-    bookViewModel: BookViewModel,
     solutionScreenViewModel: SolutionScreenViewModel,
     inventoryScreenViewModel: InventoryScreenViewModel,
     navController: NavHostController
@@ -48,7 +46,7 @@ fun CreateBookScreen(
                     modifier = Modifier.fillMaxWidth(),
                     onClick = {
                         createBookScreenViewModel.onCreateClick()
-                        bookViewModel.onTitleChange(createBookScreenViewModel.title)
+                        createBookScreenViewModel.onTitleChange(createBookScreenViewModel.title)
                         solutionScreenViewModel.clear()
                         inventoryScreenViewModel.reset()
                         navController.popBackStack()
@@ -68,7 +66,6 @@ fun CreateBookScreenPreview() {
     AdventureBookResolverTheme {
         CreateBookScreen(
             createBookScreenViewModel = CreateBookScreenViewModel(game),
-            bookViewModel = BookViewModel(game),
             solutionScreenViewModel = SolutionScreenViewModel(game),
             inventoryScreenViewModel = InventoryScreenViewModel(game),
             navController = rememberNavController()

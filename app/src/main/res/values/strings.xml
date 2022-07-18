@@ -2,51 +2,11 @@
 
     <!-- MainActivity -->
     <string name="app_name">AdventureBookResolverNativeApp</string>
-    <string name="option_load">Load</string>
-    <string name="option_restart">Restart</string>
-    <string name="option_zoom">Zoom</string>
-    <string name="option_zoom_10">10%</string>
-    <string name="option_zoom_25">25%</string>
-    <string name="option_zoom_50">50%</string>
-    <string name="option_zoom_100">100%</string>
-    <string name="option_zoom_200">200%</string>
-    <string name="option_export_image">Export graph to PNG</string>
-
-    <!-- GraphFragment -->
-    <string name="fab_save_hint">save</string>
-
-    <!-- AttributesPanel -->
-    <string name="strength">Strength:</string>
-    <string name="dexterity">Dexterity:</string>
-    <string name="luck">Luck:</string>
-    <string name="plus_sign">+</string>
-    <string name="minus_sign">-</string>
-
-    <!-- BookPanel -->
-    <string name="tries">Tries:</string>
-    <string name="entries">Entries:</string>
-    <string name="book_note_hint">enter book note</string>
 
     <!-- EntryDialog -->
     <string name="entry_title">Title</string>
     <string name="entry_note">Note</string>
     <string name="entry_action_delete">Delete</string>
-
-    <!-- ActionPanel -->
-    <string name="action_label_hint">enter action label</string>
-    <string name="action_id_hint">id</string>
-    <string name="action_fab_hint">add action</string>
-
-    <!-- GoldPanel -->
-    <string name="gold">Gold</string>
-
-    <!-- ProvisionsPanel -->
-    <string name="provisions">Provisions</string>
-    <string name="eat">Eat</string>
-
-    <!-- ItemPanel -->
-    <string name="item_label_hint">enter item</string>
-    <string name="item_add_button">Add</string>
 
     <!-- RestartDialog -->
     <string name="restart_message">Restart adventure at book entry 1?</string>
@@ -55,6 +15,5 @@
 
     <!-- WayMarkDrownDown -->
     <string name="drop_down_arrow">Drop-Down Arrow Icon</string>
-
 
 </resources>

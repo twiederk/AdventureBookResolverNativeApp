@@ -11,12 +11,14 @@ import com.d20charactersheet.adventurebookresolver.core.domain.Item
 import com.d20charactersheet.adventurebookresolver.core.domain.WayMark
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
 import java.io.File
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Game(
     var book: AdventureBook = AdventureBook(),
     private val die: Die = Die(),
     private val bookStore: BookStore = BookStore(),
-    private val fileHelper: FileHelper = FileHelper()
+    private val fileHelper: FileHelper = FileHelper(null)
 ) {
 
     fun createBook(title: String) {
@@ -32,9 +34,25 @@ class Game(
     }
 
     fun saveBook() {
-        val directory = fileHelper.getDownloadDirectory()
-        val filename = "$directory${File.separator}${book.title}"
-        bookStore.save(book, filename)
+        val bookData = bookStore.export(book)
+        fileHelper.saveInternal(
+            bookTitle = book.title,
+            fileContent = bookData
+        )
+    }
+
+    fun exportBook(date: LocalDateTime = LocalDateTime.now()) {
+        val fileName = getFileName(book.title, date)
+        val bookData = bookStore.export(book)
+        fileHelper.saveExternal(
+            bookTitle = fileName,
+            fileContent = bookData
+        )
+    }
+
+    private fun getFileName(bookTitle: String, date: LocalDateTime): String {
+        val formatter = checkNotNull(DateTimeFormatter.ofPattern("yyyyMMdd_kkmm"))
+        return "${bookTitle}_${formatter.format(date)}"
     }
 
     fun addAction(actionLabel: String, destinationId: Int) {

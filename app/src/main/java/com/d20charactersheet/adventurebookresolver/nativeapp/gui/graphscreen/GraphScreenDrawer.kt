@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,6 +20,8 @@ fun GraphScreenDrawer(
     onLoadClick: () -> Unit,
     onRestartClick: () -> Unit,
     onRenderClick: () -> Unit,
+    onImportClick: () -> Unit,
+    onExportClick: () -> Unit,
     onItemClick: () -> Unit
 ) {
     DrawerHeader()
@@ -27,6 +30,8 @@ fun GraphScreenDrawer(
         onLoadClick = onLoadClick,
         onRestartClick = onRestartClick,
         onRenderClick = onRenderClick,
+        onImportClick = onImportClick,
+        onExportClick = onExportClick,
         onItemClick = onItemClick
     )
 
@@ -60,12 +65,21 @@ fun DrawerBody(
     onLoadClick: () -> Unit,
     onRestartClick: () -> Unit,
     onRenderClick: () -> Unit,
+    onImportClick: () -> Unit,
+    onExportClick: () -> Unit,
     onItemClick: () -> Unit
 ) {
     DrawerMenuItem(label = "Create", onClick = { onCreateClick(); onItemClick() })
     DrawerMenuItem(label = "Load", onClick = { onLoadClick(); onItemClick() })
     DrawerMenuItem(label = "Restart", onClick = { onRestartClick(); onItemClick() })
     DrawerMenuItem(label = "Render", onClick = { onRenderClick(); onItemClick() })
+    Divider(
+        modifier = Modifier.fillMaxWidth(),
+        startIndent = 10.dp,
+        thickness = 1.dp
+    )
+    DrawerMenuItem(label = "Import", onClick = { onImportClick(); onItemClick() })
+    DrawerMenuItem(label = "Export", onClick = { onExportClick(); onItemClick() })
 }
 
 
@@ -89,8 +103,11 @@ fun GraphScreenDrawerPreview() {
             onCreateClick = { },
             onLoadClick = { },
             onRestartClick = { },
-            onRenderClick = { }
-        ) { }
+            onRenderClick = { },
+            onImportClick = { },
+            onExportClick = { },
+            onItemClick = { },
+        )
     }
 }
 

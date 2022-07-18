@@ -1,4 +1,4 @@
-package com.d20charactersheet.adventurebookresolver.nativeapp.gui.createbookscreen
+package com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen
 
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -8,24 +8,24 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.solutionscreen.
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.AdventureBookResolverTheme
 
 @Composable
-fun CreateBookScreenAppBar(
+fun LoadScreenAppBar(
     onBackClick: () -> Unit
 ) {
     TopAppBar(
         navigationIcon = { BackAction(onBackClick = { onBackClick() }) },
         title = {
-            Text(text = "Create Book Screen")
+            Text(text = "Load Book Screen")
         }
     )
-
 }
 
 @Preview
 @Composable
-fun CreateBookScreenAppBarPreview() {
+fun LoadScreenAppBarPreview() {
     AdventureBookResolverTheme {
-        CreateBookScreenAppBar(
+        LoadScreenAppBar(
             onBackClick = { }
         )
     }
 }
+

@@ -18,13 +18,13 @@ sealed class BottomBarScreen(
     )
 
     object Solution : BottomBarScreen(
-        route = ScreenRoute.SolutionScreen.route,
+        route = ScreenRoute.SolutionScreenRoute.route,
         title = "Solution",
         icon = Icons.Default.Person
     )
 
     object Inventory : BottomBarScreen(
-        route = ScreenRoute.InventoryScreen.route,
+        route = ScreenRoute.InventoryScreenRoute.route,
         title = "Inventory",
         icon = Icons.Default.Add
     )

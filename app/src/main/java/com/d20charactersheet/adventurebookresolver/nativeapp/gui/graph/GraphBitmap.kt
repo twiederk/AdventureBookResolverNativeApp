@@ -1,5 +1,6 @@
 package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graph
 
+import android.content.Context
 import android.graphics.Bitmap
 import com.d20charactersheet.adventurebookresolver.nativeapp.domain.Game
 import com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen.FileHelper
@@ -8,7 +9,7 @@ import org.koin.core.component.inject
 import java.io.File
 import java.io.FileOutputStream
 
-class GraphBitmap : KoinComponent {
+class GraphBitmap(private val context: Context?) : KoinComponent {
 
     private val game: Game by inject()
 
@@ -18,7 +19,7 @@ class GraphBitmap : KoinComponent {
     }
 
     private fun saveBitmap(bitmap: Bitmap?) {
-        val directory = FileHelper().getDownloadDirectory()
+        val directory = FileHelper(context).getDownloadDirectory()
         val filename = "$directory${File.separator}${game.book.title}.png"
         FileOutputStream(filename).use { fos -> bitmap?.compress(Bitmap.CompressFormat.PNG, 100, fos) }
     }

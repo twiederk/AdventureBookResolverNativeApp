@@ -1,4 +1,4 @@
-package com.d20charactersheet.adventurebookresolver.nativeapp.gui.graphscreen
+package com.d20charactersheet.adventurebookresolver.nativeapp.gui.loadscreen
 
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
@@ -9,33 +9,26 @@ import com.d20charactersheet.adventurebookresolver.nativeapp.gui.theme.Adventure
 import org.junit.Rule
 import org.junit.Test
 
-class GraphScreenComposeTest {
+class LoadScreenComposeTest {
 
     @Rule
     @JvmField
     val composeTestRule = createComposeRule()
 
     @Test
-    fun should_display_info_of_book_entry() {
-        // arrange
-        val graphScreenViewModel = GraphScreenViewModel(Game())
-        graphScreenViewModel.onScaleChange(1.0F)
-
+    fun should_display_load_screen() {
         // act
         composeTestRule.setContent {
             AdventureBookResolverTheme {
-                GraphScreen(
-                    graphScreenViewModel = graphScreenViewModel,
-                    onRestartClick = { },
-                    onRenderClick = { },
-                    onImportClick = { },
-                    navController = rememberNavController(),
+                LoadScreen(
+                    LoadScreenViewModel(Game()),
+                    rememberNavController()
                 )
             }
         }
 
         // assert
-        composeTestRule.onNodeWithText("new book").assertIsDisplayed()
+        composeTestRule.onNodeWithText("Load Book Screen").assertIsDisplayed()
     }
 
 }
